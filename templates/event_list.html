@@ -5,10 +5,13 @@
 
 {% block content%}
 {% for event in event_list %}
+
 <h1>{{event.title}}</h1>
 <p>{{event.club}}</p>
 <p>{{event.date}}</p>
 <p>{{event.location}}</p>
+<img src="{{event.event_imgage.url}}" alt="">
+{{event.event_imgage.url}}
 
     {% endfor %}
   </div>

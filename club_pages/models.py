@@ -6,7 +6,8 @@ from django.conf import settings
 class Event(models.Model):
   title = models.CharField(max_length = 255)
   club = models.CharField(max_length=70)
-  date = models.DateTimeField()
+  event_imgage = models.ImageField(upload_to="event_images", default='aqsa_copy.jpeg', blank=True)
+  date = models.DateTimeField(blank=True)
   location = models.CharField(max_length=30)
   first_name = models.CharField(max_length=15)
   last_name = models.CharField(max_length=15)

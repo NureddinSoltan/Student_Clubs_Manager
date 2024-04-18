@@ -13,6 +13,8 @@ class User(AbstractUser):
 
     # Adding a new field to the base table
     role = models.CharField(max_length=50, choices=Role.choices, default = base_role)
+    #student_id = models.PositiveIntegerField(unique=True, max_length=9, default=0) #  min_length=9 isn't working
+
     # def save(self, *args, **kwargs):
     #     if not self.pk:
     #         self.role = self.base_role
