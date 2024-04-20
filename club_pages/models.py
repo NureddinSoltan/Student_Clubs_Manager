@@ -24,4 +24,4 @@ class Event(models.Model):
     return self.title
   
   def get_absolute_url(self):
-    return reverse("article_detail", kwargs={"pk": self.pk})
+    return reverse("event_detail", kwargs={"pk": self.pk})
