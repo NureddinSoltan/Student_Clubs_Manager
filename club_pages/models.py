@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.conf import settings
 from accounts.models import User
 from ckeditor.fields import RichTextField
+from django.core.exceptions import ValidationError
 
 # Create your models here.
 class Event(models.Model):
@@ -41,13 +42,39 @@ class Activity_Form(models.Model):
   special_services = models.TextField()
   other_reqests = models.TextField()
 
-class club(models.Model):
+# def validate_manager_role(value):
+#     if value.role != User.Role.MANAGER:
+#         raise ValidationError('The selected manager must have the role set to "MANAGER".')
+
+def validate_manager_role(value):
+    try:
+        user = User.objects.get(pk=value)
+        if user.role != User.Role.MANAGER:
+            raise ValidationError('The selected manager must have the role set to "MANAGER".')
+    except User.DoesNotExist:
+        pass  # or raise ValidationError('Invalid user selected.') depending on your validation logic
+
+
+class Club(models.Model):
   title = models.CharField(max_length = 255)
   category = models.CharField(max_length=30)
   club_imgage = models.ImageField(upload_to="club_images", default='club_default.jpeg', blank=True)
-  club_cover = models.ImageField(upload_to="club_images", default='club_cover_default.jpeg', blank=True)
+  club_cover = models.ImageField(upload_to="club_images", default='club_cover_default.png', blank=True)
   vice_first_name = models.CharField(max_length=15, null=True)
   vice_last_name = models.CharField(max_length=15, null=True)
   about = models.TextField(null=True)
   purpose = models.TextField(null=True)
-  manager = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
+  # manager = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
+  manager = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, validators=[validate_manager_role])
+
+  author = models.ForeignKey(
+    settings.AUTH_USER_MODEL,
+    on_delete = models.CASCADE,
+    related_name= "author_clubs",
+    null = True,
+  )
+  def __str__(self):
+    return self.title
+  
+  def get_absolute_url(self):
+    return reverse("club_detail", kwargs={"pk": self.pk})

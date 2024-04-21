@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
-from .forms import CustomUserCreationForm
-
+from .forms import CustomUserCreationForm, CustomManagerCreationForm
+from .models import User
 # from .forms import CustomUserCreationForm
 # Create your views here.
 
@@ -12,7 +12,16 @@ class SignUpView(CreateView):
     success_url = reverse_lazy("home")
     template_name = "registration/signup.html"
 
+class ManagerSignUpView(CreateView):
+    form_class = CustomManagerCreationForm
+    success_url = reverse_lazy("home")
+    template_name = "registration/signup.html"
 
+    def form_valid(self, form):
+        form.instance.author = self.request.user # added it to club
+        # import ipdb; ipdb.set_trace()
+        form.instance.role = User.Role.MANAGER
+        return super().form_valid(form)
 
 
 # I don't know who add this?

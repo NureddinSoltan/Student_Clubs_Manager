@@ -1,0 +1,28 @@
+<!-- templates/post.detail.html -->
+{% extends "base.html"%}
+
+{% block content %}
+<div class="post-entry">
+  <h2>{{club.title}}</h2>
+  <p>{{club.category}}</p>
+  <p>{{club.club}}</p>
+  <p>{{club.vice_first_name}}</p>
+  <p>{{club.vice_last_name}}</p>
+  <p>{{club.date}}</p>
+  <img src="{{club.club_imgage.url}}" alt="">
+  <img src="{{club.club_cover.url}}" alt="">
+
+  <h2>About</h2>
+  <p>{{club.about}}</p>
+  <p>{{club.purpose}}</p>
+  <p>{{club.manager}}</p>
+  <p>{{club.author}}</p>
+
+
+
+  <!-- it will be the same because they're coming from the DetailedView
+  <h2>{{object.title}}</h2>
+  <p>{{object.body}}</p> -->
+</div>
+
+{% endblock content%}

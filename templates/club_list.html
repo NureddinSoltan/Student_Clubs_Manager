@@ -1,0 +1,23 @@
+<!-- templates/article_list.html -->
+{% extends "base.html" %}
+
+{% block title %}Clubs{% endblock title %}
+
+{% block content%}
+<p><a href="{% url 'club_new'%}">+ Add new club</a></p>
+{% for club in club_list %}
+
+<h1>{{club.title}}</h1>
+<h2><a href="{% url 'club_detail' club.pk %}">{{club.title}}</a></h2>
+<p><a href="{% url 'club_edit' club.pk%}">+ Edit clubs</a></p>
+<p><a href="{% url 'club_delete' club.pk%}">+ delete clubs</a></p>
+<p>{{club.category}}</p>
+<img src="{{club.club_imgage.url}}" alt="">
+{{club.club_imgage.url}}
+<hr>
+    {% endfor %}
+  </div>
+
+</div>
+<br/>
+{% endblock content%}

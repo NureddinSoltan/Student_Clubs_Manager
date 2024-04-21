@@ -24,3 +24,22 @@ class CustomUserChangeForm(UserChangeForm):
       "role",
       "student_id",
     )
+
+class CustomManagerCreationForm(UserCreationForm):
+  class Meta(UserCreationForm):
+    model = User
+    fields = (
+      "username",
+      "first_name",
+      "email",
+      "student_id",
+    )
+
+class CustomManagerChangeForm(UserChangeForm):
+  class Meta:
+    model = User
+    fields = (
+      "username",
+      "email",
+      "student_id",
+    )

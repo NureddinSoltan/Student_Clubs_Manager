@@ -10,6 +10,9 @@ Hi {{ user.username }}! you are {{ user.role }} years old.
 {% if user.role == "ADMIN"%}
 <h1>أبو عبدالرحمن</h1>
 {% endif %}
-
+<hr>
 <a href="{% url 'event_list'%}">Events</a>
+<hr>
+<a href="{% url 'club_list'%}">club</a>
+
 {% endblock content %}
