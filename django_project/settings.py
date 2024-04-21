@@ -37,12 +37,15 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "whitenoise.runserver_nostatic",  # new
     "django.contrib.staticfiles",
+    # 3rd party apps
+    "ckeditor",
+    "whitenoise.runserver_nostatic",  # new
     # locally
     "accounts.apps.AccountsConfig",
     # "pages.apps.PagesConfig",
     "club_pages.apps.ClubPagesConfig",
+    
 ]
 
 MIDDLEWARE = [
@@ -61,7 +64,7 @@ ROOT_URLCONF = "django_project.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR/"templates"],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -122,14 +125,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 STATIC_URL = "static/"
-STATICFILES_DIRS = [BASE_DIR/"static"] #new
-STATIC_ROOT = BASE_DIR/"staticfiles" #new
+STATICFILES_DIRS = [BASE_DIR / "static"]  # new
+STATIC_ROOT = BASE_DIR / "staticfiles"  # new
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"  # new
-#https://whitenoise.readthedocs.io/en/stable/
+# https://whitenoise.readthedocs.io/en/stable/
 
 # Media
-MEDIA_URL = 'media/' # change media
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = "media/"  # change media
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

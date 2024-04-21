@@ -7,5 +7,9 @@
 <h1>hello</h1>
 Hi {{ user.username }}! you are 
 Hi {{ user.username }}! you are {{ user.role }} years old.
+{% if user.role == "ADMIN"%}
+<h1>أبو عبدالرحمن</h1>
+{% endif %}
+
 <a href="{% url 'event_list'%}">Events</a>
 {% endblock content %}

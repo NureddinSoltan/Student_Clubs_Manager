@@ -12,7 +12,7 @@
   <img src="{{event.event_imgage.url}}" alt="">
 
   <h2>About</h2>
-  <p>{{event.body}}</p>
+  <p>{{event.body|safe}}</p>
 
 
   <!-- it will be the same because they're coming from the DetailedView

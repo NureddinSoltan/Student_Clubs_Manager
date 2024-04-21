@@ -2,8 +2,16 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.core.exceptions import ValidationError
 
-
+def validate_length(value):
+        an_integer = value
+        a_string = str(an_integer)
+        length = len(a_string)
+        if length != 9:
+            raise ValidationError(
+                ('%(value)s should be 9 digits')
+            )
 class User(AbstractUser):
     class Role(models.TextChoices):
         ADMIN = "ADMIN", "admin"
@@ -13,12 +21,7 @@ class User(AbstractUser):
 
     # Adding a new field to the base table
     role = models.CharField(max_length=50, choices=Role.choices, default = base_role)
-    #student_id = models.PositiveIntegerField(unique=True, max_length=9, default=0) #  min_length=9 isn't working
-
-    # def save(self, *args, **kwargs):
-    #     if not self.pk:
-    #         self.role = self.base_role
-    #         return super().save(*args, **kwargs)
+    student_id = models.PositiveIntegerField(unique=True, null=True, validators=[validate_length]) #  min_length=9 isn't working
 
 
 # Manager

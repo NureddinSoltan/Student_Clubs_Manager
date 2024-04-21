@@ -11,6 +11,7 @@ class CustomUserCreationForm(UserCreationForm):
       "first_name",
       "email",
       "role",
+      "student_id",
     )
 
 class CustomUserChangeForm(UserChangeForm):
@@ -21,4 +22,5 @@ class CustomUserChangeForm(UserChangeForm):
       "username",
       "email",
       "role",
+      "student_id",
     )
