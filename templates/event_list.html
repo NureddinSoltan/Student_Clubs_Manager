@@ -4,18 +4,20 @@
 {% block title %}Events{% endblock title %}
 
 {% block content%}
+<!-- Will remove this one -->
 <p><a href="{% url 'event_new'%}">+ Add new post</a></p>
 {% for event in event_list %}
 
-<h1>{{event.title}}</h1>
-<h2><a href="{% url 'event_detail' event.pk %}">{{event.title}}</a></h2>
+<h1><a href="{% url 'event_detail' event.pk %}">{{event.title}}</a></h1>
+{% if user.role == "STUDENT"%}
+<p>Hello Admin</p>
 <p><a href="{% url 'event_edit' event.pk%}">+ Edit events</a></p>
 <p><a href="{% url 'event_delete' event.pk%}">+ delete events</a></p>
-<p>{{event.club}}</p>
+{% endif %}
+<p>{{event.body|safe}}</p>
 <p>{{event.date}}</p>
-<p>{{event.location}}</p>
-<img src="{{event.event_imgage.url}}" alt="">
-{{event.event_imgage.url}}
+<img src="{{event.event_image.url}}" alt="">
+
 <hr>
     {% endfor %}
   </div>

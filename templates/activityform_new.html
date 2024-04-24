@@ -2,15 +2,10 @@
 {% extends "base.html"%}
 
 {% block content %}
-<h1> New club</h1> 
-<p>Add a manager</p>
-<a href="{% url 'signup_manager'%}">Add new manager</a>
-
+<h1> Activity Form</h1> 
 <form action="" method="post" enctype="multipart/form-data">
   {% csrf_token %}
-  {{form.media}}
   {{form.as_p}}
   <input type="submit" name="" id="" value="Save">
 </form>
-
 {% endblock content %}

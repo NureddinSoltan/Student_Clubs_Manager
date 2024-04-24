@@ -9,10 +9,12 @@
   <p>{{event.first_name}}</p>
   <p>{{event.last_name}}</p>
   <p>{{event.date}}</p>
-  <img src="{{event.event_imgage.url}}" alt="">
+  <img src="{{event.event_image.url}}" alt="">
 
   <h2>About</h2>
   <p>{{event.body|safe}}</p>
+  <p>{{event.rule|safe}}</p>
+  <p>{{event.faq|safe}}</p>
 
 
   <!-- it will be the same because they're coming from the DetailedView

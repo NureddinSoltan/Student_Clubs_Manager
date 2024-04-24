@@ -1,7 +1,8 @@
 from django.urls import path
 
 from .views import (HomePageView, EventListView, EventDetailView, EventCreateView, EventUpdateView, EventDeleteView,
-                    ClubListView, ClubDetailView, ClubUpdateView, ClubDeleteView, ClubCreateView)
+                    ClubListView, ClubDetailView, ClubUpdateView, ClubDeleteView, ClubCreateView,
+                    ActivityFormListView, ActivityFormDetailView, ActivityFormCreateView)
 
 urlpatterns = [
   path("", HomePageView.as_view(), name= "home"),
@@ -11,6 +12,11 @@ urlpatterns = [
   path("events/<int:pk>/edit/", EventUpdateView.as_view(), name="event_edit"),
   path("events/<int:pk>/delete/", EventDeleteView.as_view(), name="event_delete"),
   path("events/new/", EventCreateView.as_view(), name="event_new"),
+
+  # Activity form
+  path("activityform/", ActivityFormListView.as_view(), name="activityform_list"),
+  path("activityform/<int:pk>/", ActivityFormDetailView.as_view(), name="activityform_detail"),
+  path("activityform/new/", ActivityFormCreateView.as_view(), name="activityform_new"),
 
   # Clubs
   path("clubs/", ClubListView.as_view(), name="club_list"),

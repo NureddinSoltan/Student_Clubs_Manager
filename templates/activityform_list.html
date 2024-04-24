@@ -1,0 +1,22 @@
+<!-- templates/article_list.html -->
+{% extends "base.html" %}
+
+{% block title %}Activity form{% endblock title %}
+
+{% block content%}
+<h1>esmail</h1>
+<p><a href="{% url 'activityform_new'%}">+ Add new Activityform</a></p>
+{% for activityform in activityform_list %}
+
+<h1>{{activityform.title}}</h1>
+<h2><a href="{% url 'activityform_detail' activityform.pk %}">{{activityform.title}}</a></h2>
+<p>{{activityform.club}}</p>
+<p>{{activityform.date}}</p>
+<p>{{activityform.location}}</p>
+<hr>
+  {% endfor %}
+  </div>
+
+</div>
+<br/>
+{% endblock content%}

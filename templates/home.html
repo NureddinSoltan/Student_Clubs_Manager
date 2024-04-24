@@ -4,15 +4,15 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
-<h1>hello</h1>
-Hi {{ user.username }}! you are 
-Hi {{ user.username }}! you are {{ user.role }} years old.
+<h1>Welcome</h1>
+Hi {{ user.username }}! you are an {{ user.role }}
 {% if user.role == "ADMIN"%}
-<h1>أبو عبدالرحمن</h1>
 {% endif %}
 <hr>
 <a href="{% url 'event_list'%}">Events</a>
 <hr>
 <a href="{% url 'club_list'%}">club</a>
+<hr>
+<a href="{% url 'activityform_list'%}">activityform</a>
 
 {% endblock content %}

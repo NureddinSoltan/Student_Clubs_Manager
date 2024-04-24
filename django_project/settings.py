@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # 3rd party apps
     "ckeditor",
     "whitenoise.runserver_nostatic",  # new
+    "shell_plus",
     # locally
     "accounts.apps.AccountsConfig",
     # "pages.apps.PagesConfig",
