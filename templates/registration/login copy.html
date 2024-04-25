@@ -1,0 +1,14 @@
+<!-- templates/registration/login.html -->
+{% extends 'base.html' %}  <!-- Extend your base template -->
+{% block content %}
+{% load bootstrap5 %}
+<!-- {% bootstrap_css %} -->
+{% bootstrap_javascript %}
+    <h2>Login</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
+    <p>{{ message }}</p>  <!-- Display the welcome message -->
+{% endblock %}

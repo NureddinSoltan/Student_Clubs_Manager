@@ -67,3 +67,18 @@
 .navbar-nav .nav-link:hover {
   font-weight: bold;
 }
+/*  For the account profile */
+    .profile-dropdown {
+      position: relative;
+    }
+
+    .profile-info {
+      position: absolute;
+      top: 100%;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 5px;
+      display: none;
+      z-index: 1000;
+    }
