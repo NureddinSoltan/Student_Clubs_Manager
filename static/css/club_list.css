@@ -1,0 +1,62 @@
+  /*  */
+  .landing-image {
+    background: url('../images/club_event_pages/nermin2.JPG') no-repeat center center scroll;
+    background-size: cover;
+    position: relative;
+  }
+
+  .landing-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(2, 49, 40, 0.852);
+    /* Dark overlay */
+    z-index: 0;
+  }
+
+  .landing-image h1,
+  h3 {
+    position: relative;
+    z-index: 1;
+  }
+
+
+  .rounded-circle {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+  }
+
+  .card {
+    margin: auto;
+    /* Center the card in the column */
+    width: 100%;
+    /* Reduce width to make card smaller */
+  }
+
+  .card-link {
+    color: inherit;
+    /* This ensures that the text color is not affected by the link */
+    text-decoration: none;
+    /* This removes the underline from the link */
+  }
+
+  .card-link:hover {
+    text-decoration: none;
+    /* This ensures that the link does not get underlined on hover */
+  }
+
+  .card-img-top {
+    transition: transform 0.3s ease;
+  }
+
+  .card:hover .card-img-top {
+    transform: scale(1.1);
+  }
+
+  .card:hover {
+    filter: brightness(95%);
+  }

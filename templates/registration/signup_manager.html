@@ -1,0 +1,89 @@
+<!-- templates/registration/signup.html -->
+{% extends "base.html" %}
+
+{% load static %}
+{% block title %} Signup Manager {% endblock title %}
+{% block css%}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
+
+{% block content %}
+<style>
+    .back-button {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 25px;
+        margin-right: 10px;
+        position: absolute;
+        background-color: #e2e2e2;
+        border: none;
+        top: 15px;
+    }
+
+    body {
+        background-image: url('../image/image.png');
+        background-image: url('../image/image copy.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+    }
+
+    .form-container {
+        background-color: rgb(243, 243, 238);
+        padding: 20px;
+        border-radius: 10px;
+    }
+</style>
+
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card rounded-4 p-4 form-container">
+                    <button class="btn btn-secondary back-button" onclick="window.history.back()">&lt;</button>
+                    <h2 class="text-center mb-4">Sign Up - Managers</h2>
+                    <form id="signupForm">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username:</label>
+                            <input type="text" class="form-control" id="username">
+                        </div>
+                        <div class="mb-3">
+                            <label for="firstName" class="form-label">First Name:</label>
+                            <input type="text" class="form-control" id="firstName">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email address:</label>
+                            <input type="email" class="form-control" id="email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="studentId" class="form-label">Student ID:</label>
+                            <input type="text" class="form-control" id="studentId">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password:</label>
+                            <input type="password" class="form-control" id="password">
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirm Password:</label>
+                            <input type="password" class="form-control" id="confirmPassword">
+                        </div>
+                        <div id="passwordValidation" class="mb-3"></div>
+                        <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<h2>Sign up</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Sign Up</button>
+</form>
+{% endblock content %}

@@ -51,7 +51,8 @@
           </li>
           <li class="nav-item">
             <!-- <a class="nav-link custom-text-black btn btn-success text-white" href="#">Add Club</a> -->
-            <a class="btn btn-success custom-color-green btn-outline-dark cus-mt mx-1" href="{%url 'club_new'%}">Add Club</a>
+            <a class="btn btn-success custom-color-green btn-outline-dark cus-mt mx-1" href="{%url 'club_new'%}">Add
+              Club</a>
           </li>
         </ul>
         <!-- kokookokokokooookokookokokokoookokooookoooooooooko -->
@@ -95,12 +96,60 @@
       </div>
     </div>
   </nav>
+
   <main>
     {% block content %}
     {% endblock content %}
   </main>
-</body>
 
+  <!-- Start the footer -->
+  <footer class="footer pt-5 mt-5">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-4 mb-4">
+          <div class="footer-logo">
+            <!-- Replace with your logo image -->
+            <img src="{% static 'images/base/logo.svg' %}" class="mb-3" alt="University Logo" height="50">
+            <p>© 2011 - 2024 T.C. Üsküdar University</p>
+            <p>All rights reserved.</p>
+            <p>Software and Planning Unit</p>
+            <p><a href="#">Privacy Policy</a></p>
+          </div>
+        </div>
+
+        <div class="col-md-2 mb-4">
+          <h5>Links</h5>
+          <ul>
+            <li><a href="#">SKS Website</a></li>
+            <li><a href="#">Council of Higher Education</a></li>
+            <li><a href="#">OSYM</a></li>
+            <li><a href="#">CIMER</a></li>
+            <li><a href="#">Information Unit</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3 mb-4">
+          <h5>Contact</h5>
+          <p>Altunizade Mh. University Street No: 14 PK:34662 Üsküdar / Istanbul / TURKEY</p>
+          <p>+90 (216) 400 22 22</p>
+          <p><a href="#">View with Google Maps</a></p>
+        </div>
+
+        <div class="col-md-3 mb-4">
+          <h5>Quick Links</h5>
+          <ul>
+            <li><a href="#">Login</a></li>
+            <li><a href="#">Sign up</a></li>
+            <li><a href="#">Events</a></li>
+            <li><a href="#">Clubs</a></li>
+            <li><a href="#">Create new club</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
 <!-- Bootstrap JavaScript Bundle -->
 <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script> -->
 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script> -->
@@ -112,6 +161,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
   integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="{% static 'js/profileDropdown.js' %}"></script>
-
+{% block js%}
+{% endblock %}
 </html>

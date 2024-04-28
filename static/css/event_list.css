@@ -1,0 +1,111 @@
+.card-img-top-container {
+  width: 100%;
+  /* Full width */
+  padding-top: 56.25%;
+  /* This gives an aspect ratio of 16:9 */
+  position: relative;
+  /* Relative position for absolute positioning of the image inside */
+}
+
+.card-img-top {
+  position: absolute;
+  /* Absolute position inside the container */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Cover the container without losing aspect ratio */
+  object-position: center;
+  /* Center the image within the element */
+}
+
+/* Card effect */
+.card-img-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  /* Start with an invisible overlay */
+  background-color: rgba(0, 0, 0, 0.6);
+  /* Semi-transparent black background */
+  transition: opacity 0.3s ease;
+  /* Transition for the hover effect */
+  display: flex;
+  align-items: end;
+  padding: 0;
+}
+
+.card:hover .card-img-overlay {
+  opacity: 1;
+  /* Make the overlay visible when hovering */
+}
+
+.club-name-container {
+  transform: translateY(100%);
+  /* Start below the card */
+  transition: transform 0.3s ease;
+  /* Transition for the hover effect */
+  width: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  text-align: center;
+  padding: 10px 0;
+}
+
+.card:hover .club-name-container {
+  transform: translateY(0);
+  /* Move into view when hovering */
+}
+
+.club-name {
+  color: #fff;
+  font-size: 1.25em;
+  /* Adjust the size as needed */
+  margin: 0;
+}
+
+.card-link {
+  color: inherit;
+  /* This ensures that the text color is not affected by the link */
+  text-decoration: none;
+  /* This removes the underline from the link */
+}
+
+.card-link:hover {
+  text-decoration: none;
+  /* This ensures that the link does not get underlined on hover */
+}
+
+/*  */
+.landing-image {
+  background: url('../images/club_event_pages/nermin1.JPG') no-repeat center center scroll;
+  background-size: cover;
+  position: relative;
+}
+
+.landing-image::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(2, 49, 40, 0.852);
+  /* Dark overlay */
+  z-index: 0;
+}
+
+.landing-image h1, h3 {
+  position: relative;
+  z-index: 1;
+}
+
+.col {
+  padding: 20px; /* Increase padding to create more space around cards */
+}
+.card {
+  margin: auto; /* Center the card in the column */
+  width: 100%; /* Reduce width to make card smaller */
+}

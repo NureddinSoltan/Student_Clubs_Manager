@@ -68,17 +68,59 @@
   font-weight: bold;
 }
 /*  For the account profile */
-    .profile-dropdown {
-      position: relative;
-    }
+.profile-dropdown {
+  position: relative;
+}
 
-    .profile-info {
-      position: absolute;
-      top: 100%;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      padding: 10px;
-      border-radius: 5px;
-      display: none;
-      z-index: 1000;
-    }
+.profile-info {
+  position: absolute;
+  top: 100%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  display: none;
+  z-index: 1000;
+}
+
+.footer {
+  background-color: #2c3e50;
+  /* Adjust the color to match your footer */
+  color: white;
+  padding: 20px 0;
+}
+
+.footer a {
+  color: #ababab;
+  /* Adjust the link color if needed */
+}
+
+.footer a:hover {
+  color: white;
+}
+
+.footer-logo img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.footer h5,
+.footer p,
+.footer ul,
+.footer ul li {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.footer ul {
+  padding-left: 0;
+  /* Remove default padding */
+  list-style-type: none;
+  /* Remove list bullets */
+}
+
+.footer ul li a {
+  text-decoration: none;
+  /* Remove underline from links */
+}

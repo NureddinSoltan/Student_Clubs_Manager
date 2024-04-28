@@ -1,7 +1,87 @@
-<!-- templates/post_new.html -->
+<!-- templates/event_new.html -->
 {% extends "base.html"%}
+{% load static %}
+{% block title %} New Event Form {% endblock title %}
+{% block css%}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
 
 {% block content %}
+<body style="background-color: #f8f9fa;">
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">       <!-- Change the wider from here -->
+        <div class="card rounded-4 p-4">
+          <button class="btn btn-secondary back-button" onclick="window.history.back()">&lt;</button>
+          <h2 class="text-center mb-4">Event Post Form</h2>
+          <form>
+            <div class="mb-3">
+              <label for="eventTitle" class="form-label">Event title:</label>
+              <input type="text" class="form-control" id="eventTitle">
+            </div>
+            <div class="mb-3">
+              <label for="eventPhoto" class="form-label">Add Event photo:</label>
+              <input type="file" class="form-control" id="eventPhoto">
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="club" class="form-label">Club:</label>
+                <input type="text" class="form-control" id="club">
+              </div>
+              <div class="col-md-6">
+                <label for="date" class="form-label">Date:</label>
+                <input type="date" class="form-control" id="date">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="time" class="form-label">Time:</label>
+                <input type="time" class="form-control" id="time">
+              </div>
+              <div class="col-md-6">
+                <label for="location" class="form-label">Location:</label>
+                <input type="text" class="form-control" id="location">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="presidentFirstName" class="form-label">Club President's First Name:</label>
+                <input type="text" class="form-control" id="presidentFirstName">
+              </div>
+              <div class="col-md-6">
+                <label for="presidentLastName" class="form-label">Club President's Last Name:</label>
+                <input type="text" class="form-control" id="presidentLastName">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="aboutEvent" class="form-label">
+                Description Image Section:
+                <i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="This section is for the description that will appear on the out in the image card under the title."></i>
+              </label>
+              <textarea class="form-control" id="aboutEvent" rows="3"></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label for="aboutEvent" class="form-label">About Event Section:</label>
+              <textarea class="form-control" id="aboutEvent" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="rules" class="form-label">Rules Section:</label>
+              <textarea class="form-control" id="rules" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="faq" class="form-label">FAQ Section:</label>
+              <textarea class="form-control" id="faq" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
 <h1> New event</h1> 
 <form action="" method="post" enctype="multipart/form-data">
   {% csrf_token %}
@@ -10,4 +90,9 @@
   {{ value|date:"D d M Y" }}
   <input type="submit" name="" id="" value="Save">
 </form>
+
 {% endblock content %}
+
+{% block js%}
+<script src="{% static 'js/forms.js' %}"></script>
+{% endblock %}

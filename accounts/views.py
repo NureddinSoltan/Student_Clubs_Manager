@@ -15,7 +15,7 @@ class SignUpView(CreateView):
 class ManagerSignUpView(CreateView):
     form_class = CustomManagerCreationForm
     success_url = reverse_lazy("home")
-    template_name = "registration/signup.html"
+    template_name = "registration/signup_manager.html"
 
     def form_valid(self, form):
         form.instance.author = self.request.user # added it to club

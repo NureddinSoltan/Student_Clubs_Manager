@@ -1,7 +1,64 @@
 <!-- templates/post_new.html -->
 {% extends "base.html"%}
+{% load static %}
+{% block title %} New Activity Form {% endblock title %}
+{% block css%}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
 
 {% block content %}
+<body style="background-color: #f8f9fa;">
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">       <!-- Change the wider from here -->
+        <div class="card rounded-4 p-4">
+          <button class="btn btn-secondary back-button" onclick="window.history.back()">&lt;</button>
+          <h2 class="text-center mb-4">Activity Form</h2>
+          <form>
+            <div class="row mb-3"></div> <!-- Spacer -->
+            <div class="mb-3">
+              <label for="eventTitle" class="form-label">Event title:</label>
+              <input type="text" class="form-control" id="eventTitle">
+            </div>
+            <div class="row mb-4">
+              <div class="col-md-6">
+                <label for="dateTime" class="form-label">Date and time:</label>
+                <input type="datetime-local" class="form-control" id="dateTime">
+              </div>
+              <div class="col-md-6">
+                <label for="location" class="form-label">Location:</label>
+                <input type="text" class="form-control" id="location">
+              </div>
+            </div>
+            <div class="mb-4">
+              <label for="eventContent" class="form-label">Event Content:</label>
+              <textarea class="form-control" id="eventContent" rows="3"></textarea>
+            </div>
+            <div class="mb-4">
+              <label for="speakerParticipants" class="form-label">Speaker-Participants:</label>
+              <textarea class="form-control" id="eventContent" rows="3"></textarea>
+            </div>
+            <div class="mb-4">
+              <label for="place" class="form-label">Place where the event will be held: (Campus - Hall---Classroom---Garden etc.):</label>
+              <input type="text" class="form-control" id="place">
+            </div>
+            <div class="mb-4">
+              <label for="specialServices" class="form-label">Special Services Requested from Technical Services:</label>
+              <textarea class="form-control" id="eventContent" rows="2"></textarea>
+            </div>
+            <div class="mb-4">
+              <label for="otherRequest" class="form-label">Other request:</label>
+              <textarea class="form-control" id="otherRequest" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+
 <h1> Activity Form</h1> 
 <form action="" method="post" enctype="multipart/form-data">
   {% csrf_token %}
