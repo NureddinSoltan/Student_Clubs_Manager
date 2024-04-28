@@ -57,12 +57,21 @@ class ActivityFormCreateView(CreateView):
     fields = "__all__"
     # success_url = reverse_lazy("home")
 
+    def form_valid(self, form):
+        form.instance.author = self.request.user # added it to club
+        # form.instance.role = User.Role.MANAGER
+        return super().form_valid(form)
 
 # Clubs pages :)
 class ClubListView(ListView):
     model = Club
     template_name = "club_list.html"
 
+    def get_queryset(self):
+        query = self.request.GET.get('search')
+        if query:
+            return Club.objects.filter(title__icontains=query)
+        return Club.objects.all()
 
 class ClubDetailView(DetailView):
     model = Club

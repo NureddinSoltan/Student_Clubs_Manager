@@ -1,23 +1,98 @@
-# Student_Clubs_Manager
-- [ ] Seperate the Notification and do that in the backend.
-- [ ] Log in fields.
-- [ ] What about the footer?
-- [ ] To be safe I'm taking the {% load static %} in every bage, even if I don't need it, is this a best practice ?
-- [ ] Add form will be an edit form, how can i change it ?
-- [ ] What about the automatic filled fields.
-- [ ] Should the pagination be a static ?
+# Project Installation Guide
 
-# Forms I have to connect
-- [ ] Log in Form
-- [ ] Event_new Form
-- [ ] Add Club
-- [ ] Activity Form --> Should keep the club or not? & First Name, Last Name
+This guide will walk you through the process of cloning a Django project from GitHub, setting up a virtual environment, installing dependencies, and running the project on your local machine. The instructions are provided for both Windows and macOS.
 
+## Prerequisites
 
-# Don't forget TODO:
-- [ ] Remove the css in the Signup as a manger :)
-- [ ] Chagne the form of the add event and add the description part
+Before you begin, make sure you have the following installed:
+- Python (3.8 or higher)
+- pip (Python package manager)
+- Git
 
-# Problems:
-- [ ] RichText Field in the body of the message.
-- [ ] How to add 3 dots at the end
+## Step 1: Cloning the Repository
+
+First, clone the repository from GitHub to your local machine. Open your terminal (Command Prompt for Windows, Terminal for macOS) and run the following command:
+
+- اضغطت علي الكود وخد الرابط كوبي وحطه في ال visual studio نسخ واكتب قبله git clone
+![alt text](<Screen Shot 2024-04-29 at 2.11.00 AM.png>)
+
+```bash
+git clone https://github.com/your-username/your-project-name.git
+```
+
+Replace `https://github.com/your-username/your-project-name.git` with the URL of your GitHub repository.
+
+## Step 2: Setting Up a Virtual Environment
+
+Navigate to the project directory:
+- شغل المشروع من ال visual studio وافتح ال terminal
+
+```bash
+cd your-project-name
+```
+
+### For Windows
+
+Create a virtual environment by running:
+
+```bash
+python -m venv venv
+```
+
+Activate the virtual environment:
+
+```bash
+.\venv\Scripts\activate
+```
+
+### For macOS
+
+Create a virtual environment by running:
+
+```bash
+python3 -m venv venv
+```
+
+Activate the virtual environment:
+
+```bash
+source venv/bin/activate
+```
+
+## Step 3: Installing Dependencies
+
+With the virtual environment activated, install the project dependencies by running:
+
+```bash
+pip install -r requirements.txt
+```
+
+This command installs all the packages listed in the `requirements.txt` file, which is typically included in the root of your Django project repository.
+
+## Step 4: Running the Django Server
+
+Before running the server, you may need to apply migrations and create a superuser to access the admin panel (optional but recommended).
+
+Apply migrations:
+
+```bash
+python manage.py migrate
+```
+
+Create a superuser:
+
+```bash
+python manage.py createsuperuser
+```
+
+Follow the prompts to create a superuser account.
+
+Finally, start the Django development server:
+
+```bash
+python manage.py runserver
+```
+
+This command starts a local web server running on `http://127.0.0.1:8000/`.
+
+You can now open a web browser and visit `http://127.0.0.1:8000/` to see the project running locally.

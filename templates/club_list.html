@@ -22,11 +22,11 @@
   <!-- Search form section -->
   <div class="container mt-5">
     <h1 class="text-center mb-5">Our Clubs</h1>
-    <form class="row g-3 justify-content-center p-3">
+    <form class="row g-3 justify-content-center p-3" method="get">
       <div class="col-md-4">
         <div class="input-group">
           <span class="input-group-text"><i class="fas fa-search"></i></span>
-          <input type="text" class="form-control" id="search" placeholder="Search by title" />
+          <input type="text" class="form-control" name="search" placeholder="Search by title" />
         </div>
       </div>
       <div class="col-md-4">
@@ -77,8 +77,6 @@
     {% endfor %}
 
     <!-- Repeat the card -->
-
-
   </div>
   </div>
 

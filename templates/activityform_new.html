@@ -7,62 +7,107 @@
 {% endblock %}
 
 {% block content %}
+
 <body style="background-color: #f8f9fa;">
   <div class="container mt-5">
     <div class="row justify-content-center">
-      <div class="col-md-8">       <!-- Change the wider from here -->
+      <div class="col-md-8"> <!-- Change the wider from here -->
         <div class="card rounded-4 p-4">
           <button class="btn btn-secondary back-button" onclick="window.history.back()">&lt;</button>
           <h2 class="text-center mb-4">Activity Form</h2>
-          <form>
+          <!-- Add the form to send it -->
+          <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
             <div class="row mb-3"></div> <!-- Spacer -->
             <div class="mb-3">
               <label for="eventTitle" class="form-label">Event title:</label>
-              <input type="text" class="form-control" id="eventTitle">
+              <input type="text" class="form-control" id="eventTitle" name="title">
+              {{forms.title.errors}}
             </div>
+            <!--Dont' want that :) -->
+            <div class="mb-3">
+              <label for="eventTitle" class="form-label">Club:</label>
+              <input type="text" class="form-control" id="eventTitle" name="club">
+              {{forms.club.errors}}
+            </div>
+            <!--Dont' want that :) -->
+            <div class="mb-3">
+              <label for="eventTitle" class="form-label">First name:</label>
+              <input type="text" class="form-control" id="eventTitle" name="first_name">
+              {{forms.first_name.errors}}
+            </div>
+            <!--Dont' want that :) -->
+            <div class="mb-3">
+              <label for="eventTitle" class="form-label">Last name:</label>
+              <input type="text" class="form-control" id="eventTitle" name="last_name">
+              {{forms.last_name.errors}}
+
+            </div>
+
             <div class="row mb-4">
               <div class="col-md-6">
                 <label for="dateTime" class="form-label">Date and time:</label>
-                <input type="datetime-local" class="form-control" id="dateTime">
+                <input type="datetime-local" class="form-control" id="dateTime" name="date">
+                {{forms.date.errors}}
+
               </div>
               <div class="col-md-6">
                 <label for="location" class="form-label">Location:</label>
-                <input type="text" class="form-control" id="location">
+                <input type="text" class="form-control" id="location" name="location">
+                {{forms.location.errors}}
+
               </div>
             </div>
             <div class="mb-4">
               <label for="eventContent" class="form-label">Event Content:</label>
-              <textarea class="form-control" id="eventContent" rows="3"></textarea>
+              <textarea class="form-control" id="eventContent" rows="3" name="event_content"></textarea>
+              {{forms.event_content.errors}}
+
             </div>
             <div class="mb-4">
               <label for="speakerParticipants" class="form-label">Speaker-Participants:</label>
-              <textarea class="form-control" id="eventContent" rows="3"></textarea>
+              <textarea class="form-control" id="eventContent" rows="3" name="speakers"></textarea>
+              {{forms.speakers.errors}}
+
             </div>
             <div class="mb-4">
-              <label for="place" class="form-label">Place where the event will be held: (Campus - Hall---Classroom---Garden etc.):</label>
-              <input type="text" class="form-control" id="place">
+              <label for="place" class="form-label">Place where the event will be held: (Campus -
+                Hall---Classroom---Garden etc.):</label>
+              <input type="text" class="form-control" id="place" name="place">
+              {{forms.place.errors}}
+
             </div>
             <div class="mb-4">
-              <label for="specialServices" class="form-label">Special Services Requested from Technical Services:</label>
-              <textarea class="form-control" id="eventContent" rows="2"></textarea>
+              <label for="specialServices" class="form-label">Special Services Requested from Technical
+                Services:</label>
+              <textarea class="form-control" id="eventContent" rows="2" name="special_services"></textarea>
+              {{forms.special_services.errors}}
+
             </div>
             <div class="mb-4">
               <label for="otherRequest" class="form-label">Other request:</label>
-              <textarea class="form-control" id="otherRequest" rows="3"></textarea>
+              <textarea class="form-control" id="otherRequest" rows="3" name="other_reqests"></textarea>
+              {{forms.other_requests.errors}}
+
             </div>
             <button type="submit" class="btn btn-primary btn-block">Send</button>
+
+            <input type="submit" name="" id="" value="Save">
           </form>
+
         </div>
       </div>
     </div>
   </div>
 </body>
 
-
-<h1> Activity Form</h1> 
+{% comment %}
+<h1> Activity Form</h1>
 <form action="" method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {{form.as_p}}
   <input type="submit" name="" id="" value="Save">
 </form>
+{% endcomment %}
+
 {% endblock content %}

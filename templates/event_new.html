@@ -7,10 +7,11 @@
 {% endblock %}
 
 {% block content %}
+
 <body style="background-color: #f8f9fa;">
   <div class="container mt-5">
     <div class="row justify-content-center">
-      <div class="col-md-8">       <!-- Change the wider from here -->
+      <div class="col-md-8"> <!-- Change the wider from here -->
         <div class="card rounded-4 p-4">
           <button class="btn btn-secondary back-button" onclick="window.history.back()">&lt;</button>
           <h2 class="text-center mb-4">Event Post Form</h2>
@@ -29,20 +30,21 @@
                 <input type="text" class="form-control" id="club">
               </div>
               <div class="col-md-6">
-                <label for="date" class="form-label">Date:</label>
-                <input type="date" class="form-control" id="date">
+                <label for="dateTime" class="form-label">Date and time:</label>
+                <input type="datetime-local" class="form-control" id="dateTime" name="date">
               </div>
             </div>
             <div class="row mb-3">
-              <div class="col-md-6">
+              <!-- <div class="col-md-6">
                 <label for="time" class="form-label">Time:</label>
                 <input type="time" class="form-control" id="time">
-              </div>
+              </div> -->
               <div class="col-md-6">
                 <label for="location" class="form-label">Location:</label>
                 <input type="text" class="form-control" id="location">
               </div>
             </div>
+            
             <div class="row mb-3">
               <div class="col-md-6">
                 <label for="presidentFirstName" class="form-label">Club President's First Name:</label>
@@ -57,7 +59,8 @@
             <div class="mb-3">
               <label for="aboutEvent" class="form-label">
                 Description Image Section:
-                <i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="This section is for the description that will appear on the out in the image card under the title."></i>
+                <i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top"
+                  title="This section is for the description that will appear on the out in the image card under the title."></i>
               </label>
               <textarea class="form-control" id="aboutEvent" rows="3"></textarea>
             </div>
@@ -82,7 +85,7 @@
   </div>
 </body>
 
-<h1> New event</h1> 
+<h1> New event</h1>
 <form action="" method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {{form.media}}
