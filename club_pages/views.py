@@ -66,12 +66,26 @@ class ActivityFormCreateView(CreateView):
 class ClubListView(ListView):
     model = Club
     template_name = "club_list.html"
+    # Best Practice
+    context_object_name = "club_list"
+    paginate_by = 11
 
     def get_queryset(self):
-        query = self.request.GET.get('search')
+        query = self.request.GET.get('search', '')
+        category = self.request.GET.get('category', '')
+        queryset = Club.objects.all()
+
         if query:
-            return Club.objects.filter(title__icontains=query)
-        return Club.objects.all()
+            queryset = queryset.filter(title__icontains=query)
+        if category:
+            queryset = queryset.filter(category__iexact=category)
+        return queryset
+
+    #  to fetch all unique categories from the Club model and pass them to the template.
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Club.objects.values_list('category', flat=True).distinct()
+        return context
 
 class ClubDetailView(DetailView):
     model = Club

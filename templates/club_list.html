@@ -32,11 +32,12 @@
       <div class="col-md-4">
         <div class="input-group">
           <span class="input-group-text"><i class="fas fa-database"></i></span>
-          <select class="form-select" id="category">
-            <option value="social">Search by Category</option>
-            <option value="social">Social</option>
-            <option value="entertainment">Entertainment</option>
-            <option value="educational">Educational</option>
+          <select class="form-select" name="category">
+            <option value="">All Categories</option>
+            {% for category in categories %}
+            <option value="{{ category }}" {% if request.GET.category == category %}selected{% endif %}>{{ category }}
+            </option>
+            {% endfor %}
           </select>
         </div>
       </div>
@@ -75,8 +76,6 @@
       </div>
     </div>
     {% endfor %}
-
-    <!-- Repeat the card -->
   </div>
   </div>
 
@@ -95,8 +94,6 @@
     </ul>
   </nav>
   </div>
-
-  <!-- End  cards Section -->
 </body>
 
 
