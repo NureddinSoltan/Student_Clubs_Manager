@@ -36,10 +36,14 @@
             <h3 class="log-sing-heading only-log-in log-in-heading">Log in Student</h3>
             <!-- box-- -->
             <div class="box--for--forms">
-              <form action="">
+              <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                <!-- TODO : email & the message of the error in login or username :) -->
                 <label for="">Student Email</label>
                 <div class="form--flex student log--in">
-                  <input name="{{ user.username }}" type="text" placeholder="Student Email">
+                  <!-- <input name="{{ user.username }}" type="text" placeholder="Student Email"> -->
+                  <input type="text" class="form-control" id="email" name="username">
+                  {{form.username.errors}}
                   <svg class="icon-box" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <path d="M4 7.00005L10.2 11.65C11.2667 12.45 12.7333 12.45 13.8 11.65L20 7" stroke="black"
@@ -50,7 +54,9 @@
                 </div>
                 <label for="">Password</label>
                 <div class="form--flex">
-                  <input name="{{ user.password }}" type="password" placeholder="Password">
+                  <!-- <input name="{{ user.password }}" type="password" placeholder="Password"> -->
+                  <input type="password" class="form-control" id="password" name="password">
+                  {{form.password.errors}}
                   <svg class="icon-box" width="16" height="20" viewBox="0 0 16 20" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -62,18 +68,27 @@
                 <a href="reset_your_email.html" class="forget--pas">forget passwrod</a>
                 <p class="don't-have-accont">Dont have an account?<span><a class="dont-link" href="sign up.html"> Sign
                       up</a></span></p>
-                      <div class="text-ct log-in-btn">
-                        <button class="btn-final log-in-mg" type="submit">Login</button>
-                      </div>
-              </form>
-                
-                
-                <h2>Login</h2>
-                <form method="post">
-                  {% csrf_token %}
-                  {{ form.as_p }}
+                <div class="text-ct log-in-btn">
+                  <!-- <button class="btn-final log-in-mg" type="submit">Login</button> -->
                   <button type="submit">Login</button>
-                </form>
-              </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
+
+{% comment %}
+<h2>Login</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Login</button>
+</form>
+</div>
+{% endcomment %}
+
 {% endblock %}

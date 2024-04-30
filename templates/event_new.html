@@ -15,23 +15,31 @@
         <div class="card rounded-4 p-4">
           <button class="btn btn-secondary back-button" onclick="window.history.back()">&lt;</button>
           <h2 class="text-center mb-4">Event Post Form</h2>
-          <form>
+          <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
             <div class="mb-3">
               <label for="eventTitle" class="form-label">Event title:</label>
-              <input type="text" class="form-control" id="eventTitle">
+              <input type="text" class="form-control" id="eventTitle" name="title">
+              {{form.title.errors}}
+
             </div>
             <div class="mb-3">
               <label for="eventPhoto" class="form-label">Add Event photo:</label>
-              <input type="file" class="form-control" id="eventPhoto">
+              <input type="file" class="form-control" id="eventPhoto" name="event_image">
+              {{form.event_image.errors}}
             </div>
+
             <div class="row mb-3">
               <div class="col-md-6">
                 <label for="club" class="form-label">Club:</label>
-                <input type="text" class="form-control" id="club">
+                <input type="text" class="form-control" id="club" name="club">
+                {{form.club.errors}}
               </div>
+
               <div class="col-md-6">
                 <label for="dateTime" class="form-label">Date and time:</label>
                 <input type="datetime-local" class="form-control" id="dateTime" name="date">
+                {{form.date.errors}}
               </div>
             </div>
             <div class="row mb-3">
@@ -41,18 +49,21 @@
               </div> -->
               <div class="col-md-6">
                 <label for="location" class="form-label">Location:</label>
-                <input type="text" class="form-control" id="location">
+                <input type="text" class="form-control" id="location" name="location">
+                {{form.location.errors}}
               </div>
             </div>
-            
+
             <div class="row mb-3">
               <div class="col-md-6">
                 <label for="presidentFirstName" class="form-label">Club President's First Name:</label>
-                <input type="text" class="form-control" id="presidentFirstName">
+                <input type="text" class="form-control" id="presidentFirstName" name="first_name">
+                {{form.first_name.errors}}
               </div>
               <div class="col-md-6">
                 <label for="presidentLastName" class="form-label">Club President's Last Name:</label>
-                <input type="text" class="form-control" id="presidentLastName">
+                <input type="text" class="form-control" id="presidentLastName" name="last_name">
+                {{form.last_name.errors}}
               </div>
             </div>
 
@@ -62,20 +73,24 @@
                 <i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top"
                   title="This section is for the description that will appear on the out in the image card under the title."></i>
               </label>
-              <textarea class="form-control" id="aboutEvent" rows="3"></textarea>
+              <textarea class="form-control" id="aboutEvent" rows="3" name="description"></textarea>
+              {{form.description.errors}}
             </div>
 
             <div class="mb-3">
               <label for="aboutEvent" class="form-label">About Event Section:</label>
-              <textarea class="form-control" id="aboutEvent" rows="3"></textarea>
+              <textarea class="form-control" id="aboutEvent" rows="3" name="body"></textarea>
+              {{form.body.errors}}
             </div>
             <div class="mb-3">
               <label for="rules" class="form-label">Rules Section:</label>
-              <textarea class="form-control" id="rules" rows="3"></textarea>
+              <textarea class="form-control" id="rules" rows="3" name="rule"></textarea>
+              {{form.rule.errors}}
             </div>
             <div class="mb-3">
               <label for="faq" class="form-label">FAQ Section:</label>
-              <textarea class="form-control" id="faq" rows="3"></textarea>
+              <textarea class="form-control" id="faq" rows="3" name="faq"></textarea>
+              {{form.faq.errors}}
             </div>
             <button type="submit" class="btn btn-primary btn-block">Send</button>
           </form>
@@ -85,6 +100,7 @@
   </div>
 </body>
 
+{% comment %}
 <h1> New event</h1>
 <form action="" method="post" enctype="multipart/form-data">
   {% csrf_token %}
@@ -93,6 +109,7 @@
   {{ value|date:"D d M Y" }}
   <input type="submit" name="" id="" value="Save">
 </form>
+{% endcomment %}
 
 {% endblock content %}
 

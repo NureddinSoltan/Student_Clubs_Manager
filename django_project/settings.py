@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "ckeditor",
     "whitenoise.runserver_nostatic",  # new
     "shell_plus",
+    "django_extensions",
     'bootstrap5',
     # locally
     "accounts.apps.AccountsConfig",

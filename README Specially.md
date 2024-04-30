@@ -12,6 +12,7 @@
 - [ ] Event_new Form
 - [ ] Add Club
 - [ ] Activity Form --> Should keep the club or not? & First Name, Last Name
+- [ ] What is going on in ClubCreateView where where in functions?
 
 
 # Don't forget TODO:
@@ -21,7 +22,8 @@
 # Problems:
 - [ ] RichText Field in the body of the message.
 - [ ] How to add 3 dots at the end
-- [ ] 
+
+
 ## I want to learn it in the future :)
 1- Filled the field automatic.
 2- 

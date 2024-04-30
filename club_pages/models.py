@@ -27,6 +27,9 @@ class Event(models.Model):
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
+        # TODO: Remove this
+        null=True,
+        blank=True,
     )
 
     def __str__(self):
@@ -39,7 +42,7 @@ class Event(models.Model):
 class ActivityForm(models.Model):
     title = models.CharField(max_length=255)
     club = models.CharField(max_length=70)
-    date = models.DateTimeField(blank=True)
+    date = models.DateTimeField(null=True)
     location = models.CharField(max_length=30)
     first_name = models.CharField(max_length=15)
     last_name = models.CharField(max_length=15)
@@ -95,6 +98,8 @@ class Club(models.Model):
         on_delete=models.CASCADE,
         related_name="author_clubs",
         null=True,
+        # TODO: removethis 
+        blank=True,
     )
 
     def __str__(self):

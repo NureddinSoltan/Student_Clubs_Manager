@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Event, ActivityForm, Club
+from .models import Event, ActivityForm, Club, User
 from django.urls import reverse_lazy, reverse
 from .forms import (CustomManagerClubCreationForm, CustomManagerClubChangeForm,
                     CustomManagerClubClubChangeForm)
@@ -14,7 +14,7 @@ class HomePageView(TemplateView):
 class EventListView(ListView):
     model = Event
     template_name = "event_list.html"
-
+    
 
 class EventDetailView(DetailView):
     model = Event
@@ -98,6 +98,21 @@ class ClubCreateView(CreateView):
     ############## Do I really need that ???????
     form_class = CustomManagerClubClubChangeForm
     template_name = "club_new.html"
+
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['managers'] = User.objects.filter(role=User.Role.MANAGER)
+    #     return context
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if 'form' not in context:  # Ensuring the form is instantiated
+            context['form'] = self.form_class()
+        form = context['form']
+        if hasattr(form.fields['manager'], 'queryset'):
+            context['managers'] = form.fields['manager'].queryset
+        return context
     # fields = "__all__"
     
     # def form_valid(self, form):

@@ -7,45 +7,59 @@
 {% endblock %}
 
 {% block content %}
+
 <body style="background-color: #f8f9fa;">
   <div class="container mt-5">
     <div class="row justify-content-center">
-      <div class="col-md-8">       <!-- Change the wider from here -->
+      <div class="col-md-8"> <!-- Change the wider from here -->
         <div class="card rounded-4 p-4">
           <button class="btn btn-secondary back-button" onclick="window.history.back()">&lt;</button>
           <h2 class="text-center mb-4">Club Form</h2>
-          <form>
+          <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
             <div class="mb-3">
               <label for="eventTitle" class="form-label">Event title:</label>
-              <input type="text" class="form-control" id="eventTitle">
+              <input type="text" class="form-control" id="eventTitle" name="title">
+              {{form.title.errors}}
             </div>
+
             <div class="mb-3">
               <label for="category" class="form-label">Category:</label>
-              <input type="text" class="form-control" id="category">
+              <input type="text" class="form-control" id="category" name="category">
+              {{form.category.errors}}
             </div>
+
             <div class="mb-3">
               <label for="clubImage" class="form-label">Add Club image:</label>
-              <input type="file" class="form-control" id="clubImage">
+              <input type="file" class="form-control" id="clubImage" name="club_image">
+              {{form.club_image.errors}}
             </div>
+
             <div class="mb-3">
               <label for="clubCover" class="form-label">Club cover:</label>
-              <input type="file" class="form-control" id="clubCover">
+              <input type="file" class="form-control" id="clubCover" name="club_cover">
+              {{form.club_cover.errors}}
             </div>
+
             <div class="row mb-3">
               <div class="col-md-6">
                 <label for="managers" class="form-label">Managers:</label>
                 <div class="input-group">
-                  <select class="form-select" id="managers">
-                    <option value="manager1">Manager 1</option>
-                    <option value="manager2">Manager 2</option>
-                    <!-- Add more options if needed -->
+                  <select class="form-select" id="managers" name="manager" onchange="updatePresidentInfo()">
+                    <option>Select Managers</option>
+                    {% for manager in managers %}
+                      <option value="{{ manager.id }}" data-first-name="{{ manager.first_name }}" data-last-name="{{ manager.last_name }}">
+                        {{ manager.get_full_name }}
+                      </option>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
               <div class="col-md-6" style="display: flex; align-items: flex-end;">
-                <a href="{% url 'signup_manager'%}"  style="margin-bottom: 8px;">Add new manager</a>
+                <a href="{% url 'signup_manager'%}" style="margin-bottom: 8px;">Add new manager</a>
               </div>
             </div>
+
             <div class="row mb-3"></div> <!-- Spacer -->
             <div class="row mb-3">
               <div class="col-md-6">
@@ -61,23 +75,31 @@
             <div class="row mb-3">
               <div class="col-md-6">
                 <label for="vicePresidentFirstName" class="form-label">Vice President's First Name:</label>
-                <input type="text" class="form-control" id="vicePresidentFirstName">
+                <input type="text" class="form-control" id="vicePresidentFirstName" name="vice_first_name">
+                {{form.vice_first_name.errors}}
               </div>
+
               <div class="col-md-6">
                 <label for="vicePresidentLastName" class="form-label">Vice President's Last Name:</label>
-                <input type="text" class="form-control" id="vicePresidentLastName">
+                <input type="text" class="form-control" id="vicePresidentLastName" name="vice_last_name">
+                {{form.vice_last_name.errors}}
               </div>
             </div>
+
             <div class="row mb-3"></div> <!-- Spacer -->
             <div class="mb-3">
               <label for="aboutSection" class="form-label">About Section:</label>
-              <textarea class="form-control" id="aboutSection" rows="3"></textarea>
+              <textarea class="form-control" id="aboutSection" rows="3" name="about"></textarea>
+              {{form.about.errors}}
             </div>
+
             <div class="row mb-3"></div> <!-- Spacer -->
             <div class="mb-3">
               <label for="purposeSection" class="form-label">Purpose Section:</label>
-              <textarea class="form-control" id="purposeSection" rows="3"></textarea>
+              <textarea class="form-control" id="purposeSection" rows="3" name="purpose"></textarea>
+              {{form.purpose.errors}}
             </div>
+            <input type="submit" name="" id="" value="Save">
             <button type="submit" class="btn btn-primary btn-block">Add</button>
           </form>
         </div>
@@ -86,7 +108,8 @@
   </div>
 </body>
 
-<h1> New club</h1> 
+{% comment %}
+<h1> New club</h1>
 <p>Add a manager</p>
 <a href="{% url 'signup_manager'%}">Add new manager</a>
 
@@ -96,5 +119,10 @@
   {{form.as_p}}
   <input type="submit" name="" id="" value="Save">
 </form>
+{% endcomment %}
 
 {% endblock content %}
+
+{% block js%}
+<script src="{% static 'js/automatic_fill.js' %}"></script>
+{% endblock %}

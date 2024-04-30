@@ -22,25 +22,30 @@
             <div class="mb-3">
               <label for="eventTitle" class="form-label">Event title:</label>
               <input type="text" class="form-control" id="eventTitle" name="title">
-              {{forms.title.errors}}
+              {% if form.title.errors %}
+              {% for error in form.title.errors %}
+                <div class="error">{{ error }}</div>
+              {% endfor %}
+            {% endif %}
+              
             </div>
             <!--Dont' want that :) -->
             <div class="mb-3">
               <label for="eventTitle" class="form-label">Club:</label>
               <input type="text" class="form-control" id="eventTitle" name="club">
-              {{forms.club.errors}}
+              {{form.club.errors}}
             </div>
             <!--Dont' want that :) -->
             <div class="mb-3">
               <label for="eventTitle" class="form-label">First name:</label>
               <input type="text" class="form-control" id="eventTitle" name="first_name">
-              {{forms.first_name.errors}}
+              {{form.first_name.errors}}
             </div>
             <!--Dont' want that :) -->
             <div class="mb-3">
               <label for="eventTitle" class="form-label">Last name:</label>
               <input type="text" class="form-control" id="eventTitle" name="last_name">
-              {{forms.last_name.errors}}
+              {{form.last_name.errors}}
 
             </div>
 
@@ -48,53 +53,51 @@
               <div class="col-md-6">
                 <label for="dateTime" class="form-label">Date and time:</label>
                 <input type="datetime-local" class="form-control" id="dateTime" name="date">
-                {{forms.date.errors}}
+                {{form.date.errors}}
 
               </div>
               <div class="col-md-6">
                 <label for="location" class="form-label">Location:</label>
                 <input type="text" class="form-control" id="location" name="location">
-                {{forms.location.errors}}
-
+                {{form.location.errors}}
               </div>
+              
             </div>
             <div class="mb-4">
               <label for="eventContent" class="form-label">Event Content:</label>
               <textarea class="form-control" id="eventContent" rows="3" name="event_content"></textarea>
-              {{forms.event_content.errors}}
+              {{form.event_content.errors}}
 
             </div>
             <div class="mb-4">
               <label for="speakerParticipants" class="form-label">Speaker-Participants:</label>
               <textarea class="form-control" id="eventContent" rows="3" name="speakers"></textarea>
-              {{forms.speakers.errors}}
+              {{form.speakers.errors}}
 
             </div>
             <div class="mb-4">
               <label for="place" class="form-label">Place where the event will be held: (Campus -
                 Hall---Classroom---Garden etc.):</label>
               <input type="text" class="form-control" id="place" name="place">
-              {{forms.place.errors}}
+              {{form.place.errors}}
 
             </div>
             <div class="mb-4">
               <label for="specialServices" class="form-label">Special Services Requested from Technical
                 Services:</label>
               <textarea class="form-control" id="eventContent" rows="2" name="special_services"></textarea>
-              {{forms.special_services.errors}}
+              {{form.special_services.errors}}
 
             </div>
             <div class="mb-4">
               <label for="otherRequest" class="form-label">Other request:</label>
               <textarea class="form-control" id="otherRequest" rows="3" name="other_reqests"></textarea>
-              {{forms.other_requests.errors}}
+              {{form.other_requests.errors}}
 
             </div>
             <button type="submit" class="btn btn-primary btn-block">Send</button>
-
-            <input type="submit" name="" id="" value="Save">
+            <!-- <button type="submit" class="btn btn-primary btn-block" onclick="return confirm('Are you sure you want to send this?');">Send</button> -->
           </form>
-
         </div>
       </div>
     </div>
@@ -111,3 +114,7 @@
 {% endcomment %}
 
 {% endblock content %}
+
+{% block js%}
+<script src="{% static 'js/popupmessage.js' %}"></script>
+{% endblock %}
