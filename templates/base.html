@@ -37,10 +37,10 @@
         <ul class="navbar-nav">
           {% if user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link custom-text-black mx-1" href="{%url 'event_list'%}">Events</a>
+            <a class="nav-link custom-text-black mx-1" href="{%url 'club_list'%}">Clubs</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link custom-text-black mx-1" href="{%url 'club_list'%}">Clubs</a>
+            <a class="nav-link custom-text-black mx-1" href="{%url 'event_list'%}">Events</a>
           </li>
           {% if user.role == "ADMIN"%}
           <li class="nav-item">
@@ -49,6 +49,17 @@
           <li class="nav-item">
             <a class="nav-link custom-text-black mx-1" href="#"><i class="fa-solid fa-bell-concierge"></i> Requests</a>
           </li>
+          <!-- TODO: Temparory -->
+          <li class="nav-item">
+            <a class="btn btn-success custom-color-green btn-outline-dark cus-mt mx-1" href="{%url 'event_new'%}">Add
+              Event</a>
+          </li>
+          <!-- Send Activity Form -->
+          <li class="nav-item">
+            <a class="btn btn-success custom-color-green btn-outline-dark cus-mt mx-1" href="{%url 'activityform_new'%}">Send
+              Activity Form</a>
+          </li>
+          <!-- TODO: Temparory -->
           <li class="nav-item">
             <!-- <a class="nav-link custom-text-black btn btn-success text-white" href="#">Add Club</a> -->
             <a class="btn btn-success custom-color-green btn-outline-dark cus-mt mx-1" href="{%url 'club_new'%}">Add
@@ -63,9 +74,22 @@
           {% endif %}
           <!-- kokookokokokooookokookokokokoookokooookoooooooooko -->
           {% if user.role == "MANAGER"%}
+          <!-- Notifications -->
           <li class="nav-item">
             <a class="nav-link custom-text-black mx-1" href="#"><i class="fa-solid fa-bell"></i> Notifications</a>
           </li>
+          {% comment %}
+          <!-- Add Event -->
+          <li class="nav-item">
+            <a class="btn btn-success custom-color-green btn-outline-dark cus-mt mx-1" href="{%url 'event_new'%}">Add
+              Event</a>
+          </li>
+          <!-- Send Activity Form -->
+          <li class="nav-item">
+            <a class="btn btn-success custom-color-green btn-outline-dark cus-mt mx-1" href="{%url 'activityform_new'%}">Send
+              Activity Form</a>
+          </li>
+          {% endcomment %}
           {% endif %}
           <!-- kokookokokokooookokookokokokoookokooookoooooooooko -->
           <li class="nav-item">

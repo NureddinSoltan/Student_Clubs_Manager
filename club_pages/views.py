@@ -14,7 +14,11 @@ class HomePageView(TemplateView):
 class EventListView(ListView):
     model = Event
     template_name = "event_list.html"
-    
+    paginate_by = 12
+
+    # TODO: Filtering and connect the events with the Club category
+    # def get_queryset(self):
+    #     query = self.request.Get.get('')
 
 class EventDetailView(DetailView):
     model = Event
@@ -68,7 +72,7 @@ class ClubListView(ListView):
     template_name = "club_list.html"
     # Best Practice
     context_object_name = "club_list"
-    paginate_by = 11
+    paginate_by = 12
 
     def get_queryset(self):
         query = self.request.GET.get('search', '')

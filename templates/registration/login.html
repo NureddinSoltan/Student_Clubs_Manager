@@ -10,7 +10,7 @@
 {% block content %}
 
 <body>
-  <div class="parent">
+  <div class="parent p-5">
     <div class="container">
       <div class="grid--container sing--in">
         <div class="grid---1">
@@ -38,6 +38,7 @@
             <div class="box--for--forms">
               <form action="{% url 'login' %}" method="post">
                 {% csrf_token %}
+                {{form.non_field_errors}}
                 <!-- TODO : email & the message of the error in login or username :) -->
                 <label for="">Student Email</label>
                 <div class="form--flex student log--in">

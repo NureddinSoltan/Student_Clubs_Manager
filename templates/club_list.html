@@ -35,6 +35,7 @@
           <select class="form-select" name="category">
             <option value="">All Categories</option>
             {% for category in categories %}
+            <!-- TODO : Alwaqys error by luck -->
             <option value="{{ category }}" {% if request.GET.category == category %}selected{% endif %}>{{ category }}
             </option>
             {% endfor %}
@@ -77,26 +78,47 @@
     </div>
     {% endfor %}
   </div>
-  </div>
 
-
+  <!-- Pagination Section -->
+  {% if is_paginated %}
   <nav aria-label="Page navigation mt-5">
     <ul class="pagination justify-content-center pt-5">
+      {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1"
+          aria-disabled="true">Previous</a>
+      </li>
+      {% else %}
       <li class="page-item disabled">
         <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
       </li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      {% endif %}
+
+      {% for i in paginator.page_range %}
+      {% if page_obj.number == i %}
+      <li class="page-item active"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% else %}
+      <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
       <li class="page-item">
-        <a class="page-link" href="#">Next</a>
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}" tabindex="-1" aria-disabled="true">Next</a>
       </li>
+      {% else %}
+      <li class="page-item disabled">
+        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Next</a>
+      </li>
+      {% endif %}
     </ul>
   </nav>
+  {% endif %}
+
   </div>
 </body>
 
-
+{% comment %}
 <p><a href="{% url 'club_new'%}">+ Add new club</a></p>
 {% for club in club_list %}
 
@@ -113,4 +135,6 @@
 
 </div>
 <br />
+{% endcomment %}
+
 {% endblock content%}
