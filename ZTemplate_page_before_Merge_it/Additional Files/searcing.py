@@ -12,3 +12,36 @@ def search_view(request, *args, **kwargs):
         articles = Article.objects.filter(Q(content__contains=search_key_word) | Q(title__contains=search_key_word))
 
     return render(request, 'search/search.html', {'title': search_key_word, 'articles': articles})
+
+
+
+
+		function usernameForm(event) {
+      event.preventDefault();
+      const usernameInputValue =
+        document.getElementById("usernameInput").value;
+      if (usernameInputValue.trim() !== "") {
+        document.getElementById("usernameForm").classList.add("hidden");
+        document.getElementById("radioContainer").classList.remove("hidden");
+        document.getElementById("showVotes").classList.remove("hidden");
+      } else {
+        alert("Username field is mandatory. Please enter a username.");
+      }
+    }
+
+    <div class="row mt-5 justify-content-center">
+      <div id="usernameForm">
+        <h2>Enter Username</h2>
+        <form id="usernameInputForm" onsubmit="usernameForm(event)">
+          <input type="text" id="usernameInput" placeholder="Enter Username" class="form-control mb-2" />
+          <button type="submit" class="btn btn-primary">
+            Next
+          </button>
+        </form>
+      </div>
+
+   <div id="radioContainer" class="hidden">
+        <!-- The select field will be inserted here -->
+      </div>
+      <div id="showVotes" class="row justify-content-center mt-5 hidden">
+        <div class="col-8">

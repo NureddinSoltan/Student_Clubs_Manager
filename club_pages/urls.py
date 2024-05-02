@@ -2,7 +2,8 @@ from django.urls import path
 
 from .views import (HomePageView, EventListView, EventDetailView, EventCreateView, EventUpdateView, EventDeleteView,
                     ClubListView, ClubDetailView, ClubUpdateView, ClubDeleteView, ClubCreateView,
-                    ActivityFormListView, ActivityFormDetailView, ActivityFormCreateView)
+                    ActivityFormListView, ActivityFormDetailView, ActivityFormCreateView,
+                    AdminRequestTemplateView)
 
 urlpatterns = [
   path("", HomePageView.as_view(), name= "home"),
@@ -24,4 +25,7 @@ urlpatterns = [
   path("clubs/<int:pk>/edit/", ClubUpdateView.as_view(), name="club_edit"),
   path("clubs/<int:pk>/delete/", ClubDeleteView.as_view(), name="club_delete"),
   path("clubs/new/", ClubCreateView.as_view(), name="club_new"),
+
+  # 
+  path("requests/", AdminRequestTemplateView.as_view(), name="requests"),
 ]

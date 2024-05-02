@@ -53,6 +53,8 @@
                       </option>
                     {% endfor %}
                   </select>
+                  {{form.manager.errors}}
+
                 </div>
               </div>
               <div class="col-md-6" style="display: flex; align-items: flex-end;">
@@ -99,7 +101,7 @@
               <textarea class="form-control" id="purposeSection" rows="3" name="purpose"></textarea>
               {{form.purpose.errors}}
             </div>
-            <input type="submit" name="" id="" value="Save">
+            <!-- <input type="submit" name="" id="" value="Save"> -->
             <button type="submit" class="btn btn-primary btn-block">Add</button>
           </form>
         </div>

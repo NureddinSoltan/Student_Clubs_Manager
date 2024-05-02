@@ -1,10 +1,11 @@
 from django.contrib import admin
-from .models import Event, ActivityForm, Club, User
+from .models import Event, ActivityForm, Club, User, EventEdit
 from django import forms
 from django.db.models import Q
 # Register your models here.
 
 admin.site.register(Event)
+admin.site.register(EventEdit)
 admin.site.register(ActivityForm)
 # admin.site.register(Club)
 # class EventAdmin(admin.ModelAdmin):
