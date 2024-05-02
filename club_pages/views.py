@@ -5,6 +5,11 @@ from .models import Event, ActivityForm, Club, User, EventEdit
 from django.urls import reverse_lazy, reverse
 from .forms import (CustomManagerClubCreationForm, CustomManagerClubChangeForm,
                     CustomManagerClubClubChangeForm)
+from datetime import datetime
+from django.utils.timezone import make_aware
+from django.utils import timezone
+from django.db.models import Q
+from itertools import chain
 
 # Create your views here.
 class HomePageView(TemplateView):
@@ -149,7 +154,7 @@ class ClubDeleteView(DeleteView):
 # Admin Requests
 class AdminRequestTemplateView(TemplateView):
     template_name = "admin_request.html"
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['events'] = Event.objects.all()
@@ -176,17 +181,63 @@ class AdminRequestTemplateView(TemplateView):
         waiting_events_edit = EventEdit.objects.filter(status=EventEdit.StatusChoices.waiting).count()
         context['waiting'] = waiting_events + waiting_activity_form + waiting_events_edit
 
-    
+        # TODO: Filtering by date
+
+        # Combine all the objects
+
+        events = Event.objects.all()
+        activity_forms = ActivityForm.objects.all()
+        edit_event_posts = EventEdit.objects.all()
+
+        # # Combine queries
+        # all_requests = list(events) + list(activity_forms) + list(edit_event_posts)
+        
+        # # Sort all_requests by date (assuming 'date' field is present and not None in all models)
+        # all_requests.sort(key=lambda x: x.date if x.date else timezone.now(), reverse=True)
+        
+        # context['all_requests'] = all_requests
+
+
+        # Filtering section
+
+        # Retrieve filter parameters from the URL
+        request_type = self.request.GET.get('type', '')
+        status_filter = self.request.GET.get('status', '')
+        sort_order = self.request.GET.get('order', 'new')
+
+        # Query data based on filters
+        events = Event.objects.filter(status__icontains=status_filter) if status_filter else Event.objects.all()
+        activity_forms = ActivityForm.objects.filter(status__icontains=status_filter) if status_filter else ActivityForm.objects.all()
+        edit_event_posts = EventEdit.objects.filter(status__icontains=status_filter) if status_filter else EventEdit.objects.all()
+
+        # Filter by type if specific type is requested
+        if request_type == 'event':
+            activity_forms = activity_forms.none()
+            edit_event_posts = edit_event_posts.none()
+        elif request_type == 'activity':
+            events = events.none()
+            edit_event_posts = edit_event_posts.none()
+        elif request_type == 'edit':
+            events = events.none()
+            activity_forms = activity_forms.none()
+
+        # # Combine and sort the results
+        # all_requests = list(chain(events, activity_forms, edit_event_posts))
+        # all_requests.sort(key=lambda x: x.date, reverse=(sort_order == 'new'))
+
+        # Combine and sort the results
+        all_requests = list(events) + list(activity_forms) + list(edit_event_posts)
+        if sort_order == 'oldest':
+            all_requests.sort(key=lambda x: x.date if x.date else timezone.now())
+        else:
+            all_requests.sort(key=lambda x: x.date if x.date else timezone.now(), reverse=True)
+
+        # Pass the filtered and sorted requests to the template
+        context['all_requests'] = all_requests
 
         return context
 
 
-# Remove this as fast as I can
-    # def get_queryset(self, **kwargs):
-    #     qs = super().get_queryset(**kwargs)
-    #     return qs.filter(status = Event.StatusChoices.accepted)
-    #     return context
-    # --------------------------------------------------------------------------------
 
     # # Fletring for everyone in detail.
     # def get_queryset(self):

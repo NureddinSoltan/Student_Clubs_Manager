@@ -67,36 +67,66 @@
       </div>
     </div>
 
+<!-- Filter Section -->
+<ul class="nav nav-tabs">
+  <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"
+        id="filterByRequestTime">Filter by Request <i class="fa-solid fa-code-pull-request"></i></a>
+      <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#" onclick="updateFilter('filterByRequestTime', 'type', 'all', 'Filter by Request')">All Requests</a></li>
+          <li><a class="dropdown-item" href="#" onclick="updateFilter('filterByRequestTime', 'type', 'event', 'Event Post')">Event Post</a></li>
+          <li><a class="dropdown-item" href="#" onclick="updateFilter('filterByRequestTime', 'type', 'activity', 'Activity Form')">Activity Form</a></li>
+          <li><a class="dropdown-item" href="#" onclick="updateFilter('filterByRequestTime', 'type', 'edit', 'Edit Event Post')">Edit Event Post</a></li>
+      </ul>
+  </li>
+  <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"
+        id="filterByStatus">Filter by Status <i class="fas fa-clipboard-check"></i></a>
+      <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#" onclick="updateFilter('filterByStatus', 'status', 'all', 'Filter by Status')">All Statuses</a></li>
+          <li><a class="dropdown-item" href="#" onclick="updateFilter('filterByStatus', 'status', 'waiting', 'Waiting')">Waiting</a></li>
+          <li><a class="dropdown-item" href="#" onclick="updateFilter('filterByStatus', 'status', 'accepted', 'Accepted')">Accepted</a></li>
+          <li><a class="dropdown-item" href="#" onclick="updateFilter('filterByStatus', 'status', 'rejected', 'Rejected')">Rejected</a></li>
+      </ul>
+  </li>
+  <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"
+        id="filterByDate">Filter by Time <i class="fas fa-calendar-alt"></i></a>
+      <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#" onclick="updateFilter('filterByDate', 'order', 'oldest', 'Oldest')">Oldest</a></li>
+          <li><a class="dropdown-item" href="#" onclick="updateFilter('filterByDate', 'order', 'newest', 'Newest')">Newest</a></li>
+      </ul>
+  </li>
+</ul>
+
+
     <!-- Filter Section -->
-    <ul class="nav nav-tabs">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"
-          id="filterByRequestTime">Filter by Request <i class="fa-solid fa-code-pull-request"></i></a>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#" onclick="updateFilter('filterByRequestTime', 'Event Post')">Event Post</a></li>
-          <li><a class="dropdown-item" href="#" onclick="updateFilter('filterByRequestTime', 'Activity Form')">Activity Form</a></li>
-          <li><a class="dropdown-item" href="#" onclick="updateFilter('filterByRequestTime', 'Edit Event Post')">Edit Event Post</a></li>
-        </ul>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"
-          id="filterByStatus">Filter by Status <i class="fas fa-clipboard-check"></i></a>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#" onclick="updateFilter('filterByStatus', 'Waiting')">Waiting</a></li>
-          <li><a class="dropdown-item" href="#" onclick="updateFilter('filterByStatus', 'Accepted')">Accepted</a></li>
-          <li><a class="dropdown-item" href="#" onclick="updateFilter('filterByStatus', 'Rejected')">Rejected</a></li>
-        </ul>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"
-          id="filterByDate">Filter by Time <i class="fas fa-calendar-alt"></i></a>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#" onclick="updateFilter('filterByDate', 'Oldest')">Oldest</a></li>
-          <li><a class="dropdown-item" href="#" onclick="updateFilter('filterByDate', 'New')">New</a></li>
-        </ul>
-      </li>
-      <button class="btn btn-primary m-1">Apply Filters</button>
-    </ul>
+    <form action="{% url 'requests' %}" method="get" class="mb-3">
+      <div class="row">
+        <div class="col">
+          <select name="type" class="form-select" onchange="this.form.submit()">
+            <option value="">All Types</option>
+            <option value="event">Event Post</option>
+            <option value="activity">Activity Form</option>
+            <option value="edit">Edit Event Post</option>
+          </select>
+        </div>
+        <div class="col">
+          <select name="status" class="form-select" onchange="this.form.submit()">
+            <option value="">All Statuses</option>
+            <option value="waiting">Waiting</option>
+            <option value="accepted">Accepted</option>
+            <option value="rejected">Rejected</option>
+          </select>
+        </div>
+        <div class="col">
+          <select name="order" class="form-select" onchange="this.form.submit()">
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+          </select>
+        </div>
+      </div>
+    </form>
 
     <!-- Modal -->
     <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
@@ -131,8 +161,26 @@
           </tr>
         </thead>
         <tbody>
+          {% for request in all_requests %}
+          <tr class="clickable-row">
+            <td><a href="#">{{ request.get_request_type_display }}</a></td>
+            <td><a href="#">{{ request.date|date:"Y-m-d H:i" }}</a></td>
+            <td><a href="#">{{ request.title }}</a></td>
+            <td><a href="#">{{ request.status }}</a></td>
+            <td><a href="#">{{ request.club.title}}</a></td>
+            <td>
+              <button class="btn btn-success btn-sm mb-1" data-bs-toggle="modal" data-bs-target="#confirmationModal"
+                onclick="setActionType('accept')">Accept</button>
+              <button class="btn btn-danger btn-sm mb-1" data-bs-toggle="modal" data-bs-target="#confirmationModal"
+                onclick="setActionType('reject')">Reject</button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <!-- <tbody>
           {% for object in events %}
           <tr class="clickable-row">
+            <h1>koko</h1>
             <td><a href="#">Event Post</a></td>
             <td><a href="#">{{object.date}}</a></td>
             <td><a href="#">{{object.title}}</a></td>
@@ -178,30 +226,64 @@
             </td>
           </tr>
           {% endfor %}
-          <!-- Additional rows as needed -->
+          Additional rows as needed -->
       </table>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    function updateFilter(dropdownId, selectedOption) {
-      document.getElementById(dropdownId).innerText = selectedOption + ' ';
-      const icon = document.createElement('i');
-      switch (dropdownId) {
-        case 'filterByRequestTime':
-          icon.className = 'fas fa-clock';
-          break;
-        case 'filterByStatus':
-          icon.className = 'fas fa-clipboard-check';
-          break;
-        case 'filterByDate':
-          icon.className = 'fas fa-calendar-alt';
-          break;
+    function updateFilter(dropdownId, filterType, value, displayText) {
+      let currentUrl = new URL(window.location.href);
+      let searchParams = currentUrl.searchParams;
+  
+      // Update the search parameter based on the filter type and value
+      if (value === 'all') {
+          searchParams.delete(filterType); // Remove the parameter for 'all' selections
+      } else {
+          searchParams.set(filterType, value);
       }
-      document.getElementById(dropdownId).appendChild(icon);
+  
+      // Update the dropdown title to the selected option
+      document.getElementById(dropdownId).textContent = displayText + ' ';
+      const caretIcon = document.createElement('i');
+      caretIcon.className = 'fa-solid fa-caret-down';
+      document.getElementById(dropdownId).appendChild(caretIcon);
+  
+      // Redirect to the new URL with the updated parameters
+      window.location.href = currentUrl.toString();
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const type = urlParams.get('type');
+    const status = urlParams.get('status');
+    const order = urlParams.get('order');
+
+    if (status) {
+        const statusText = status.charAt(0).toUpperCase() + status.slice(1); // Capitalize the first letter
+        updateDropdownTitle('filterByStatus', 'Filter by Status', statusText);
     }
 
+    if (type) {
+        const typeText = { 'event': 'Event Post', 'activity': 'Activity Form', 'edit': 'Edit Event Post' }[type] || 'All Types';
+        updateDropdownTitle('filterByRequestTime', 'Filter by Request', typeText);
+    }
+
+    if (order) {
+        const orderText = order === 'newest' ? 'Newest First' : 'Oldest';
+        updateDropdownTitle('filterByDate', 'Filter by Time', orderText);
+    }
+});
+
+function updateDropdownTitle(dropdownId, defaultText, newText) {
+    const dropdown = document.getElementById(dropdownId);
+    // Remove only the text node, keep the icon
+    while (dropdown.firstChild && dropdown.firstChild.nodeType === Node.TEXT_NODE) {
+        dropdown.removeChild(dropdown.firstChild);
+    }
+    // Add new text node
+    dropdown.insertBefore(document.createTextNode(newText + ' '), dropdown.firstChild || null);
+}
     function setActionType(action) {
       const modalLabel = document.getElementById('actionType');
       modalLabel.textContent = action;

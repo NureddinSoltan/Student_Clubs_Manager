@@ -96,6 +96,10 @@ class Event(models.Model):
     
     status = models.CharField(max_length=50, choices=StatusChoices.choices, default = StatusChoices.waiting)
 
+    # Add Helper Method:
+    def get_request_type_display(self):
+        return "Event Post"
+
     def __str__(self):
         return self.title
 
@@ -133,10 +137,14 @@ class EventEdit(models.Model):
         waiting = "WAITING", "waiting"
         accepted = "ACCEPTED", "accepted"
         rejected = "REJECTED", "rejected"
-        
+
     # TODO: should Also this be a null and blank
     status = models.CharField(max_length=50, choices=StatusChoices.choices, default = StatusChoices.waiting)
 
+    # Add Helper Method:
+    def get_request_type_display(self):
+        return "Edit Event Post"
+    
     def __str__(self):
         return self.title
 
@@ -164,7 +172,10 @@ class ActivityForm(models.Model):
         rejected = "REJECTED", "rejected"
     
     status = models.CharField(max_length=50, choices=StatusChoices.choices, default = StatusChoices.waiting)
-
+    
+    # Add Helper Method
+    def get_request_type_display(self):
+        return "Activity Form"
 
     def __str__(self):
         return self.title
