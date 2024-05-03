@@ -238,6 +238,9 @@ class AdminRequestTemplateView(TemplateView):
         return context
 
 
+class AcceptEvent(UpdateView):
+    model = Event
+    fields = ['status']
 
     # # Fletring for everyone in detail.
     # def get_queryset(self):

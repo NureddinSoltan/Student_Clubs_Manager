@@ -45,3 +45,16 @@ def search_view(request, *args, **kwargs):
       </div>
       <div id="showVotes" class="row justify-content-center mt-5 hidden">
         <div class="col-8">
+
+
+        swal({
+                                type: 'success',
+                                text: 'تم تسليم السؤال'
+                            }
+                            ).then(function () {
+                                window.location = "{% url 'student_questions' %}";
+                            });
+<head>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/sweetalert/dist/sweetalert.css">
+</head>
