@@ -1,7 +1,8 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import Club, User
+from .models import Club, User, Event
 from django.db.models import Q
 from django import forms
+from django.forms import ModelForm
 
 # I can do it without these things ??????????
 class CustomManagerClubCreationForm(UserCreationForm):
@@ -36,3 +37,8 @@ class CustomManagerClubClubChangeForm(forms.ModelForm):
         Q(club=self.instance.id) | Q(club__isnull=True)
     )
     self.fields["manager"].queryset = available_managers
+
+class EventForm(ModelForm):
+    class Meta:
+        model = Event
+        exclude = ('club','author','event')  # Specify the field to exclude

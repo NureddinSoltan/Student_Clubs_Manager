@@ -76,8 +76,8 @@ class Event(models.Model):
     event_image = models.ImageField(upload_to="event_images", default="club-pic.jpeg", blank=True)
     date = models.DateTimeField(null=True)
     location = models.CharField(max_length=40)
-    first_name = models.CharField(max_length=20)
-    last_name = models.CharField(max_length=20)
+    # first_name = models.CharField(max_length=20)
+    # last_name = models.CharField(max_length=20)
     description = models.CharField(null=True, max_length=200, validators=[validate_length])
     body = RichTextField()
     rule = RichTextField(null=True)
@@ -90,6 +90,7 @@ class Event(models.Model):
         blank=True,
     )
     class StatusChoices(models.TextChoices):
+        # on the left: db, on the right: server
         waiting = "WAITING", "waiting"
         accepted = "ACCEPTED", "accepted"
         rejected = "REJECTED", "rejected"
@@ -98,13 +99,18 @@ class Event(models.Model):
 
     # Add Helper Method:
     def get_request_type_display(self):
-        return "Event Post"
+        return Event.model_display()
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse("event_detail", kwargs={"pk": self.pk})
+    
+    @staticmethod
+    def model_display():
+        return "Event Post"
+
 
 
 # EventEdit Model
@@ -119,6 +125,8 @@ class EventEdit(models.Model):
 
     event_image = models.ImageField(upload_to="event_images", default="club-pic.jpeg", blank=True, null=True)
     date = models.DateTimeField(blank=True, null=True)
+    # created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
     location = models.CharField(max_length=40, blank=True, null=True)
     first_name = models.CharField(max_length=20, blank=True, null=True)
     last_name = models.CharField(max_length=20, blank=True, null=True)
@@ -133,6 +141,9 @@ class EventEdit(models.Model):
         null=True,
         blank=True,
     )
+    event = models.ForeignKey(
+        Event, on_delete=models.CASCADE, null=True, blank=True
+    )
     class StatusChoices(models.TextChoices):
         waiting = "WAITING", "waiting"
         accepted = "ACCEPTED", "accepted"
@@ -143,13 +154,17 @@ class EventEdit(models.Model):
 
     # Add Helper Method:
     def get_request_type_display(self):
-        return "Edit Event Post"
+        return EventEdit.model_display()
     
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse("event_detail", kwargs={"pk": self.pk})
+    
+    @staticmethod
+    def model_display():
+        return "Edit Event Post"
 
 
 # ActivityForm Model
@@ -175,10 +190,14 @@ class ActivityForm(models.Model):
     
     # Add Helper Method
     def get_request_type_display(self):
-        return "Activity Form"
+        return ActivityForm.model_display()
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse("activityform_detail", kwargs={"pk": self.pk})
+
+    @staticmethod
+    def model_display():
+        return "Activity Form"

@@ -1,0 +1,37 @@
+<h1>Hello World</h1>
+
+<div class="post-entry">
+
+  <h2>
+
+    old: {{original_event.title}}
+    {% if eventedit.title is not none %}
+  <br>new: {{ eventedit.title }}
+    {% endif %}
+  </h2>
+  <p>{{eventedit.location}}</p>
+  {{original_event.location}}
+  {% if eventedit.location is not none %}
+  <br>new: {{ eventedit.location }}
+    {% endif %}
+  
+
+  <p>{{eventedit.club}}</p>
+  <p>{{eventedit.first_name}}</p>
+  {{original_event.first_name}}
+
+  <p>{{eventedit.last_name}}</p>
+  <p>{{eventedit.date}}</p>
+  {{original_event.date}}
+  <img src="{{eventedit.eventedit_image.url}}" alt="">
+
+  <h2>About</h2>
+  <p>{{eventedit.body|safe}}</p>
+  <p>{{eventedit.rule|safe}}</p>
+  <p>{{eventedit.faq|safe}}</p>
+
+
+  <!-- it will be the same because they're coming from the DetailedView
+  <h2>{{object.title}}</h2>
+  <p>{{object.body}}</p> -->
+</div>

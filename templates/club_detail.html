@@ -1,7 +1,112 @@
 <!-- templates/post.detail.html -->
-{% extends "base.html"%}
+{% extends "base.html" %}
 
-{% block content %}
+{% load static %}
+{% block title %} Events_Detail {% endblock title %}
+{% block css%}
+<link rel="stylesheet" href="{% static 'css/club_detail.css' %}">
+{% endblock %}
+
+{% block content%}
+<body>
+  <div class="main-card">
+    <div class="container shadow">
+      <div class="for-img">
+        <img src="{{club.club_cover.url}}" alt="" />
+      </div>
+      <div class="row p-2">
+        <div class="avatar col-12 col-md-6 col-lg-2">
+          <img src="{{club.club_imgage.url}}" class="img-card2" />
+        </div>
+        <div class="col-12 col-md-6 col-lg-2 text-center">
+          <!-- Club title -->
+          <h1>{{club.title}}</h1>
+          <!-- Club category -->
+          <p>{{club.category}}</p>
+        </div>
+        <div class="col-4 col-lg-4 d-flex flex-column justify-content-center">
+          <div class="d-flex flex-column gap-3 justify-content-center align-items-center">
+            <!-- Specially for Admin -->
+            <!-- TODO do this and connect it please -->
+            <button type="button" class="btn btn-danger px-3">Delete Club</button>
+            <button type="button" class="btn btn-success px-3">Edit Profile</button>
+          </div>
+        </div>
+        <div class="col-8 col-lg-4 text-center">
+          <!-- Club managers and vice Prisident -->
+          <p><span>President: </span>{{club.manager.first_name}} {{club.manager.last_name}}</p>
+          <p><span>Vice president:</span>{{club.vice_first_name}} {{club.vice_last_name}}</p>
+          <!-- Add the email -->
+          <p>{{club.manager.email}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="container mt-3  ">
+      <div class="row gap-5 d-flex justify-content-between p-2">
+        <div class="text-card2 col-12 col-md-12 col-lg-5 shadow">
+          <!-- Club about -->
+          <h3>Who is {{club.title}}</h3>
+          <p class="ps-3">{{club.about|safe}}</p>
+        </div>
+        <div class="text-card2 col-12 col-md-12 col-lg-6 shadow">
+          <!-- Club purpose -->
+          <h3>Our purpose</h3>
+          <p class="ps-3">{{club.purpose|safe}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="mb-5 container shadow mt-4">
+      <h1 class="text-center py-3">Our Events</h1>
+      <div class="container mt-4 width-custom pb-4">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+
+          <!-- TODO: events here -->
+          {% for event in event_list %}
+          <!-- Start card section -->
+          <div class="col">
+            <!-- Wrap the card with an anchor tag -->
+            <!-- Event link -->
+            <a href="{% url 'event_detail' event.pk %}" class="card-link">
+              <div class="card h-100">
+                <div class="card-img-top-container">
+                  <!-- Event images -->
+                  <img src="/image/nermin1.JPG" class="card-img-top" alt="...">
+                  <div class="card-img-overlay d-flex justify-content-end flex-column">
+                    <div class="club-name-container">
+                      <!-- club_name -->
+                      <p class="club-name">ergerg</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <!-- Event title -->
+                  <h5 class="card-title">ergaergergerag</h5>
+                  <!-- Event body -->
+                  <p class="card-text">dfvdfvaergergergaerg</p>
+                </div>
+            </a>
+            <div class="card-footer d-flex justify-content-between align-items-center">
+              <!-- Event date -->
+              <small class="text-muted"><i class="fa-regular fa-calendar-days"></i> 02/02/202</small>
+              <div class="d-flex">
+                <a class="btn btn-danger me-2" href="{% url 'event_delete' event.pk %}">Delete</a>
+                <a class="btn btn-primary" href="{% url 'event_edit' event.pk %}">Edit</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Event card -->
+        {% endfor %}
+        </div>
+      </div>
+    </div>
+
+</body>
+
+
+
+
+{% comment %}
 <div class="post-entry">
   <h2>{{club.title}}</h2>
   <p>{{club.category}}</p>
@@ -17,6 +122,7 @@
   <p>{{club.purpose|safe}}</p>
   <p>{{club.manager}}</p>
   <p>{{club.author}}</p>
+{% endcomment %}
 
 
 

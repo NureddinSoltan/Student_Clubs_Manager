@@ -30,31 +30,36 @@
             </div>
 
             <div class="row mb-3">
-              <div class="col-md-6">
+              <!-- <div class="col-md-6">
                 <label for="club" class="form-label">Club:</label>
                 <input type="text" class="form-control" id="club" name="club">
                 {{form.club.errors}}
-              </div>
-
-              <div class="col-md-6">
-                <label for="dateTime" class="form-label">Date and time:</label>
-                <input type="datetime-local" class="form-control" id="dateTime" name="date">
-                {{form.date.errors}}
-              </div>
-            </div>
-            <div class="row mb-3">
-              <!-- <div class="col-md-6">
-                <label for="time" class="form-label">Time:</label>
-                <input type="time" class="form-control" id="time">
               </div> -->
               <div class="col-md-6">
                 <label for="location" class="form-label">Location:</label>
                 <input type="text" class="form-control" id="location" name="location">
                 {{form.location.errors}}
               </div>
+              
+              <div class="col-md-6">
+                <label for="dateTime" class="form-label">Date and time:</label>
+                <input type="datetime-local" class="form-control" id="dateTime" name="date">
+                {{form.date.errors}}
+              </div>
             </div>
+            <!-- <div class="row mb-3"> -->
+              <!-- <div class="col-md-6">
+                <label for="time" class="form-label">Time:</label>
+                <input type="time" class="form-control" id="time">
+              </div> -->
+              <!-- <div class="col-md-6">
+                <label for="location" class="form-label">Location:</label>
+                <input type="text" class="form-control" id="location" name="location">
+                {{form.location.errors}}
+              </div> -->
+            <!-- </div> -->
 
-            <div class="row mb-3">
+            <!-- <div class="row mb-3">
               <div class="col-md-6">
                 <label for="presidentFirstName" class="form-label">Club President's First Name:</label>
                 <input type="text" class="form-control" id="presidentFirstName" name="first_name">
@@ -65,7 +70,7 @@
                 <input type="text" class="form-control" id="presidentLastName" name="last_name">
                 {{form.last_name.errors}}
               </div>
-            </div>
+            </div> -->
 
             <div class="mb-3">
               <label for="aboutEvent" class="form-label">
@@ -82,6 +87,16 @@
               <textarea class="form-control" id="aboutEvent" rows="3" name="body"></textarea>
               {{form.body.errors}}
             </div>
+
+            {% csrf_token %}
+            {{ form.media }}
+            <div class="mb-3">
+              {{ form.body.label_tag }}
+              {{ form.body }}
+              {{ form.body.errors }}
+            </div>
+
+
             <div class="mb-3">
               <label for="rules" class="form-label">Rules Section:</label>
               <textarea class="form-control" id="rules" rows="3" name="rule"></textarea>
