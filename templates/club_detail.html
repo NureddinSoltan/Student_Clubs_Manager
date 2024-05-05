@@ -70,28 +70,37 @@
               <div class="card h-100">
                 <div class="card-img-top-container">
                   <!-- Event images -->
-                  <img src="/image/nermin1.JPG" class="card-img-top" alt="...">
+                  <img src="{{event.event_image.url}}" class="card-img-top" alt="...">
                   <div class="card-img-overlay d-flex justify-content-end flex-column">
                     <div class="club-name-container">
                       <!-- club_name -->
-                      <p class="club-name">ergerg</p>
+                      <p class="club-name">{{event.club}}</p>
                     </div>
                   </div>
                 </div>
                 <div class="card-body">
                   <!-- Event title -->
-                  <h5 class="card-title">ergaergergerag</h5>
+                  <h5 class="card-title">{{event.title}}</h5>
                   <!-- Event body -->
-                  <p class="card-text">dfvdfvaergergergaerg</p>
+                  <p class="card-text">{{event.description|slice:120}}</p>
+                  <!-- <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
+                    content. This content is a little bit longer.</p> -->
                 </div>
             </a>
             <div class="card-footer d-flex justify-content-between align-items-center">
               <!-- Event date -->
-              <small class="text-muted"><i class="fa-regular fa-calendar-days"></i> 02/02/202</small>
+              <small class="text-muted"><i class="fa-regular fa-calendar-days"></i> {{event.date}}</small>
+              {% if user.role == "ADMIN" %}
               <div class="d-flex">
                 <a class="btn btn-danger me-2" href="{% url 'event_delete' event.pk %}">Delete</a>
                 <a class="btn btn-primary" href="{% url 'event_edit' event.pk %}">Edit</a>
               </div>
+              {% endif %}
+              {% if user_is_manager %}
+              <div class="d-flex">
+                  <a class="btn btn-primary" href="{% url 'event_edit' event.pk %}">Edit</a>
+              </div>
+              {% endif %}
             </div>
           </div>
         </div>

@@ -1,7 +1,143 @@
-<!-- templates/post_edit.html -->
+<!-- templates/club_new.html -->
 {% extends "base.html"%}
+{% load static %}
+{% block title %} New Event Form {% endblock title %}
+{% block css%}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
 
 {% block content %}
+
+<body style="background-color: #f8f9fa;">
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8"> <!-- Change the wider from here -->
+        <div class="card rounded-4 p-4">
+          <button class="btn btn-secondary back-button" onclick="window.history.back()">&lt;</button>
+          <h2 class="text-center mb-4">Edit Club Form</h2>
+          <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="eventTitle" class="form-label">Club Name:</label>
+              <input type="text" class="form-control" id="eventTitle" name="title" value="{{ form.title.value }}">
+              {{form.title.errors}}
+            </div>
+
+            <div class="mb-3">
+              <label for="category" class="form-label">Category:</label>
+              <input type="text" class="form-control" id="category" name="category" value="{{ form.category.value }}">
+              {{form.category.errors}}
+            </div>
+
+            <!-- TODO: Image isn't desplay it -->
+            {% csrf_token %}
+            {{ form.media }}
+            <div class="mb-3">
+              {{ form.club_image.label_tag }}
+              {{ form.club_image }}
+              {{ form.club_image.errors }}
+            </div>
+
+
+            <div class="mb-3">
+              <label for="clubImage" class="form-label">Add Club image:</label>
+              <input type="file" class="form-control" id="clubImage" name="club_image" >
+              {{form.club_image.errors}}
+            </div>
+
+            <div class="mb-3">
+              <label for="clubCover" class="form-label">Club cover:</label>
+              <input type="file" class="form-control" id="clubCover" name="club_cover">
+              {{form.club_cover.errors}}
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="managers" class="form-label">Managers:</label>
+                <div class="input-group">
+                  <select class="form-select" id="managers" name="manager" onchange="updatePresidentInfo()" >
+                    <option>Select Managers</option>
+                    {% for manager in managers %}
+                      <option value="{{ manager.id }}" data-first-name="{{ manager.first_name }}" data-last-name="{{ manager.last_name }}">
+                        {{ manager.get_full_name }}
+                      </option>
+                    {% endfor %}
+                  </select>
+                  {{form.manager.errors}}
+                  
+
+                </div>
+              </div>
+              <div class="col-md-6" style="display: flex; align-items: flex-end;">
+                <a href="{% url 'signup_manager'%}" style="margin-bottom: 8px;">Add new manager</a>
+              </div>
+            </div>
+
+            <div class="row mb-3"></div> <!-- Spacer -->
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="presidentFirstName" class="form-label">Club President's First Name:</label>
+                <input type="text" class="form-control" id="presidentFirstName" disabled>
+              </div>
+              <div class="col-md-6">
+                <label for="presidentLastName" class="form-label">Club President's Last Name:</label>
+                <input type="text" class="form-control" id="presidentLastName" disabled>
+              </div>
+            </div>
+            <div class="row mb-3"></div> <!-- Spacer -->
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="vicePresidentFirstName" class="form-label">Vice President's First Name:</label>
+                <input type="text" class="form-control" id="vicePresidentFirstName" name="vice_first_name" value="{{ form.vice_first_name.value }}">
+                {{form.vice_first_name.errors}}
+              </div>
+
+              <div class="col-md-6">
+                <label for="vicePresidentLastName" class="form-label">Vice President's Last Name:</label>
+                <input type="text" class="form-control" id="vicePresidentLastName" name="vice_last_name" value="{{ form.vice_last_name.value }}">
+                {{form.vice_last_name.errors}}
+              </div>
+            </div>
+
+            {% csrf_token %}
+            {{ form.media }}
+            <div class="mb-3">
+              {{ form.about.label_tag }}
+              {{ form.about }}
+              {{ form.about.errors }}
+            </div>
+
+            {% csrf_token %}
+            {{ form.media }}
+            <div class="mb-3">
+              {{ form.purpose.label_tag }}
+              {{ form.purpose }}
+              {{ form.purpose.errors }}
+            </div>
+
+            {% comment %}
+            <div class="row mb-3"></div> <!-- Spacer -->
+            <div class="mb-3">
+              <label for="aboutSection" class="form-label">About Section:</label>
+              <textarea class="form-control" id="aboutSection" rows="3" name="about" value="{{ form.about.value|safe }}"></textarea>
+              {{form.about.errors}}
+            </div>
+            <div class="row mb-3"></div> <!-- Spacer -->
+            <div class="mb-3">
+              <label for="purposeSection" class="form-label">Purpose Section:</label>
+              <textarea class="form-control" id="purposeSection" rows="3" name="purpose" value="{{ form.purpose.value }}"></textarea>
+              {{form.purpose.errors}}
+            </div>
+            {% endcomment %}
+
+            <!-- <input type="submit" name="" id="" value="Save"> -->
+            <button type="submit" class="btn btn-primary btn-block">Update</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
 
 <!-- This is not additional -->
 <h1>Edit post</h1>

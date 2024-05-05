@@ -301,7 +301,22 @@ class ClubDetailView(DetailView):
     model = Club
     template_name = "club_detail.html"
 
-    # TODO: Get context data to view the
+    # TODO: Get context data to view the event cards that related to that club
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        club = self.get_object()  # Get the current club based on the primary key in the URL
+        # Filter events related to this club and are accepted
+        events = Event.objects.filter(club=club, status=Event.StatusChoices.accepted)
+        context['event_list'] = events
+
+        user = self.request.user
+        # Check if the user is a manager and the manager of this club
+        if user.is_authenticated and user.role == User.Role.MANAGER and user == club.manager:
+            context['user_is_manager'] = True
+        else:
+            context['user_is_manager'] = False
+        
+        return context
 
 
 class ClubCreateView(CreateView):
@@ -339,7 +354,9 @@ class ClubUpdateView(UpdateView):
     model = Club
     template_name = "club_edit.html"
     fields = "__all__"
-
+    
+    
+    
 
 class ClubDeleteView(DeleteView):
     model = Club
