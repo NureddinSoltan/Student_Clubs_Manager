@@ -11,5 +11,17 @@ Hi {{ user.username }}! you are an {{ user.role }}
 
 <hr>
 <a href="{% url 'activityform_list'%}">activityform</a>
+<a href=""></a>
+
+
+{% if user.is_authenticated %}
+    {% if user.role == "MANAGER" %}
+        {% if club_id %}
+            <p><a href="{% url 'club_detail' pk=club_id %}">Your Club</a></p>
+        {% else %}
+            <p>You do not manage any club.</p>
+        {% endif %}
+    {% endif %}
+{% endif %}
 
 {% endblock content %}

@@ -20,10 +20,10 @@ class HomePageView(TemplateView):
         user = self.request.user
         
         # Check if the user is a manager and has an associated club
-        if user.groups.filter(name='manager').exists():  # Assuming 'Manager' is a group name
+        if user.is_authenticated and user.role == User.Role.MANAGER:
             club = Club.objects.filter(manager=user).first()
             if club:
-                context['club_id'] = club.id  # Pass the club ID to the template
+                context['club_id'] = club.id
         return context
 
 class ConfMsgActivityFormPageView(TemplateView):
@@ -49,13 +49,34 @@ class EventListView(ListView):
 
     # TODO: Filtering and connect the events with the Club category
 
-    def get_queryset(self, **kwargs):
-        qs = super().get_queryset(**kwargs)
-        qs = qs.filter(status=Event.StatusChoices.accepted)
+    # def get_queryset(self, **kwargs):
+    #     qs = super().get_queryset(**kwargs)
+    #     qs = qs.filter(status=Event.StatusChoices.accepted)
+    #     # category = self.request.GET.get('category', None)
+    #     # if category and category != 'all':  # Assuming 'all' or empty is used for no filter
+    #     #     qs = qs.filter(club__category=category)
+    #     return qs
+
+    def get_queryset(self):
         category = self.request.GET.get('category', None)
-        if category and category != 'all':  # Assuming 'all' or empty is used for no filter
-            qs = qs.filter(club__category=category)
-        return qs
+        # By date
+        date_filter = self.request.GET.get('date', None)
+        # queryset = Event.objects.prefetch_related('club')  # Prefetch related club
+        queryset = Event.objects.select_related('club')  # Changed to `select_related` is more appropriate here
+        queryset = queryset.filter(status=Event.StatusChoices.accepted)
+
+        if category and category != 'all':  # Ensure 'all' is an option to list all categories
+            queryset = queryset.filter(club__category=category)
+        if date_filter:
+            queryset = queryset.filter(date__date=date_filter)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # only categories linked that're accepted
+        accepted_club_ids = Event.objects.filter(status=Event.StatusChoices.accepted).values_list('club_id', flat=True).distinct()
+        context['categories'] = Club.objects.filter(id__in=accepted_club_ids).values_list('category', flat=True).distinct()
+        return context
 
 class EventDetailView(DetailView):
     model = Event
