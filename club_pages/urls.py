@@ -19,6 +19,7 @@ from .views import (
     AcceptRequestView,
     RejectRequestView,
     EditEventDetailView,
+    ConfMsgActivityFormPageView,
 )
 
 
@@ -50,17 +51,12 @@ urlpatterns = [
     path("clubs/<int:pk>/edit/", ClubUpdateView.as_view(), name="club_edit"),
     path("clubs/<int:pk>/delete/", ClubDeleteView.as_view(), name="club_delete"),
     path("clubs/new/", ClubCreateView.as_view(), name="club_new"),
-    #
+    # Requests Page
     path("requests/", AdminRequestTemplateView.as_view(), name="requests"),
-    #
-    path(
-        "request/accept/<int:pk>/<str:request_type>/",
-        AcceptRequestView.as_view(),
-        name="accept_request",
-    ),
-    path(
-        "request/reject/<int:pk>/<str:request_type>/",
-        RejectRequestView.as_view(),
-        name="reject_request",
-    ),
+    path("request/accept/<int:pk>/<str:request_type>/", AcceptRequestView.as_view(),name="accept_request",),
+    path("request/reject/<int:pk>/<str:request_type>/", RejectRequestView.as_view(),name="reject_request",),
+
+    # Confitmation messages
+    path("confmsg/", ConfMsgActivityFormPageView.as_view(), name="confirmation_message"),
+
 ]

@@ -89,13 +89,15 @@ class Event(models.Model):
         null=True,
         blank=True,
     )
+    # add just for updating
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
     class StatusChoices(models.TextChoices):
         # on the left: db, on the right: server
         waiting = "WAITING", "waiting"
         accepted = "ACCEPTED", "accepted"
         rejected = "REJECTED", "rejected"
     
-    status = models.CharField(max_length=50, choices=StatusChoices.choices, default = StatusChoices.waiting)
+    status = models.CharField(max_length=50, choices=StatusChoices.choices, default = StatusChoices.waiting, null=True, blank=True)
 
     # Add Helper Method:
     def get_request_type_display(self):
@@ -170,11 +172,16 @@ class EventEdit(models.Model):
 # ActivityForm Model
 class ActivityForm(models.Model):
     title = models.CharField(max_length=255)
-    club = models.CharField(max_length=70)
+    # club = models.CharField(max_length=70, null=True, blank=True)
+    club = models.ForeignKey(
+    Club, on_delete=models.CASCADE,
+    null=True,
+    blank=True,
+    )
     date = models.DateTimeField(null=True)
     location = models.CharField(max_length=30)
-    first_name = models.CharField(max_length=15)
-    last_name = models.CharField(max_length=15)
+    # first_name = models.CharField(max_length=15)
+    # last_name = models.CharField(max_length=15)
     event_content = models.TextField()
     speakers = models.TextField()
     place = models.CharField(max_length=70)
@@ -186,7 +193,7 @@ class ActivityForm(models.Model):
         accepted = "ACCEPTED", "accepted"
         rejected = "REJECTED", "rejected"
     
-    status = models.CharField(max_length=50, choices=StatusChoices.choices, default = StatusChoices.waiting)
+    status = models.CharField(max_length=50, choices=StatusChoices.choices, default = StatusChoices.waiting, blank=True)
     
     # Add Helper Method
     def get_request_type_display(self):

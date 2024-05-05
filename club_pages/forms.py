@@ -41,4 +41,4 @@ class CustomManagerClubClubChangeForm(forms.ModelForm):
 class EventForm(ModelForm):
     class Meta:
         model = Event
-        exclude = ('club','author','event')  # Specify the field to exclude
+        exclude = ('club','author','event', 'status')  # Specify the field to exclude

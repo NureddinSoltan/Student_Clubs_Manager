@@ -1,13 +1,136 @@
-<!-- templates/registration/signup.html -->
-{% extends "base.html" %}
+<!-- templates/registration/login.html -->
+{% extends 'base.html' %} <!-- Extend your base template -->
+{% load static %}
+{% block title %} Sign in{% endblock title %}
 
-{% block title %}Sign Up{% endblock title %}
+{% block css%}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
 
 {% block content %}
-    <h2>Sign up</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-success">Sign Up</button>
-    </form>
+
+<body>
+  <div class="parent">
+    <div class="container">
+      <div class="grid--container sing--in">
+        <div class="grid---1">
+          <div class="flexing--images--with-the--h1">
+            <!-- flexing image -->
+            <div class="image--flex">
+              <img src="{% static 'images/base/USKUAR_Logo.png' %}" alt="" class="image--log1">
+              <img src="{% static 'images/base/SKS_Logo.png' %}" alt="" class="image--log2">
+            </div>
+
+          </div>
+        </div>
+        <div class="grid--2">
+          <h1 class="Welcome">
+            Welcome To
+            <br>Üsküdar
+            <br> Community
+
+          </h1>
+        </div>
+        <div class="grid---3 sig-in margin-top">
+          <div class="text-container">
+            <h3 class="log-sing-heading log-in-heading">sign up</h3>
+            <!-- box-- -->
+            <div class="box--for--forms">
+              <form action="">
+                <label for="">First name</label>
+                <!-- foerm and svg center -->
+                <div class="form--flex">
+                  <input type="text" placeholder="First name">
+                  <svg class="icon-box" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M5 20V19C5 16.2386 7.23858 14 10 14H14C16.7614 14 19 16.2386 19 19V20M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
+                      stroke="black" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+
+                </div>
+                <label for="">Last Name</label>
+                <div class="form--flex">
+                  <input type="text" placeholder="Last Name">
+                  <svg class="icon-box" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M5 20V19C5 16.2386 7.23858 14 10 14H14C16.7614 14 19 16.2386 19 19V20M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
+                      stroke="black" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+
+                </div>
+
+                <label for=""> Email</label>
+                <div class="form--flex">
+                  <input type="email" placeholder="Email">
+                  <svg class="icon-box" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 7.00005L10.2 11.65C11.2667 12.45 12.7333 12.45 13.8 11.65L20 7" stroke="black"
+                      stroke-opacity="0.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <rect x="3" y="5" width="18" height="14" rx="2" stroke="black" stroke-opacity="0.5" stroke-width="2"
+                      stroke-linecap="round" />
+                  </svg>
+                </div>
+                <label for="">Student ID</label>
+                <div class="form--flex">
+                  <input type="text" placeholder="Student ID">
+                  <svg class="icon-box" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M9 5H7C5.89543 5 5 5.89543 5 7V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V7C19 5.89543 18.1046 5 17 5H15"
+                      stroke="black" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                    <path d="M9 12H15" stroke="black" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                    <path d="M9 16H12" stroke="black" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                    <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="black"
+                      stroke-opacity="0.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <label for="">Password</label>
+                <div class="form--flex">
+                  <input type="password" placeholder="Password">
+                  <svg class="icon-box" width="16" height="20" viewBox="0 0 16 20" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M12 7V4C12 2.34315 10.6569 1 9 1H7C5.34315 1 4 2.34315 4 4V7M12 7H4M12 7C13.6569 7 15 8.34315 15 10V16C15 17.6569 13.6569 19 12 19H4C2.34315 19 1 17.6569 1 16V10C1 8.34315 2.34315 7 4 7M8 12V15M9 12C9 12.5523 8.55228 13 8 13C7.44772 13 7 12.5523 7 12C7 11.4477 7.44772 11 8 11C8.55228 11 9 11.4477 9 12Z"
+                      stroke="black" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <label for="">Confirm password</label>
+                <div class="form--flex">
+                  <input type="password" placeholder="Confirm password">
+                  <svg class="icon-box" width="16" height="20" viewBox="0 0 16 20" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M5.34875 9.50002L7.34875 11.5L11.5 7.34878M7.72528 1.07852L1.72528 2.7928C1.29598 2.91546 1 3.30784 1 3.75432L1 8.85384C1 12.0834 2.55966 15.1141 5.18762 16.9912L7.41876 18.5849C7.76646 18.8332 8.23354 18.8332 8.58124 18.5849L10.8124 16.9912C13.4403 15.1141 15 12.0834 15 8.85384V3.75432C15 3.30784 14.704 2.91546 14.2747 2.7928L8.27472 1.07852C8.09517 1.02721 7.90483 1.02721 7.72528 1.07852Z"
+                      stroke="black" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </div>
+              </form>
+              <div class="text-ct">
+                <a href="" class="btn-final">sign up</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+
+
+<h2>Sign up</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-success">Sign Up</button>
+</form>
 {% endblock content %}

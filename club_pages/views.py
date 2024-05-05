@@ -15,6 +15,32 @@ from .forms import (
 class HomePageView(TemplateView):
     template_name = "home.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        
+        # Check if the user is a manager and has an associated club
+        if user.groups.filter(name='manager').exists():  # Assuming 'Manager' is a group name
+            club = Club.objects.filter(manager=user).first()
+            if club:
+                context['club_id'] = club.id  # Pass the club ID to the template
+        return context
+
+class ConfMsgActivityFormPageView(TemplateView):
+    template_name = "conf_msg_activityform.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(ConfMsgActivityFormPageView, self).get_context_data(**kwargs)
+        user = self.request.user
+        club = Club.objects.filter(manager=user).first()  # Assuming the user is a manager of a club
+        if club:
+            context['club_id'] = club.id
+        # Get the action type from the URL query parameter
+
+        context['action_type'] = self.request.GET.get('type', 'default')
+
+        return context
+
 
 class EventListView(ListView):
     model = Event
@@ -25,18 +51,59 @@ class EventListView(ListView):
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
-        return qs.filter(status=Event.StatusChoices.accepted)
-
+        qs = qs.filter(status=Event.StatusChoices.accepted)
+        category = self.request.GET.get('category', None)
+        if category and category != 'all':  # Assuming 'all' or empty is used for no filter
+            qs = qs.filter(club__category=category)
+        return qs
 
 class EventDetailView(DetailView):
     model = Event
     template_name = "event_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        event = self.object  # current event
+        event_edits = EventEdit.objects.filter(event=event, status=EventEdit.StatusChoices.accepted).order_by('-id')
+        if event_edits.exists():
+            event_edit = event_edits.first()  # last one
+            modified_fields = {}
+            for field in event_edit._meta.fields:
+                field_name = field.name
+                if field_name.startswith('_'):
+                    continue  # Skip 
+                original_value = getattr(event, field_name, None)
+                new_value = getattr(event_edit, field_name, None)
+                if new_value is not None and new_value != original_value:
+                    modified_fields[field_name] = new_value
+            context['modified_fields'] = modified_fields
+        else:
+            context['modified_fields'] = {}
+        return context
 
 
 class EventCreateView(CreateView):
     model = Event
     template_name = "event_new.html"
     fields = "__all__"
+
+    def form_valid(self, form):
+        manager = self.request.user
+        club = Club.objects.filter(manager=manager).first()
+        
+        if club:
+            form.instance.club = club
+        # else:
+        #     return redirect('error_url')  
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        # return reverse_lazy('event_detail', kwargs={'pk': self.object.pk})
+        # return reverse_lazy('/confmsg/activityform/?type=event')
+        url = reverse('confirmation_message')  # Ensure the URL name is correctly defined in your urls.py
+        return f"{url}?type=event"
+
+    
     # success_url = reverse_lazy("home")
 
     # def get_initial(self):
@@ -148,11 +215,37 @@ class ActivityFormCreateView(CreateView):
     template_name = "activityform_new.html"
     fields = "__all__"
     # success_url = reverse_lazy("home")
-
     def form_valid(self, form):
-        form.instance.author = self.request.user  # added it to club
-        # form.instance.role = User.Role.MANAGER
+        # Retrieve the club associated with the current user (manager)
+        manager = self.request.user
+        club = Club.objects.filter(manager=manager).first()
+
+        if club:
+            form.instance.club = club
+        # else:
+        #     return redirect('error_url')
+
         return super().form_valid(form)
+
+    def get_success_url(self):
+        # Redirect to the Activity Form's detail view or wherever appropriate
+        # return reverse_lazy('club_detail', kwargs={'pk': self.object.pk})
+        # Reverse to the club it self
+        # if hasattr(self, 'object') and self.object.club:
+        #     return reverse_lazy('club_detail', kwargs={'pk': self.object.club.pk})
+        # else:
+        #     # Redirect to a fallback URL if no club is associated or if the object was not created
+        #     return reverse_lazy('home')
+
+        # return reverse_lazy('confirmation_message')
+        url = reverse('confirmation_message')  # Ensure the URL name is correctly defined in your urls.py
+        return f"{url}?type=activityform"
+
+
+    # def form_valid(self, form):
+    #     form.instance.author = self.request.user  # added it to club
+    #     # form.instance.role = User.Role.MANAGER
+    #     return super().form_valid(form)
 
 
 # Clubs pages :)
@@ -387,15 +480,48 @@ class AcceptRequestView(RedirectView):
         if self.kwargs["request_type"] == Event.model_display():
             object = Event.objects.get(pk=self.kwargs["pk"])
             object.status = Event.StatusChoices.accepted
+
+# fIRST AOORIACH
+        # if self.kwargs["request_type"] == EventEdit.model_display():
+        #     object = EventEdit.objects.get(pk=self.kwargs["pk"])
+            
+        #     edited_fields = object.__dict__.copy()  # Copy the dict to avoid modifying the original object directly
+        #     # filter to remove fields with None values
+        #     keys_to_remove = [key for key in edited_fields if edited_fields[key] is None]
+        #     for key in keys_to_remove:
+        #         edited_fields.pop(key)
+        #     object.status = EventEdit.StatusChoices.accepted
+        #     # Assuming `event` is a related field accessible directly from `EventEdit`
+        #     if hasattr(object, 'event'):
+        #         object.event.objects.update(**edited_fields)
+
+
+# Second APPROACH
+        # if self.kwargs["request_type"] == EventEdit.model_display():
+        #     object = EventEdit.objects.get(pk=self.kwargs["pk"])
+        #     edited_fields = object.__dict__
+        #     # filter remove null fields
+        #     for key in edited_fields.keys():
+        #         if edited_fields[key] == None:
+        #             edited_fields.pop(key)
+        #     object.status = EventEdit.StatusChoices.accepted
+        #     EventEdit.event.objects.update(**edited_fields)
+
+# Third approach
         if self.kwargs["request_type"] == EventEdit.model_display():
             object = EventEdit.objects.get(pk=self.kwargs["pk"])
-            edited_fields = object.__dict__
-            # filter remove null fields
-            for key in edited_fields.keys():
-                if edited_fields[key] == None:
-                    edited_fields.pop(key)
+            edited_fields = {key: value for key, value in object.__dict__.items() if value is not None}
+            # Remove keys that start with underscore (internal use)
+            keys_to_remove = [key for key in edited_fields if key.startswith('_')]
+            for key in keys_to_remove:
+                del edited_fields[key]
             object.status = EventEdit.StatusChoices.accepted
-            EventEdit.event.update(**edited_fields)
+            # Assuming you meant to update the Event object associated with this EventEdit
+            if hasattr(object, 'event') and object.event:
+                for key, value in edited_fields.items():
+                    setattr(object.event, key, value)
+                object.event.save()
+
         if self.kwargs["request_type"] == ActivityForm.model_display():
             object = ActivityForm.objects.get(pk=self.kwargs["pk"])
             object.status = ActivityForm.StatusChoices.accepted

@@ -1,22 +1,88 @@
-<!-- templates/post.detail.html -->
+<!-- templates/post_new.html -->
 {% extends "base.html"%}
+{% load static %}
+{% block title %} New Activity Form {% endblock title %}
+{% block css%}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
 
 {% block content %}
+
+<body style="background-color: #f8f9fa;">
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card rounded-4 p-4">
+          <button class="btn btn-secondary back-button" onclick="window.history.back()">&lt;</button>
+          <h2 class="text-center mb-4">Activity Form</h2>
+          <div class="mb-3">
+            <strong>Event Title:</strong> <span>{{activityform.title}}</span>
+          </div>
+
+          <div class="mb-4">
+            <strong>Club Name:</strong> <span>{{activityform.club}}</span>
+          </div>
+
+          <div class="mb-4">
+            <strong>Club President Name</strong> <span>{{activityform.club.manager.first_name}}
+              {{activityform.club.manager.last_name}}</span>
+          </div>
+
+
+          <div class="row mb-4">
+            <div class="col-md-6">
+              <strong>Date and Time:</strong> <span>{{activityform.date}}</span>
+            </div>
+            <div class="col-md-6">
+              <strong>Location:</strong> <span>{{activityform.location}}</span>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <strong>Event Content:</strong>
+            <span>{{activityform.event_content}}</span>
+          </div>
+
+          <div class="mb-4">
+            <strong>Speaker-Participants:</strong> <span>{{activityform.speakers}}</span>
+          </div>
+          <div class="mb-4">
+            <strong>Place where the event will be held:</strong> <span>{{activityform.place}}</span>
+          </div>
+          <div class="mb-4">
+            <strong>Special Services Requested from Technical Services:</strong> <span>{{activityform.special_services}}</span>
+          </div>
+          <div class="mb-4">
+            <strong>Other Requests:</strong> <span>{{activityform.other_reqests}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+{% comment %}
 <div class="post-entry">
   <h2>{{activityform.title}}</h2>
   <p>{{activityform.club}}</p>
   <p>{{activityform.date}}</p>
   <p>{{activityform.location}}</p>
-  <p>{{activityform.first_name}}</p>
+  <p>{{activityform.club.manager.first_name}}</p>
+  <p>{{activityform.club.manager.last_name}}</p>
   <p>{{activityform.event_content}}</p>
   <p>{{activityform.speakers}}</p>
   <p>{{activityform.place}}</p>
   <p>{{activityform.special_services}}</p>
   <p>{{activityform.other_reqests}}</p>
-  activityform
   <!-- it will be the same because they're coming from the DetailedView
   <h2>{{object.title}}</h2>
   <p>{{object.body}}</p> -->
 </div>
+{% endcomment%}
 
-{% endblock content%}
+
+{% endblock content %}
+
+{% block js%}
+<script src="{% static 'js/popupmessage.js' %}"></script>
+{% endblock %}

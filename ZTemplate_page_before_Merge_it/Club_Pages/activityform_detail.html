@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Activity Form - Filled Display</title>
+  <style>
+    .back-button {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 25px;
+      margin-right: 10px;
+      position: absolute;
+      background-color: #e2e2e2;
+      border: none;
+      top: 15px;
+    }
+  </style>
+</head>
+<body style="background-color: #f8f9fa;">
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card rounded-4 p-4">
+          <button class="btn btn-secondary back-button" onclick="window.history.back()">&lt;</button>
+          <h2 class="text-center mb-4">Activity Form</h2>
+          <div class="mb-3">
+            <strong>Event Title:</strong> <span>Annual Tech Conference</span>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-6">
+              <strong>Date and Time:</strong> <span>10 May 2024, 19:30</span>
+            </div>
+            <div class="col-md-6">
+              <strong>Location:</strong> <span>Main Auditorium</span>
+            </div>
+          </div>
+          <div class="mb-4">
+            <strong>Event Content:</strong> <span>This event will showcase the latest advancements in technology and innovation. Keynote speakers from various tech industries will share their insights.</span>
+          </div>
+          <div class="mb-4">
+            <strong>Speaker-Participants:</strong> <span>John Doe, Jane Smith, and Alex Johnson</span>
+          </div>
+          <div class="mb-4">
+            <strong>Place where the event will be held:</strong> <span>Campus Hall</span>
+          </div>
+          <div class="mb-4">
+            <strong>Special Services Requested from Technical Services:</strong> <span>Audio/Visual Setup, Special Lighting</span>
+          </div>
+          <div class="mb-4">
+            <strong>Other Requests:</strong> <span>Additional seating arrangements, Catering services</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

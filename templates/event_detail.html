@@ -17,6 +17,7 @@
     <div class="first-flex">
       <div class="text-alig">
         <h1 class="heading-primary">{{event.title}}</h1>
+        <h1 class="heading-primary">{{modified_fields.title}}</h1>
         <div class="icon-parent">
           <!-- for flex-the whole 4 div-s -->
           <div class="icon-text-flexer">
@@ -44,7 +45,7 @@
                 fill="#696767" />
             </svg>
             <!-- TODO : Change this when making the relations with the club -->
-            <p class="text-diatails">{{event.first_name}} {{event.last_name}}</p>
+            <p class="text-diatails">{{event.club.manager.first_name}} {{event.club.manager.last_name}}</p>
           </div>
 
           <div class="icon-text-flexer">

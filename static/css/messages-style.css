@@ -1,0 +1,192 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    }
+    body{
+        font-family: "Roboto", sans-serif;
+        position: relative;
+        /* background-color: rgba(0, 0, 0, 0.5); */
+    height: 100vh;
+    } 
+    .parent{
+        
+        margin-left: auto;
+        margin-right: auto;
+        padding: 15px ;
+        /* overflow: hidden; */
+    }
+    @media (min-width: 768px){
+        .parent{
+            width: 750px;
+        }
+    }
+    /* medium */
+    @media(min-width: 992px){
+        .parent{
+        width: 970px;
+        }
+    }
+    /* large */
+    @media (min-width: 1200px){
+        .parent{
+            width: 1170px;
+    
+            .w-100 {
+                margin-left: 199px;
+                width: 100% !important;
+            }
+            .heading-primary {
+                width: 120%;
+                font-size: 40px !important;
+                font-weight: 700;
+                line-height: 50.86px;
+            }
+    }}
+    .box-massage {
+        margin-top: 80px;
+        padding: 20px 20px;
+        width: 100%;
+        box-shadow: rgba(77, 80, 83, 0.2) 0px 8px 24px;
+        min-height: 50vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        z-index: 100;
+        color: black;
+    border-radius: 20px;
+      }
+    
+    
+    .massage-images{
+        height: 200px;
+        
+    }
+    .btn-massage:link,.btn-massage:visited{
+    text-decoration: none;
+    padding: 10px 30px;
+    background-color:#3D545B ;
+    color: #fff;
+    border-radius: 10px;
+    transition: all .5ss;
+    }
+    .btn-massage:hover{
+        background-color:#566C72 ;
+    }
+    
+    /* Not important */
+    /* headear */
+    header {
+        width: 100%;
+        background-color: #9def6b59;
+        height: 80px;
+        position: relative;
+      }
+      header .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 80px;
+      }
+      header .logo img {
+        height: 50px;
+      }
+      header nav {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+      }
+      @media (min-width: 768px) {
+        header nav .toggle-menu {
+          display: none;
+        }
+      }
+      header nav ul {
+        display: flex;
+        list-style: none;
+      }
+      @media (max-width: 767px) {
+        header nav ul {
+          display: none;
+        }
+        header nav .toggle-menu:hover + ul {
+          display: flex;
+          flex-direction: column;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background-color: rgb(0 0 0 / 50%);
+        }
+        header nav ul li a {
+          padding: 15px !important;
+        }
+      }
+      header nav ul li {
+        position: relative;
+      }
+      header nav ul li a {
+        padding: 10px 15px;
+        display: block;
+        color: rgb(8, 8, 8);
+        text-decoration: none;
+        left: 20px;
+        position: relative;
+        list-style: none;
+        font-size: 18px;
+        top: 58%;
+        transform: translateX(-50%) translateY(-50%);
+        right: 0;
+        left: 20px;
+      }
+      
+      header nav ul li a:hover {
+        color: var(--secondary-color);
+        border-bottom: 4px solid green;
+        font-weight: bold;
+      }
+      header nav .form {
+        width: 30px;
+        height: 30px;
+        position: relative;
+        margin-left: 0;
+      }
+      header nav .form i {
+        color: rgb(14, 14, 14);
+        position: absolute;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        right: 0;
+      }
+      .btn-nav {
+        background: transparent;
+        color: rgb(8, 8, 8);
+        width: 90px;
+        border: 1 solid black;
+        border-radius: 20px;
+        text-align: center;
+        height: 45px;
+        margin-right: 15px;
+      }
+      .btn1-nav {
+        background: #60a99a;
+        color: white;
+        width: 90px;
+        border: none;
+        border-radius: 30px;
+        text-align: center;
+        height: 45px;
+      }
+      .btn2-nav {
+        background: #a6c83d;
+        color: white;
+        width: 100px;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+        height: 40px;
+        padding: 10px;
+      }

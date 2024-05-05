@@ -82,11 +82,11 @@
               {{form.description.errors}}
             </div>
 
-            <div class="mb-3">
+            <!-- <div class="mb-3">
               <label for="aboutEvent" class="form-label">About Event Section:</label>
               <textarea class="form-control" id="aboutEvent" rows="3" name="body"></textarea>
               {{form.body.errors}}
-            </div>
+            </div> -->
 
             {% csrf_token %}
             {{ form.media }}

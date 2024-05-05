@@ -1,0 +1,39 @@
+<!-- templates/post_new.html -->
+{% extends "base.html"%}
+{% load static %}
+{% block title %} confimation_message_activityform {% endblock title %}
+{% block css%}
+<link rel="stylesheet" href="{% static 'css/messages-style.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<body>
+  <main>
+    <div class="parent">
+      <div class="box-massage">
+        <img src="{% static 'images/base/correct_mark.png' %}" alt="Success" class="massage-images">
+        {% if action_type == 'activityform' %}
+        <p class="text-1-massages">Your request for creating an activity has been sent to the SKS.</p>
+        {% elif action_type == 'event' %}
+        <p class="text-1-massages">Your request for creating an event has been sent to the SKS.</p>
+        {% elif action_type == 'edit_post' %}
+        <p class="text-1-massages">Your request for editing a post has been sent to the SKS.</p>
+        {% else %}
+        <p class="text-1-massages">Your request has been sent to the SKS.</p>
+        {% endif %}
+        <p class="text-2-massage">Please wait until your request is accepted.</p>
+        <a href="{% url 'home' %}" class="btn-massage">Home</a>
+        {% if club_id %}
+        <a href="{% url 'club_detail' pk=club_id %}" class="btn-massage">Return to Club</a>
+        {% endif %}
+      </div>
+    </div>
+  </main>
+</body>
+
+{% endblock content %}
+
+{% block js%}
+<script src="{% static 'js/popupmessage.js' %}"></script>
+{% endblock %}
