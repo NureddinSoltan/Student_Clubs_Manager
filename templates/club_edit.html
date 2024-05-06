@@ -41,7 +41,7 @@
 
             <div class="mb-3">
               <label for="clubImage" class="form-label">Add Club image:</label>
-              <input type="file" class="form-control" id="clubImage" name="club_image" >
+              <input type="file" class="form-control" id="clubImage" name="club_image" value="{{ form.club_image.value}}">
               {{form.club_image.errors}}
             </div>
 

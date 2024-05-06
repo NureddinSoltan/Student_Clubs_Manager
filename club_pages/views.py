@@ -75,8 +75,27 @@ class EventListView(ListView):
 
         return queryset
 
+    # def get_weekly_events(self):
+    #     today = timezone.now().date()
+    #     end_of_week = today + timedelta(days=6)  # Assuming week starts from today
+    #     weekly_events = Event.objects.filter(date__date__range=[today, end_of_week])
+    #     return weekly_events
+    
+    def get_weekly_events(self):
+        today = timezone.now().date() # + timedelta(days=1)
+        print("hoooob" + str(today))
+        # Find the first day of the current week (Monday)
+        start_of_week = today - timedelta(days=today.weekday())
+        print("start" + str(start_of_week))
+        # Find the last day of the current week (Sunday)
+        end_of_week = start_of_week + timedelta(days=6)
+        print("end" + str(end_of_week))
+        weekly_events = Event.objects.filter(date__date__range=[start_of_week, end_of_week])
+        return weekly_events
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['weekly_events'] = self.get_weekly_events()
         # only categories linked that're accepted
         accepted_club_ids = Event.objects.filter(status=Event.StatusChoices.accepted).values_list('club_id', flat=True).distinct()
         context['categories'] = Club.objects.filter(id__in=accepted_club_ids).values_list('category', flat=True).distinct()
@@ -635,18 +654,20 @@ class AcceptRequestView(RedirectView):
 
 # Third approach
         if self.kwargs["request_type"] == EventEdit.model_display():
+            # import ipdb; ipdb.set_trace()
             object = EventEdit.objects.get(pk=self.kwargs["pk"])
-            edited_fields = {key: value for key, value in object.__dict__.items() if value is not None}
+            populted_fields = {key: value for key, value in object.__dict__.items() if value is not None}
             # Remove keys that start with underscore (internal use)
-            keys_to_remove = [key for key in edited_fields if key.startswith('_')]
+            keys_to_remove = [key for key in populted_fields if key.startswith('_')]
+            keys_to_remove.extend(["event_id", "status", "id", "updated_at"])
             for key in keys_to_remove:
-                del edited_fields[key]
+                del populted_fields[key]
             object.status = EventEdit.StatusChoices.accepted
             # Assuming you meant to update the Event object associated with this EventEdit
-            if hasattr(object, 'event') and object.event:
-                for key, value in edited_fields.items():
-                    setattr(object.event, key, value)
-                object.event.save()
+            # if hasattr(object, 'event') and object.event:  # Not important 
+            for key, value in populted_fields.items():
+                setattr(object.event, key, value)
+            object.event.save()
 
         if self.kwargs["request_type"] == ActivityForm.model_display():
             object = ActivityForm.objects.get(pk=self.kwargs["pk"])

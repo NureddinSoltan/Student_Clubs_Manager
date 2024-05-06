@@ -32,7 +32,7 @@ def validate_manager_role(value):
 class Club(models.Model):
     title = models.CharField(max_length=255)
     category = models.CharField(max_length=30)
-    club_imgage = models.ImageField(
+    club_image = models.ImageField(
         upload_to="club_images", default="logo_club.png", blank=True
     )
     club_cover = models.ImageField(

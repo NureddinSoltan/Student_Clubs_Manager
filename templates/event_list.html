@@ -31,7 +31,7 @@
           <select class="form-select" name="category" id="category">
             <option value="all">Search by Category</option>
             {% for category in categories %}
-            <option value="{{ category }}" {% if request.GET.category==category %}selected{% endif %}>
+            <option value="{{ category }}" {% if request.GET.category == category %}selected{% endif %}>
               {{ category }}
             </option>
             {% endfor %}
@@ -43,6 +43,35 @@
       </div>
     </form>
     {% endcomment %}
+
+
+<!-- Weekly Events Table -->
+<div class="container mt-3">
+  <table class="table table-bordered">
+    <h2>Weekly Events</h2>
+    <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Event</th>
+        <th scope="col">Event</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for event in weekly_events %}
+      <tr>
+        <td>{{ event.date }}</td>
+        <td><a href="{% url 'event_detail' event.pk %}">{{ event.title }}</a></td>
+        <td><a href="{% url 'event_detail' event.pk %}">{{ event.club.title }}</a></td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="2">No events for the week</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 
 
 
