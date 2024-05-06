@@ -28,9 +28,12 @@
           <div class="d-flex flex-column gap-3 justify-content-center align-items-center">
             <!-- Specially for Admin -->
             <!-- TODO do this and connect it please -->
-            <button type="button" class="btn btn-danger px-3">Delete Club</button>
-            <button type="button" class="btn btn-success px-3">Edit Profile</button>
+            {% if user.role == "ADMIN" %}
+            <a href="{% url 'club_delete' club.pk%}"><button type="button" class="btn btn-danger px-3">Delete Club</button></a>
+            <a href="{% url 'club_edit' club.pk%}"><button type="button"  class="btn btn-sm btn-primary px-3">Edit Profile</button></a>
+            {% endif %}
           </div>
+
         </div>
         <div class="col-8 col-lg-4 text-center">
           <!-- Club managers and vice Prisident -->

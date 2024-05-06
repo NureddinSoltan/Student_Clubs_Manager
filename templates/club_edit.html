@@ -58,8 +58,8 @@
                   <select class="form-select" id="managers" name="manager" onchange="updatePresidentInfo()" >
                     <option>Select Managers</option>
                     {% for manager in managers %}
-                      <option value="{{ manager.id }}" data-first-name="{{ manager.first_name }}" data-last-name="{{ manager.last_name }}">
-                        {{ manager.get_full_name }}
+                    <option value="{{ manager.id }}" data-first-name="{{ manager.first_name }}" data-last-name="{{ manager.last_name }}" {% if manager.id == form.manager.value %}selected{% endif %}>
+                      {{ manager.get_full_name }}
                       </option>
                     {% endfor %}
                   </select>
@@ -150,3 +150,7 @@
 {% endblock content%}
 {% comment %}
 {% endcomment %}
+
+{% block js%}
+<script src="{% static 'js/automatic_fill.js' %}"></script>
+{% endblock %}

@@ -4,6 +4,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Event, ActivityForm, Club, User, EventEdit
 from django.urls import reverse_lazy, reverse
 from django.utils import timezone
+from datetime import timedelta
 from .forms import (
     CustomManagerClubCreationForm,
     CustomManagerClubChangeForm,
@@ -48,7 +49,6 @@ class EventListView(ListView):
     paginate_by = 12
 
     # TODO: Filtering and connect the events with the Club category
-
     # def get_queryset(self, **kwargs):
     #     qs = super().get_queryset(**kwargs)
     #     qs = qs.filter(status=Event.StatusChoices.accepted)
@@ -69,6 +69,10 @@ class EventListView(ListView):
             queryset = queryset.filter(club__category=category)
         if date_filter:
             queryset = queryset.filter(date__date=date_filter)
+
+        # TODO: sorting by date
+        # queryset = queryset.order_by('-date')
+
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -78,6 +82,72 @@ class EventListView(ListView):
         context['categories'] = Club.objects.filter(id__in=accepted_club_ids).values_list('category', flat=True).distinct()
         return context
 
+# Filtering by week 
+
+
+# class EventListView(ListView):
+#     model = Event
+#     template_name = "event_list.html"
+#     paginate_by = 12
+
+#     # TODO: Filtering and connect the events with the Club category
+#     # def get_queryset(self, **kwargs):
+#     #     qs = super().get_queryset(**kwargs)
+#     #     qs = qs.filter(status=Event.StatusChoices.accepted)
+#     #     # category = self.request.GET.get('category', None)
+#     #     # if category and category != 'all':  # Assuming 'all' or empty is used for no filter
+#     #     #     qs = qs.filter(club__category=category)
+#     #     return qs
+
+#     # def get_queryset(self):
+#     #     category = self.request.GET.get('category', None)
+#     #     # By date
+#     #     date_filter = self.request.GET.get('date', None)
+#     #     # queryset = Event.objects.prefetch_related('club')  # Prefetch related club
+#     #     queryset = Event.objects.select_related('club')  # Changed to `select_related` is more appropriate here
+#     #     queryset = queryset.filter(status=Event.StatusChoices.accepted)
+
+#     #     if category and category != 'all':  # Ensure 'all' is an option to list all categories
+#     #         queryset = queryset.filter(club__category=category)
+#     #     if date_filter:
+#     #         queryset = queryset.filter(date__date=date_filter)
+
+#     def get_queryset(self):
+#         category = self.request.GET.get('category', None)
+#         date_filter = self.request.GET.get('date', None)
+#         queryset = Event.objects.select_related('club').filter(status=Event.StatusChoices.accepted)
+
+#         if category and category != 'all':
+#             queryset = queryset.filter(club__category=category)
+#         if date_filter:
+#             year, month, day = map(int, date_filter.split('-'))
+#             date_obj = timezone.datetime(year, month, day)
+#             start_of_week = date_obj - timedelta(days=date_obj.weekday())
+#             end_of_week = start_of_week + timedelta(days=6)
+#             queryset = queryset.filter(date__range=[start_of_week, end_of_week])
+        
+#         queryset = queryset.order_by('date')
+#         return queryset
+#         # TODO: sorting by date
+#         # queryset = queryset.order_by('-date')
+
+#         return queryset
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         events = list(self.object_list)
+#         events_by_week = {}
+#         for event in events:
+#             week_start = event.date - timedelta(days=event.date.weekday())
+#             if week_start not in events_by_week:
+#                 events_by_week[week_start] = []
+#             events_by_week[week_start].append(event)
+
+#         context['events_by_week'] = events_by_week
+#         accepted_club_ids = Event.objects.filter(status=Event.StatusChoices.accepted).values_list('club_id', flat=True).distinct()
+#         context['categories'] = Club.objects.filter(id__in=accepted_club_ids).values_list('category', flat=True).distinct()
+#         return context
+    
 class EventDetailView(DetailView):
     model = Event
     template_name = "event_detail.html"
@@ -350,11 +420,29 @@ class ClubCreateView(CreateView):
     #   return super().form_valid(form)
 
 
+# class ClubUpdateView(UpdateView):
+#     model = Club
+#     template_name = "club_edit.html"
+#     fields = "__all__"
+
 class ClubUpdateView(UpdateView):
     model = Club
+    form_class = CustomManagerClubChangeForm
     template_name = "club_edit.html"
-    fields = "__all__"
-    
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['instance'] = self.object
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if "form" not in context:  # Ensuring the form is instantiated
+            context["form"] = self.form_class(instance=self.object)
+        form = context["form"]
+        if hasattr(form.fields["manager"], "queryset"):
+            context["managers"] = form.fields["manager"].queryset
+        return context
     
     
 
