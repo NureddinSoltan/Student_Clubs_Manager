@@ -1,0 +1,11 @@
+<!-- notifications.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Notifications</h2>
+<ul>
+    {% for notification in object_list %}
+    <li>{{ notification.message }} - {% if not notification.read %}<strong>New</strong>{% endif %}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

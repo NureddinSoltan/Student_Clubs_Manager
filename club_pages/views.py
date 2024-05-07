@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView, RedirectView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Event, ActivityForm, Club, User, EventEdit
+from .models import Event, ActivityForm, Club, User, EventEdit, Notification
 from django.urls import reverse_lazy, reverse
 from django.utils import timezone
 from datetime import timedelta
@@ -632,7 +632,56 @@ class AcceptRequestView(RedirectView):
         if self.kwargs["request_type"] == Event.model_display():
             object = Event.objects.get(pk=self.kwargs["pk"])
             object.status = Event.StatusChoices.accepted
+            # TODO: What's going on here
+            self.create_notification("Creating an Event ", object, "accepted")
 
+# Third approach
+        if self.kwargs["request_type"] == EventEdit.model_display():
+            # import ipdb; ipdb.set_trace()
+            object = EventEdit.objects.get(pk=self.kwargs["pk"])
+            populted_fields = {key: value for key, value in object.__dict__.items() if value is not None}
+            # Remove keys that start with underscore (internal use)
+            keys_to_remove = [key for key in populted_fields if key.startswith('_')]
+            keys_to_remove.extend(["event_id", "status", "id", "updated_at"])
+            for key in keys_to_remove:
+                del populted_fields[key]
+            object.status = EventEdit.StatusChoices.accepted
+            # TODO: What's going on here
+            self.create_notification("Editing an Event Post " , object.event, "accepted")
+            # Assuming you meant to update the Event object associated with this EventEdit
+            # if hasattr(object, 'event') and object.event:  # Not important 
+            for key, value in populted_fields.items():
+                setattr(object.event, key, value)
+            object.event.save()
+
+        if self.kwargs["request_type"] == ActivityForm.model_display():
+            object = ActivityForm.objects.get(pk=self.kwargs["pk"])
+            object.status = ActivityForm.StatusChoices.accepted
+            object.status = ActivityForm.StatusChoices.accepted
+            # TODO: What's going on here
+            self.create_notification("Creating an ActivityForm " ,object, "accepted")
+        object.save()
+        return reverse("requests")
+    
+    # def create_notification(self, obj, action):
+    #     Notification.objects.create(
+    #         recipient=obj.event.club.manager,
+    #         message=f"Your request for {obj.title} has been {action}."
+    #     )
+    def create_notification(self, type, obj, action):
+        if hasattr(obj, 'event') and obj.event.club.manager:
+            recipient = obj.event.club.manager
+        elif hasattr(obj, 'club') and obj.club.manager:
+            recipient = obj.club.manager
+        else:
+            print("Error: No manager found to send notification.")
+            return  # Exit if there is no manager to notify
+
+        Notification.objects.create(
+            recipient=recipient,
+            message=f"Your request for {type} {obj.title} has been {action}."
+        )
+    
 # fIRST AOORIACH
         # if self.kwargs["request_type"] == EventEdit.model_display():
         #     object = EventEdit.objects.get(pk=self.kwargs["pk"])
@@ -659,28 +708,6 @@ class AcceptRequestView(RedirectView):
         #     object.status = EventEdit.StatusChoices.accepted
         #     EventEdit.event.objects.update(**edited_fields)
 
-# Third approach
-        if self.kwargs["request_type"] == EventEdit.model_display():
-            # import ipdb; ipdb.set_trace()
-            object = EventEdit.objects.get(pk=self.kwargs["pk"])
-            populted_fields = {key: value for key, value in object.__dict__.items() if value is not None}
-            # Remove keys that start with underscore (internal use)
-            keys_to_remove = [key for key in populted_fields if key.startswith('_')]
-            keys_to_remove.extend(["event_id", "status", "id", "updated_at"])
-            for key in keys_to_remove:
-                del populted_fields[key]
-            object.status = EventEdit.StatusChoices.accepted
-            # Assuming you meant to update the Event object associated with this EventEdit
-            # if hasattr(object, 'event') and object.event:  # Not important 
-            for key, value in populted_fields.items():
-                setattr(object.event, key, value)
-            object.event.save()
-
-        if self.kwargs["request_type"] == ActivityForm.model_display():
-            object = ActivityForm.objects.get(pk=self.kwargs["pk"])
-            object.status = ActivityForm.StatusChoices.accepted
-        object.save()
-        return reverse("requests")
 
 
 class RejectRequestView(RedirectView):
@@ -689,11 +716,53 @@ class RejectRequestView(RedirectView):
         if self.kwargs["request_type"] == Event.model_display():
             object = Event.objects.get(pk=self.kwargs["pk"])
             object.status = Event.StatusChoices.rejected
+            self.create_notification("Creating an Event ", object, "rejected")
+
         if self.kwargs["request_type"] == EventEdit.model_display():
             object = EventEdit.objects.get(pk=self.kwargs["pk"])
             object.status = EventEdit.StatusChoices.rejected
+            # TODO: What's going on here
+            self.create_notification("Editing an Event Post " , object.event, "rejected")
+
         if self.kwargs["request_type"] == ActivityForm.model_display():
             object = ActivityForm.objects.get(pk=self.kwargs["pk"])
             object.status = ActivityForm.StatusChoices.rejected
+            # TODO: What's going on here
+            self.create_notification("Creating an ActivityForm " ,object, "rejected")
+
         object.save()
         return reverse("requests")
+    
+    def create_notification(self, type, obj, action):
+        if hasattr(obj, 'event') and obj.event.club.manager:
+            recipient = obj.event.club.manager
+        elif hasattr(obj, 'club') and obj.club.manager:
+            recipient = obj.club.manager
+        else:
+            print("Error: No manager found to send notification.")
+            return  # Exit if there is no manager to notify
+
+        Notification.objects.create(
+            recipient=recipient,
+            message=f"Your request for {type} {obj.title} has been {action}."
+        )
+
+
+class NotificationListView(ListView):
+    model = Notification
+    template_name = 'notifications.html'
+
+    def get_queryset(self):
+        return Notification.objects.filter(recipient=self.request.user).order_by('-created_at')
+
+    def create_notification(self, obj, action):
+        print(obj.author)
+        if not obj.author:
+            # Print to console for debugging purposes
+            print(f"Attempted to create a notification for an object without an author: {obj}")
+            return  # Exit the function to avoid creating the notification
+
+        Notification.objects.create(
+            recipient=obj.author,
+            message=f"Your request for {obj.title} has been {action}."
+        )

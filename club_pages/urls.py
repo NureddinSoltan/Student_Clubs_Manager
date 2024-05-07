@@ -20,6 +20,7 @@ from .views import (
     RejectRequestView,
     EditEventDetailView,
     ConfMsgActivityFormPageView,
+    NotificationListView,
 )
 
 
@@ -59,4 +60,5 @@ urlpatterns = [
     # Confitmation messages
     path("confmsg/", ConfMsgActivityFormPageView.as_view(), name="confirmation_message"),
 
+    path("notifications/", NotificationListView.as_view(), name="notifications")
 ]
