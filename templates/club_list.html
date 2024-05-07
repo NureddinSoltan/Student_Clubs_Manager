@@ -57,7 +57,7 @@
         <a href="{% url 'club_detail' club.pk %}" class="card-link">
           <div class="card text-center border-1">
             <!-- Photo of the club -->
-            <img src="{{club.club_imgage.url}}" class="card-img-top rounded-circle mx-auto d-block border-4 mt-3"
+            <img src="{{club.club_image.url}}" class="card-img-top rounded-circle mx-auto d-block border-4 mt-3"
               alt="Club 1 Image">
             <div class="card-body">
               <!-- Club name -->
@@ -127,8 +127,8 @@
 <p><a href="{% url 'club_edit' club.pk%}">+ Edit clubs</a></p>
 <p><a href="{% url 'club_delete' club.pk%}">+ delete clubs</a></p>
 <p>{{club.category}}</p>
-<img src="{{club.club_imgage.url}}" alt="">
-{{club.club_imgage.url}}
+<img src="{{club.club_image.url}}" alt="">
+{{club.club_image.url}}
 <hr>
 {% endfor %}
 </div>

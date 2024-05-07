@@ -17,10 +17,10 @@ class User(AbstractUser):
         ADMIN = "ADMIN", "admin"
         MANAGER = "MANAGER", "manager"
         STUDENT = "STUDENT", "student"
-    base_role = Role.ADMIN  # Assign the base role when logging
+    base_role = Role.STUDENT  # Assign the base role when logging
 
     # Adding a new field to the base table
-    role = models.CharField(max_length=50, choices=Role.choices, default = base_role)
+    role = models.CharField(max_length=50, choices=Role.choices, default = base_role, null= True, blank= True)
     student_id = models.PositiveIntegerField(unique=True, null=True, validators=[validate_length]) #  min_length=9 isn't working
 
 

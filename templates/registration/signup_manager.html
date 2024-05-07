@@ -39,7 +39,7 @@
         border-radius: 10px;
     }
 </style>
-
+{% comment %}
 <body>
     <div class="container mt-5">
         <div class="row justify-content-center">
@@ -47,30 +47,47 @@
                 <div class="card rounded-4 p-4 form-container">
                     <button class="btn btn-secondary back-button" onclick="window.history.back()">&lt;</button>
                     <h2 class="text-center mb-4">Sign Up - Managers</h2>
-                    <form id="signupForm">
+                    <form action="{% url 'signup_manager' %}" method="post" id="signupForm">
+                        {% csrf_token %}
+                        {{form.non_field_errors}}
                         <div class="mb-3">
                             <label for="username" class="form-label">Username:</label>
-                            <input type="text" class="form-control" id="username">
+                            <input type="text" class="form-control" id="username" name="username">
+                            {{form.username.errors}}
                         </div>
                         <div class="mb-3">
                             <label for="firstName" class="form-label">First Name:</label>
-                            <input type="text" class="form-control" id="firstName">
+                            <input type="text" class="form-control" id="firstName" name="first_name">
+                            {{form.first_name.errors}}
                         </div>
+                        <div class="mb-3">
+                            <label for="lastName" class="form-label">Last Name:</label>
+                            <input type="text" class="form-control" id="lastName" name="last_name">
+                            {{form.last_name.errors}}
+                        </div>
+
                         <div class="mb-3">
                             <label for="email" class="form-label">Email address:</label>
-                            <input type="email" class="form-control" id="email">
+                            <input type="email" class="form-control" id="email" name="email">
+                            {{form.email.errors}}
                         </div>
+
                         <div class="mb-3">
                             <label for="studentId" class="form-label">Student ID:</label>
-                            <input type="text" class="form-control" id="studentId">
+                            <input type="text" class="form-control" id="studentId" name="student_id">
+                            {{form.student_id.errors}}
+
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password:</label>
-                            <input type="password" class="form-control" id="password">
+                            <input type="password" class="form-control" id="password" name="password">
+                            {{form.password.errors}}
                         </div>
                         <div class="mb-3">
                             <label for="confirmPassword" class="form-label">Confirm Password:</label>
-                            <input type="password" class="form-control" id="confirmPassword">
+                            <input type="password" class="form-control" id="confirmPassword" name="password_confirm">
+                            {{form.password_confirm.errors}}
+
                         </div>
                         <div id="passwordValidation" class="mb-3"></div>
                         <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
@@ -80,6 +97,8 @@
         </div>
     </div>
 </body>
+{% endcomment %}
+
 <h2>Sign up</h2>
 <form method="post">
     {% csrf_token %}
