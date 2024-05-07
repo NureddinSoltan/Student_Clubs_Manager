@@ -55,7 +55,22 @@
           <div class="mb-4">
             <strong>Other Requests:</strong> <span>{{activityform.other_reqests}}</span>
           </div>
+          <div class="d-flex align-items-center justify-content-center gap-2">
+            {% if activityform.status == "WAITING" %}
+            <a href="{% url 'accept_request' activityform.id activityform.get_request_type_display %}">
+              <button class="btn btn-success btn-sm mb-1">Accept</button>
+            </a>
+            <a href="{% url 'reject_request' activityform.id activityform.get_request_type_display %}">
+              <button class="btn btn-danger btn-sm mb-1">Reject</button>
+            </a>
+            {% elif activityform.status == "ACCEPTED" %}
+            <i class="fas fa-check-circle" style="color: green;"> Accepted </i>
+            {% elif activityform.status == "REJECTED" %}
+            <i class="fas fa-times-circle" style="color: red;"> Rejected </i>
+            {% endif %}
+          </div>
         </div>
+
       </div>
     </div>
   </div>

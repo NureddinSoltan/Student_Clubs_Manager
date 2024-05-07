@@ -8,7 +8,20 @@
 {% endblock %}
 
 {% block content %}
-
+<style>
+  .log-in-btn button {
+    background-color: #415A62; /* Dark green color */
+    color: #ffffff; /* White text color */
+    padding: 13px 25px;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+  }
+  
+  .log-in-btn button:hover {
+    background-color: #1b5e20; /* Darker shade of green on hover */
+  }
+</style>
 <body>
   <div class="parent">
     <div class="container">
@@ -36,11 +49,16 @@
             <h3 class="log-sing-heading log-in-heading">sign up</h3>
             <!-- box-- -->
             <div class="box--for--forms">
-              <form action="">
-                <label for="">First name</label>
+              <form action="{% url 'signup' %}" method="post" id="signupForm">
+                {% csrf_token %}
+                {{form.non_field_errors}}
+
+                <label for="">Username</label>
                 <!-- foerm and svg center -->
                 <div class="form--flex">
-                  <input type="text" placeholder="First name">
+                  <input type="text" placeholder="Username" name="username">
+                  {{form.username.errors}}
+
                   <svg class="icon-box" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -49,10 +67,25 @@
                       stroke-linejoin="round" />
                   </svg>
 
+                <label for="">First name</label>
+                <!-- foerm and svg center -->
+                <div class="form--flex">
+                  <input type="text" placeholder="First name" name="first_name">
+                  {{form.first_name.errors}}
+
+                  <svg class="icon-box" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M5 20V19C5 16.2386 7.23858 14 10 14H14C16.7614 14 19 16.2386 19 19V20M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
+                      stroke="black" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
                 </div>
+
                 <label for="">Last Name</label>
                 <div class="form--flex">
-                  <input type="text" placeholder="Last Name">
+                  <input type="text" placeholder="Last Name" name="last_name">
+                  {{form.last_name.errors}}
                   <svg class="icon-box" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -65,7 +98,8 @@
 
                 <label for=""> Email</label>
                 <div class="form--flex">
-                  <input type="email" placeholder="Email">
+                  <input type="email" placeholder="Email" name="email">
+                  {{form.email.errors}}
                   <svg class="icon-box" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <path d="M4 7.00005L10.2 11.65C11.2667 12.45 12.7333 12.45 13.8 11.65L20 7" stroke="black"
@@ -74,9 +108,11 @@
                       stroke-linecap="round" />
                   </svg>
                 </div>
+
                 <label for="">Student ID</label>
                 <div class="form--flex">
-                  <input type="text" placeholder="Student ID">
+                  <input type="text" placeholder="Student ID" name="student_id">
+                  {{form.student_id.errors}}
                   <svg class="icon-box" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -91,9 +127,11 @@
                       stroke-opacity="0.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
                 </div>
+
                 <label for="">Password</label>
                 <div class="form--flex">
-                  <input type="password" placeholder="Password">
+                  <input type="password" placeholder="Password" name="password1">
+                  {{form.password1.errors}}
                   <svg class="icon-box" width="16" height="20" viewBox="0 0 16 20" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -102,9 +140,11 @@
                       stroke-linejoin="round" />
                   </svg>
                 </div>
+
                 <label for="">Confirm password</label>
                 <div class="form--flex">
-                  <input type="password" placeholder="Confirm password">
+                  <input type="password" placeholder="Confirm password" name="password2">
+                  {{form.password2.errors}}
                   <svg class="icon-box" width="16" height="20" viewBox="0 0 16 20" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -113,9 +153,11 @@
                       stroke-linejoin="round" />
                   </svg>
                 </div>
+
               </form>
               <div class="text-ct">
-                <a href="" class="btn-final">sign up</a>
+                <div class="text-ct log-in-btn"><button type="submit">Sign up</button>
+                </div>
               </div>
             </div>
           </div>
@@ -126,11 +168,12 @@
 </body>
 
 
-
+{% comment %}
 <h2>Sign up</h2>
 <form method="post">
   {% csrf_token %}
   {{ form.as_p }}
   <button type="submit" class="btn btn-success">Sign Up</button>
 </form>
+  {% endcomment %}
 {% endblock content %}

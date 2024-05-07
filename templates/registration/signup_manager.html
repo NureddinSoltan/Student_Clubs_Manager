@@ -39,7 +39,6 @@
         border-radius: 10px;
     }
 </style>
-{% comment %}
 <body>
     <div class="container mt-5">
         <div class="row justify-content-center">
@@ -80,13 +79,13 @@
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password:</label>
-                            <input type="password" class="form-control" id="password" name="password">
-                            {{form.password.errors}}
+                            <input type="password" class="form-control" id="password" name="password1">
+                            {{form.password1.errors}}
                         </div>
                         <div class="mb-3">
                             <label for="confirmPassword" class="form-label">Confirm Password:</label>
-                            <input type="password" class="form-control" id="confirmPassword" name="password_confirm">
-                            {{form.password_confirm.errors}}
+                            <input type="password" class="form-control" id="confirmPassword" name="password2">
+                            {{form.password2.errors}}
 
                         </div>
                         <div id="passwordValidation" class="mb-3"></div>
@@ -97,12 +96,13 @@
         </div>
     </div>
 </body>
-{% endcomment %}
-
+{% comment %}
 <h2>Sign up</h2>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class="btn btn-success">Sign Up</button>
 </form>
+{% endcomment %}
+
 {% endblock content %}

@@ -213,7 +213,13 @@
               {% endif %}
             </td> -->
 
-            <td>{{ request.club.title}}</a></td>
+            <td>
+              {% if request.get_request_type_display == "Edit Event Post"%}
+              {{request.event.club.title}}
+              {% else %}
+              {{ request.club.title}}</td>
+              {% endif %}
+
             <td>
               {% if request.status == "WAITING" %}
               <a href="{% url 'accept_request' request.id request.get_request_type_display %}">

@@ -1,20 +1,30 @@
-<h1>Hello World</h1>
+<!-- templates/post_new.html -->
+{% extends "base.html"%}
+{% load static %}
+{% block title %} Edit Event Post {% endblock title %}
+{% block css%}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
 
+{% block content %}
+
+{% comment %}
 <div class="post-entry">
 
-  <h2>
-
+  <h1>Title</h1>
+  <h3>
     old: {{original_event.title}}
     {% if eventedit.title is not none %}
-  <br>new: {{ eventedit.title }}
+    <br>new: {{ eventedit.title }}
     {% endif %}
-  </h2>
+  </h3>
+
   <p>{{eventedit.location}}</p>
   {{original_event.location}}
   {% if eventedit.location is not none %}
   <br>new: {{ eventedit.location }}
-    {% endif %}
-  
+  {% endif %}
+
 
   <p>{{eventedit.club}}</p>
   <p>{{eventedit.first_name}}</p>
@@ -30,8 +40,139 @@
   <p>{{eventedit.rule|safe}}</p>
   <p>{{eventedit.faq|safe}}</p>
 
+{% endcomment %}
 
-  <!-- it will be the same because they're coming from the DetailedView
-  <h2>{{object.title}}</h2>
-  <p>{{object.body}}</p> -->
 </div>
+
+<body style="background-color: #f8f9fa;">
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card rounded-4 p-4">
+          <button class="btn btn-secondary back-button" onclick="window.history.back()">&lt;</button>
+          <h2 class="text-center mb-4">Edit Event</h2>
+          <div class="mb-3">
+            <h4><strong>Event Title:</strong></h3>
+              <div>
+                <p>
+                  {% if eventedit.title is not none %}
+                  <p class="text-danger"> Old: {{original_event.title}} </p>
+                  <p class="text-success"> New: {{eventedit.title}} </p>
+                  {% endif %}
+                </p>
+              </div>
+          </div>
+
+          <div class="mb-4">
+            <h4><strong>Event Image:</strong></h3>
+              <div>
+                <p>
+                  {% if eventedit.event_image is not none %}
+                  <p class="text-danger"> Old: {{original_event.event_image}} </p>
+                  <img src="{{ original_event.event_image.url }}" class="img-fluid" alt="Event Image">
+                  <p class="text-success mt-3"> New: {{eventedit.event_image}} </p>
+                  <img src="{{ eventedit.event_image.url }}" class="img-fluid" alt="Event Image">
+                  {% endif %}
+                </p>
+              </div>
+          </div>
+
+          <div class="mb-4">
+            <h4><strong>Location</strong></h3>
+              <div>
+                <p>
+                  {% if eventedit.location is not none %}
+                  <p class="text-danger"> Old: {{original_event.location}} </p>
+                  <p class="text-success"> New: {{eventedit.location}} </p>
+                  {% endif %}
+                </p>
+              </div>
+          </div>
+
+          <div class="mb-4">
+            <h4><strong>Date and time</strong></h3>
+              <div>
+                <p>
+                  {% if eventedit.date is not none %}
+                  <p class="text-danger"> Old: {{original_event.date}} </p>
+                  <p class="text-success"> New: {{eventedit.date}} </p>
+                  {% endif %}
+                </p>
+              </div>
+          </div>
+
+          <div class="mb-4">
+            <h4><strong>Description Image Section: </strong></h3>
+              <div>
+                <p>
+                  {% if eventedit.description is not none %}
+                  <p class="text-danger"> Old: {{original_event.description}} </p>
+                  <p class="text-success"> New: {{eventedit.description}} </p>
+                  {% endif %}
+                </p>
+              </div>
+          </div>
+
+          <div class="mb-4">
+            <h4><strong>Body: </strong></h3>
+              <div>
+                <p>
+                  {% if eventedit.body is not none %}
+                  <p class="text-danger"> Old: {{original_event.body}} </p>
+                  <p class="text-success"> New: {{eventedit.body}} </p>
+                  {% endif %}
+                </p>
+              </div>
+          </div>
+
+          <div class="mb-4">
+            <h4><strong>Rules: </strong></h3>
+              <div>
+                <p>
+                  {% if eventedit.rule is not none %}
+                  <p class="text-danger"> Old: {{original_event.rule}} </p>
+                  <p class="text-success"> New: {{eventedit.rule}} </p>
+                  {% endif %}
+                </p>
+              </div>
+          </div>
+
+          <div class="mb-4">
+            <h4><strong>Faq: </strong></h3>
+              <div>
+                <p>
+                  {% if eventedit.faq is not none %}
+                  <p class="text-danger"> Old: {{original_event.faq}} </p>
+                  <p class="text-success"> New: {{eventedit.faq}} </p>
+                  {% endif %}
+                </p>
+              </div>
+          </div>
+
+          <div class="d-flex align-items-center justify-content-center gap-2">
+            {% if eventedit.status == "WAITING" %}
+            <a href="{% url 'accept_request' eventedit.id eventedit.get_request_type_display %}">
+              <button class="btn btn-success btn-md mb-1 ">Accept</button>
+            </a>
+            <a href="{% url 'reject_request' eventedit.id eventedit.get_request_type_display %}">
+              <button class="btn btn-danger btn-md mb-1">Reject</button>
+            </a>
+            {% elif eventedit.status == "ACCEPTED" %}
+            <i class="fas fa-check-circle" style="color: green;"> Accepted </i>
+            {% elif eventedit.status == "REJECTED" %}
+            <i class="fas fa-times-circle" style="color: red;"> Rejected </i>
+            {% endif %}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</body>
+
+
+{% endblock content %}
+
+{% block js%}
+<script src="{% static 'js/popupmessage.js' %}"></script>
+{% endblock %}

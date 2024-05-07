@@ -290,6 +290,13 @@ class EventUpdateView(UpdateView):
         event_edit.save()
         form.instance = self.get_object()
         return super().form_valid(form)
+    
+
+    def get_success_url(self):
+        # return reverse_lazy('event_detail', kwargs={'pk': self.object.pk})
+        # return reverse_lazy('/confmsg/activityform/?type=event')
+        url = reverse('confirmation_message')  # Ensure the URL name is correctly defined in your urls.py
+        return f"{url}?type=event"
 
 
 class EventDeleteView(DeleteView):

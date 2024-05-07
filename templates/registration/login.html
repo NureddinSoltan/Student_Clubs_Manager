@@ -33,7 +33,7 @@
 
         <div class="grid---3 sig-in margin-top">
           <div class="text-container">
-            <h3 class="log-sing-heading only-log-in log-in-heading">Log in Student</h3>
+            <h3 class="log-sing-heading only-log-in log-in-heading">Log in to your account</h3>
             <!-- box-- -->
             <div class="box--for--forms">
               <form action="{% url 'login' %}" method="post">
@@ -43,7 +43,7 @@
                 <label for="">Student Email</label>
                 <div class="form--flex student log--in">
                   <!-- <input name="{{ user.username }}" type="text" placeholder="Student Email"> -->
-                  <input type="text" class="form-control" id="email" name="username">
+                  <input type="text" class="form-control" placeholder="Email" id="email" name="username">
                   {{form.username.errors}}
                   <svg class="icon-box" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
@@ -56,7 +56,7 @@
                 <label for="">Password</label>
                 <div class="form--flex">
                   <!-- <input name="{{ user.password }}" type="password" placeholder="Password"> -->
-                  <input type="password" class="form-control" id="password" name="password">
+                  <input type="password" class="form-control" placeholder="Password" id="password" name="password">
                   {{form.password.errors}}
                   <svg class="icon-box" width="16" height="20" viewBox="0 0 16 20" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
@@ -66,8 +66,11 @@
                       stroke-linejoin="round" />
                   </svg>
                 </div>
+                {% comment %}
                 <a href="reset_your_email.html" class="forget--pas">forget passwrod</a>
-                <p class="don't-have-accont">Dont have an account?<span><a class="dont-link" href="sign up.html"> Sign
+                {% endcomment %}
+
+                <p class="don't-have-accont">Do not have an account?<span><a class="dont-link" href="{% url 'signup' %}"> Sign
                       up</a></span></p>
                 <div class="text-ct log-in-btn">
                   <!-- <button class="btn-final log-in-mg" type="submit">Login</button> -->

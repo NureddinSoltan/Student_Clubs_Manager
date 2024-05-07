@@ -1,7 +1,150 @@
-<!-- templates/post_edit.html -->
+<!-- templates/event_new.html -->
 {% extends "base.html"%}
+{% load static %}
+{% block title %} New Event Form {% endblock title %}
+{% block css%}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
 
 {% block content %}
+
+<body style="background-color: #f8f9fa;">
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8"> <!-- Change the wider from here -->
+        <div class="card rounded-4 p-4">
+          <button class="btn btn-secondary back-button" onclick="window.history.back()">&lt;</button>
+          <h2 class="text-center mb-4">Edit Event Post Form</h2>
+          <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="eventTitle" class="form-label">Event title:</label>
+              <input type="text" class="form-control" id="eventTitle" name="title" value="{{ form.title.value }}">
+              {{form.title.errors}}
+
+              {% csrf_token %}
+              {{ form.media }}
+              <div class="mt-4 mb-3">
+                {{ form.event_image.label_tag }}
+                {{ form.event_image }}
+                {{ form.event_image.errors }}
+                <!-- Display the image -->
+                {% if form.instance.event_image %}
+                  <img src="{{ form.instance.event_image.url }}" alt="Current Event Photo" style="width: 200px; height: auto;">
+                {% else %}
+                  <p>No photo uploaded.</p>
+                {% endif %}
+              </div>
+
+            <!-- </div>
+            <div class="mb-3">
+              <label for="eventPhoto" class="form-label">Add Event photo:</label>
+              <input type="file" class="form-control" id="eventPhoto" name="event_image">
+              {{form.event_image.errors}}
+            </div> -->
+
+            <div class="row mb-3">
+              <!-- <div class="col-md-6">
+                <label for="club" class="form-label">Club:</label>
+                <input type="text" class="form-control" id="club" name="club">
+                {{form.club.errors}}
+              </div> -->
+              <div class="col-md-6">
+                <label for="location" class="form-label">Location:</label>
+                <input type="text" class="form-control" id="location" name="location" value="{{ form.location.value }}">
+                {{form.location.errors}}
+              </div>
+
+              <div class="col-md-6">
+                <label for="dateTime" class="form-label">Date and time:</label>
+                <input type="datetime-local" class="form-control" id="dateTime" name="date" value="{{ form.date.value }}">
+                {{form.date.errors}}
+              </div>
+            </div>
+            <!-- <div class="row mb-3"> -->
+            <!-- <div class="col-md-6">
+                <label for="time" class="form-label">Time:</label>
+                <input type="time" class="form-control" id="time">
+              </div> -->
+            <!-- <div class="col-md-6">
+                <label for="location" class="form-label">Location:</label>
+                <input type="text" class="form-control" id="location" name="location">
+                {{form.location.errors}}
+              </div> -->
+            <!-- </div> -->
+
+            <!-- <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="presidentFirstName" class="form-label">Club President's First Name:</label>
+                <input type="text" class="form-control" id="presidentFirstName" name="first_name">
+                {{form.first_name.errors}}
+              </div>
+              <div class="col-md-6">
+                <label for="presidentLastName" class="form-label">Club President's Last Name:</label>
+                <input type="text" class="form-control" id="presidentLastName" name="last_name">
+                {{form.last_name.errors}}
+              </div>
+            </div> -->
+
+            <div class="mb-3">
+              <label for="aboutEvent" class="form-label">
+                Description Image Section:
+                <i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top"
+                  title="This section is for the description that will appear on the out in the image card under the title. it should be more than 100 and less than 200 words"></i>
+              </label>
+              <textarea class="form-control" id="aboutEvent" rows="3" name="description" value="{{ form.description.value }}"></textarea>
+              {{form.description.errors}}
+            </div>
+
+            {% comment %}
+            <div class="mb-3">
+              <label for="aboutEvent" class="form-label">About Event Section:</label>
+              <textarea class="form-control" id="aboutEvent" rows="3" name="body" value="{{ form.body.value }}"></textarea>
+              {{form.body.errors}}
+            </div>
+            <div class="mb-3">
+              <label for="rules" class="form-label">Rules Section:</label>
+              <textarea class="form-control" id="rules" rows="3" name="rule" value="{{ form.rule.value }}"></textarea>
+              {{form.rule.errors}}
+            </div>
+            <div class="mb-3">
+              <label for="faq" class="form-label">FAQ Section:</label>
+              <textarea class="form-control" id="faq" rows="3" name="faq" value="{{ form.faq.value }}"></textarea>
+              {{form.faq.errors}}
+            </div>
+            {% endcomment %}
+
+
+            {% csrf_token %}
+            {{ form.media }}
+            <div class="mb-3">
+              {{ form.body.label_tag }}
+              {{ form.body }}
+              {{ form.body.errors }}
+            </div>
+
+            {{ form.media }}
+            <div class="mb-3">
+              {{ form.rule.label_tag }}
+              {{ form.rule }}
+              {{ form.rule.errors }}
+            </div>
+            {{ form.media }}
+            <div class="mb-3">
+              {{ form.faq.label_tag }}
+              {{ form.faq }}
+              {{ form.faq.errors }}
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+{% endblock content%}
+
 <h1>Edit post</h1>
 <form action="" method="post" enctype="multipart/form-data">
   {% csrf_token %}
@@ -9,6 +152,5 @@
   {{form.as_p}}
   <input type="submit" value="update">
 </form>
-{% endblock content%}
 {% comment %}
 {% endcomment %}

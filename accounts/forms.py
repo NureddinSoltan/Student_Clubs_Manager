@@ -9,9 +9,12 @@ class CustomUserCreationForm(UserCreationForm):
     fields = (
       "username",
       "first_name",
+      "last_name",
       "email",
       "role",
       "student_id",
+      "password1",  # Default password field
+      "password2",  # Confirm password field
     )
 
 class CustomUserChangeForm(UserChangeForm):
@@ -26,13 +29,15 @@ class CustomUserChangeForm(UserChangeForm):
     )
 
 class CustomManagerCreationForm(UserCreationForm):
-  class Meta(UserCreationForm):
+  class Meta(UserCreationForm.Meta):
     model = User
     fields = (
       "username",
       "first_name",
       "last_name",
       "email",
+      "password1",  # Default password field
+      "password2",  # Confirm password field
       "student_id",
     )
 

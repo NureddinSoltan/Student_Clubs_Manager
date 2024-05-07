@@ -40,7 +40,7 @@
                 <input type="text" class="form-control" id="location" name="location">
                 {{form.location.errors}}
               </div>
-              
+
               <div class="col-md-6">
                 <label for="dateTime" class="form-label">Date and time:</label>
                 <input type="datetime-local" class="form-control" id="dateTime" name="date">
@@ -48,11 +48,11 @@
               </div>
             </div>
             <!-- <div class="row mb-3"> -->
-              <!-- <div class="col-md-6">
+            <!-- <div class="col-md-6">
                 <label for="time" class="form-label">Time:</label>
                 <input type="time" class="form-control" id="time">
               </div> -->
-              <!-- <div class="col-md-6">
+            <!-- <div class="col-md-6">
                 <label for="location" class="form-label">Location:</label>
                 <input type="text" class="form-control" id="location" name="location">
                 {{form.location.errors}}
@@ -76,27 +76,18 @@
               <label for="aboutEvent" class="form-label">
                 Description Image Section:
                 <i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top"
-                  title="This section is for the description that will appear on the out in the image card under the title."></i>
+                  title="This section is for the description that will appear on the out in the image card under the title. it should be more than 100 and less than 200 words"></i>
               </label>
               <textarea class="form-control" id="aboutEvent" rows="3" name="description"></textarea>
               {{form.description.errors}}
             </div>
 
-            <!-- <div class="mb-3">
+            {% comment %}
+            <div class="mb-3">
               <label for="aboutEvent" class="form-label">About Event Section:</label>
               <textarea class="form-control" id="aboutEvent" rows="3" name="body"></textarea>
               {{form.body.errors}}
-            </div> -->
-
-            {% csrf_token %}
-            {{ form.media }}
-            <div class="mb-3">
-              {{ form.body.label_tag }}
-              {{ form.body }}
-              {{ form.body.errors }}
             </div>
-
-
             <div class="mb-3">
               <label for="rules" class="form-label">Rules Section:</label>
               <textarea class="form-control" id="rules" rows="3" name="rule"></textarea>
@@ -107,6 +98,30 @@
               <textarea class="form-control" id="faq" rows="3" name="faq"></textarea>
               {{form.faq.errors}}
             </div>
+            {% endcomment %}
+
+
+            {% csrf_token %}
+            {{ form.media }}
+            <div class="mb-3">
+              {{ form.body.label_tag }}
+              {{ form.body }}
+              {{ form.body.errors }}
+            </div>
+            
+            {{ form.media }}
+            <div class="mb-3">
+              {{ form.rule.label_tag }}
+              {{ form.rule }}
+              {{ form.rule.errors }}
+            </div>
+            {{ form.media }}
+            <div class="mb-3">
+              {{ form.faq.label_tag }}
+              {{ form.faq }}
+              {{ form.faq.errors }}
+            </div>
+
             <button type="submit" class="btn btn-primary btn-block">Send</button>
           </form>
         </div>
