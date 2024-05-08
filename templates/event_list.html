@@ -14,7 +14,7 @@
   <div class="landing-image d-flex align-items-center justify-content-center" style="height: 50vh;">
     <div class="text-center"> <!-- Add the text-center class here -->
       <h1 class="text-white">Welcome</h1>
-      <h3 class="text-white p-4">Welcome to this page where you can discover our club</h3>
+      <h3 class="text-white p-4">Welcome to this page where you can discover our events</h3>
     </div>
   </div>
   <!-- End Landing -->
@@ -53,7 +53,7 @@
       <tr>
         <th scope="col">Date</th>
         <th scope="col">Event</th>
-        <th scope="col">Event</th>
+        <th scope="col">Club</th>
 
       </tr>
     </thead>
@@ -62,7 +62,13 @@
       <tr>
         <td>{{ event.date }}</td>
         <td><a href="{% url 'event_detail' event.pk %}">{{ event.title }}</a></td>
-        <td><a href="{% url 'event_detail' event.pk %}">{{ event.club.title }}</a></td>
+        <td>
+          {% if event.club %}
+          <a href="{% url 'club_detail' event.club.pk %}">{{ event.club.title }}</a>
+        {% else %}
+          No club assigned
+        {% endif %}
+        </td>
       </tr>
       {% empty %}
       <tr>

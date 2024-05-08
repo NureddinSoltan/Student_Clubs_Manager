@@ -20,6 +20,13 @@ class HomePageView(TemplateView):
         context = super().get_context_data(**kwargs)
         user = self.request.user
         
+        # Fetch the last three events sorted by date in descending order
+        # TODO: by Id or by what ?
+        events = Event.objects.order_by('-id')[:3]  # Replace 'date' with 'created_at' if that's more appropriate
+        context['event_list'] = events
+        clubs = Club.objects.order_by('-id')[:4]  # Replace 'date' with 'created_at' if that's more appropriate
+        context['club_list'] = clubs
+
         # Check if the user is a manager and has an associated club
         if user.is_authenticated and user.role == User.Role.MANAGER:
             club = Club.objects.filter(manager=user).first()
@@ -175,6 +182,10 @@ class EventDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         event = self.object  # current event
+        # Filtering the events
+        events = Event.objects.order_by('-id')[:3]  # Replace 'date' with 'created_at' if that's more appropriate
+        context['event_list'] = events
+
         event_edits = EventEdit.objects.filter(event=event, status=EventEdit.StatusChoices.accepted).order_by('-id')
         if event_edits.exists():
             event_edit = event_edits.first()  # last one
@@ -191,7 +202,6 @@ class EventDetailView(DetailView):
         else:
             context['modified_fields'] = {}
         return context
-
 
 class EventCreateView(CreateView):
     model = Event

@@ -47,7 +47,7 @@ Hi {{ user.username }}! you are an {{ user.role }}
                 <a href="{%url 'requests'%}" class="call-action-white">Requests</a>
                 {% elif user.role == "MANAGER"%}
                 {% if club_id %}
-                <p><a href="{% url 'club_detail' pk=club_id %}"  class="call-action-white">Your Club</a></p>
+                <p><a href="{% url 'club_detail' pk=club_id %}" class="call-action-white">Your Club</a></p>
                 {% else %}
                 <p class="p-3">You do not manage any club.</p>
                 {% endif %}
@@ -67,6 +67,9 @@ Hi {{ user.username }}! you are an {{ user.role }}
 <!-- ending Landing background -->
 
 <main>
+    <!-- This for the authenticated section for clubs and events -->
+    {% if user.is_authenticated %}
+
     <div class="parent">
         <div class="part-1">
             <!-- Start club section -->
@@ -80,15 +83,13 @@ Hi {{ user.username }}! you are an {{ user.role }}
                 <!-- Start Card section -->
                 <div class="container mt-0" style="max-width: 1200px;">
                     <div class="row row-cols-2 row-cols-md-2 row-cols-lg-4 g-5">
-                        {%comment%}
-                        <!-- {% for club in club_list %} -->
-                        {%endcomment%}
+                        {% for club in club_list %}
                         <div class="col">
                             <!-- Link to the club -->
-                            <a href="" class="card-link">
+                            <a href="{% url 'club_detail' club.pk %}" class="card-link">
                                 <div class="card text-center border-1 card-club">
                                     <!-- Photo of the club -->
-                                    <img src="/Student_Club_Manager_Front_end-dev_real_version/image2/nermin1.JPG"
+                                    <img src="{{club.club_image.url}}"
                                         class="card-club-img-top rounded-circle mx-auto d-block border-4 mt-3"
                                         alt="Club 1 Image">
                                     <div class="card-body">
@@ -98,19 +99,17 @@ Hi {{ user.username }}! you are an {{ user.role }}
                                         <p class="card-text text-muted">{{club.category}}</p>
                                     </div>
                             </a>
-                            <!-- {% if user.role == "ADMIN" %} -->
+                            {% if user.role == "ADMIN" %}
                             <div class="card-footer d-flex justify-content-center align-items-center">
                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                    <a class="btn btn-sm btn-danger me-2" href="">Delete</a>
-                                    <a class="btn btn-sm btn-primary" href="}">Edit</a>
+                                    <a class="btn btn-sm btn-danger me-2" href="{% url 'club_delete' club.pk%}">Delete</a>
+                                    <a class="btn btn-sm btn-primary" href="{% url 'club_edit' club.pk%}">Edit</a>
                                 </div>
                             </div>
-                            <!-- {% endif %} -->
+                            {% endif %}
                         </div>
                     </div>
-                    {%comment%}
-                    <!-- {% endfor %} -->
-                    {%endcomment%}
+                    {% endfor %}
                 </div>
             </div>
             <div class="links-view"><a href="" class="view-all">View all</a></div>
@@ -121,7 +120,7 @@ Hi {{ user.username }}! you are an {{ user.role }}
 
 
 
-
+    <!-- Start of the Events section -->
     <div class="bacground--con">
         <div class="parent">
             <div class="text-centering">
@@ -136,47 +135,54 @@ Hi {{ user.username }}! you are an {{ user.role }}
 
             </div>
 
-            <!-- container -->
-            <div class="container mt-5">
+            <!-- start cards Section -->
+            <div class="container mt-5 ">
                 <div class="row row-cols-1 row-cols-md-3 g-4">
                     <!-- Start card section -->
+                    {% for event in event_list %}
                     <div class="col">
                         <!-- Wrap the card with an anchor tag -->
-                        <!-- Event link -->
-                        <a href="" class="card-link">
+                        <!-- Eventa link -->
+                        <a href="{% url 'event_detail' event.pk %}" class="card-link">
                             <div class="card h-100">
                                 <div class="card-img-top-container">
                                     <!-- Event images -->
-                                    <img src="/Student_Club_Manager_Front_end-dev_real_version/image2/nermin1.JPG"
-                                        class="card-img-top" alt="...">
+                                    <img src="{{event.event_image.url}}" class="card-img-top" alt="...">
                                     <div class="card-img-overlay d-flex justify-content-end flex-column">
                                         <div class="club-name-container">
                                             <!-- club_name -->
-                                            <p class="club-name">ergerg</p>
+                                            <p class="club-name">{{event.club}}</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     <!-- Event title -->
-                                    <h5 class="card-title">ergaergergerag</h5>
+                                    <h5 class="card-title">{{event.title}}</h5>
                                     <!-- Event body -->
-                                    <p class="card-text">dfvdfvaergergergaerg</p>
+                                    <p class="card-text">{{event.description|slice:120}}</p>
+                                    <!-- <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
+                content. This content is a little bit longer.</p> -->
                                 </div>
                         </a>
                         <div class="card-footer d-flex justify-content-between align-items-center">
                             <!-- Event date -->
-                            <small class="text-muted"><i class="fa-regular fa-calendar-days"></i> 02/02/202</small>
+                            <small class="text-muted"><i class="fa-regular fa-calendar-days"></i> {{event.date}}</small>
+                            {% if user.role == "ADMIN" %}
                             <div class="d-flex">
-                                <a class="btn btn-danger me-2" href="">Delete</a>
-                                <a class="btn btn-primary" href="">Edit</a>
+                                <a class="btn btn-danger me-2" href="{% url 'event_delete' event.pk %}">Delete</a>
+                                <a class="btn btn-primary" href="{% url 'event_edit' event.pk %}">Edit</a>
                             </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-            <div class="links-view"><a href="" class="view-all">View all</a></div>
+            <div class="links-view "><a href="" class="view-all">View all</a></div>
         </div>
-    </div>
+        {% endif %}
+    <!-- This for the authenticated section for clubs and events -->
+
 
 
 

@@ -114,7 +114,8 @@
 
   <div class="events-container">
 
-    <div class="container mt-5">
+    <!-- start cards Section -->
+    <div class="container mt-5 ">
       <div class="row row-cols-1 row-cols-md-3 g-4">
         <!-- Start card section -->
         {% for event in event_list %}
@@ -156,112 +157,9 @@
       </div>
       {% endfor %}
 
-      <!-- Repeat the cards -->
-      <!-- Repeat the cards -->
-      <div class="col">
-        <!-- Wrap the card with an anchor tag -->
-        <!-- Event link -->
-        <a href="{% url 'event_detail' event.pk %}" class="card-link">
-          <div class="card h-100">
-            <div class="card-img-top-container">
-              <!-- Event images -->
-              <img src="/image/nermin1.JPG" class="card-img-top" alt="...">
-              <div class="card-img-overlay d-flex justify-content-end flex-column">
-                <div class="club-name-container">
-                  <!-- club_name -->
-                  <p class="club-name">ergerg</p>
-                </div>
-              </div>
-            </div>
-            <div class="card-body">
-              <!-- Event title -->
-              <h5 class="card-title">ergaergergerag</h5>
-              <!-- Event body -->
-              <p class="card-text">dfvdfvaergergergaerg</p>
-            </div>
-        </a>
-        <div class="card-footer d-flex justify-content-between align-items-center">
-          <!-- Event date -->
-          <small class="text-muted"><i class="fa-regular fa-calendar-days"></i> 02/02/202</small>
-          <div class="d-flex">
-            <a class="btn btn-danger me-2" href="{% url 'event_delete' event.pk %}">Delete</a>
-            <a class="btn btn-primary" href="{% url 'event_edit' event.pk %}">Edit</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Repeat the cards -->
-    <!-- Repeat the cards -->
-    <div class="col">
-      <!-- Wrap the card with an anchor tag -->
-      <!-- Event link -->
-      <a href="{% url 'event_detail' event.pk %}" class="card-link">
-        <div class="card h-100">
-          <div class="card-img-top-container">
-            <!-- Event images -->
-            <img src="/image/nermin1.JPG" class="card-img-top" alt="...">
-            <div class="card-img-overlay d-flex justify-content-end flex-column">
-              <div class="club-name-container">
-                <!-- club_name -->
-                <p class="club-name">ergerg</p>
-              </div>
-            </div>
-          </div>
-          <div class="card-body">
-            <!-- Event title -->
-            <h5 class="card-title">ergaergergerag</h5>
-            <!-- Event body -->
-            <p class="card-text">dfvdfvaergergergaerg</p>
-          </div>
-      </a>
-      <div class="card-footer d-flex justify-content-between align-items-center">
-        <!-- Event date -->
-        <small class="text-muted"><i class="fa-regular fa-calendar-days"></i> 02/02/202</small>
-        <div class="d-flex">
-          <a class="btn btn-danger me-2" href="{% url 'event_delete' event.pk %}">Delete</a>
-          <a class="btn btn-primary" href="{% url 'event_edit' event.pk %}">Edit</a>
-        </div>
-      </div>
+
     </div>
   </div>
-  <!-- Repeat the cards -->
-  <div class="col">
-    <!-- Wrap the card with an anchor tag -->
-    <!-- Event link -->
-    <a href="{% url 'event_detail' event.pk %}" class="card-link">
-      <div class="card h-100">
-        <div class="card-img-top-container">
-          <!-- Event images -->
-          <img src="/image/nermin1.JPG" class="card-img-top" alt="...">
-          <div class="card-img-overlay d-flex justify-content-end flex-column">
-            <div class="club-name-container">
-              <!-- club_name -->
-              <p class="club-name">ergerg</p>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <!-- Event title -->
-          <h5 class="card-title">ergaergergerag</h5>
-          <!-- Event body -->
-          <p class="card-text">dfvdfvaergergergaerg</p>
-        </div>
-    </a>
-    <div class="card-footer d-flex justify-content-between align-items-center">
-      <!-- Event date -->
-      <small class="text-muted"><i class="fa-regular fa-calendar-days"></i> 02/02/202</small>
-      <div class="d-flex">
-        <a class="btn btn-danger me-2" href="{% url 'event_delete' event.pk %}">Delete</a>
-        <a class="btn btn-primary" href="{% url 'event_edit' event.pk %}">Edit</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-</div>
-
-
-
 </div>
 </body>
 
