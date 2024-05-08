@@ -1,11 +1,59 @@
 <!-- notifications.html -->
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
+<style>
+  .unread {
+    font-weight: bold;
+    color: red;
+  }
+  .accepted {
+    color: rgb(7, 85, 7);
+  }
+  .rejected {
+    color: red;
+  }
+</style>
+
+<div class="container mt-5">
+  <div>
+    <p>You have {{ unread_notifications_count }} unread notifications.</p>
+</div>
+  <h1>Notifications</h1>
+  <div class="d-flex justify-content-end mb-3">
+    <form method="post" action="{% url 'notification_read_all' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Mark all as read</button>
+    </form>
+  </div>
+  <div class="list-group">
+    {% for notification in object_list %}
+    <a href="#" class="list-group-item list-group-item-action {% if not notification.read %}list-group-item-warning{% else %}list-group-item-light{% endif %}" aria-current="true">
+      <div class="d-flex w-100 justify-content-between">
+        <p class="mb-1 {% if 'accepted' in notification.message %}accepted{% elif 'rejected' in notification.message %}rejected{% endif %}">
+          {{ notification.message }}
+        </p>
+        <small>{{ notification.created_at|date:"M d, Y H:i" }}</small>
+        {% if not notification.read %}
+        <small><span class="badge bg-primary">New</span></small>
+        {% endif %}
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+
+
+{% comment %}
 <h2>Notifications</h2>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">Mark all as read</button>
+</form>
 <ul>
     {% for notification in object_list %}
-    <li>{{ notification.message }} - {% if not notification.read %}<strong>New</strong>{% endif %}</li>
+        <li>{{ notification.message }} - <strong>New</strong></li>
     {% endfor %}
 </ul>
-{% endblock %}
+{% endcomment %}

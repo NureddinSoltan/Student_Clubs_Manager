@@ -657,7 +657,6 @@ class AcceptRequestView(RedirectView):
         if self.kwargs["request_type"] == ActivityForm.model_display():
             object = ActivityForm.objects.get(pk=self.kwargs["pk"])
             object.status = ActivityForm.StatusChoices.accepted
-            object.status = ActivityForm.StatusChoices.accepted
             # TODO: What's going on here
             self.create_notification("Creating an ActivityForm " ,object, "accepted")
         object.save()
@@ -675,7 +674,7 @@ class AcceptRequestView(RedirectView):
             recipient = obj.club.manager
         else:
             print("Error: No manager found to send notification.")
-            return  # Exit if there is no manager to notify
+            return 
 
         Notification.objects.create(
             recipient=recipient,
@@ -748,12 +747,45 @@ class RejectRequestView(RedirectView):
         )
 
 
+from django.shortcuts import redirect
+from django.views.generic import ListView
+from .models import Notification
+
 class NotificationListView(ListView):
     model = Notification
     template_name = 'notifications.html'
 
     def get_queryset(self):
+        # Retrieve only notifications for the logged-in user
         return Notification.objects.filter(recipient=self.request.user).order_by('-created_at')
+
+    def post(self, request, *args, **kwargs):
+        # Mark all notifications as read when a specific action is performed
+        Notification.objects.filter(recipient=self.request.user, read=False).update(read=True)
+        return redirect('notifications')  # Adjust the redirect as necessary
+    
+    # Deletign all the notifications:
+#     from django.http import HttpResponseRedirect
+
+# class NotificationListView(ListView):
+#     model = Notification
+#     template_name = 'notifications.html'
+
+#     def get_queryset(self):
+#         # Fetch notifications and do not mark them as read yet
+#         return Notification.objects.filter(recipient=self.request.user, read=False).order_by('-created_at')
+
+#     def post(self, request, *args, **kwargs):
+#         # A POST request to this view marks all notifications as read
+#         Notification.objects.filter(recipient=self.request.user, read=False).update(read=True)
+#         return HttpResponseRedirect(request.path_info)  # Redirect back to the same page to reflect the changes
+    
+
+    def unread_notifications_count(request):
+        if request.user.is_authenticated:
+            count = Notification.objects.filter(recipient=request.user, read=False).count()
+            return {'unread_notifications_count': count}
+        return {'unread_notifications_count': 0}
 
     def create_notification(self, obj, action):
         print(obj.author)

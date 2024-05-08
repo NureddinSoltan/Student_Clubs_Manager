@@ -60,5 +60,7 @@ urlpatterns = [
     # Confitmation messages
     path("confmsg/", ConfMsgActivityFormPageView.as_view(), name="confirmation_message"),
 
-    path("notifications/", NotificationListView.as_view(), name="notifications")
+    # Notifications
+    path("notifications/", NotificationListView.as_view(), name="notifications"),
+    path('notifications/read-all/', NotificationListView.as_view(), name='notification_read_all'),  # Adjust as needed
 ]

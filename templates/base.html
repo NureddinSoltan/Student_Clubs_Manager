@@ -68,16 +68,19 @@
         </ul>
         <!-- kokookokokokooookokookokokokoookokooookoooooooooko -->
         <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link custom-text-black mx-1" href="#"><i class="fa-solid fa-bell"></i> Notifications </a>
-          </li>
           {% endif %}
           <!-- kokookokokokooookokookokokokoookokooookoooooooooko -->
           {% if user.role == "MANAGER"%}
           <!-- Notifications -->
           <li class="nav-item">
-            <a class="nav-link custom-text-black mx-1" href="{% url 'notifications' %}"><i class="fa-solid fa-bell"></i> Notifications</a>
-          </li>
+            <a class="nav-link custom-text-black mx-1" href="{% url 'notifications' %}">
+                <i class="fa-solid fa-bell"></i>
+                Notifications
+                {% if unread_notifications_count > 0 %}
+                    <span class="badge bg-danger">{{ unread_notifications_count }}</span>
+                {% endif %}
+            </a>
+        </li>
           <!-- real one -->
           <!-- Add Event -->
           <li class="nav-item">
