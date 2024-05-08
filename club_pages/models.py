@@ -77,7 +77,7 @@ class Event(models.Model):
     event_image = models.ImageField(upload_to="event_images", default="club-pic.jpeg", blank=True)
     date = models.DateTimeField(null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
-    location = models.CharField(max_length=40)
+    location = models.CharField(max_length=70)
     # first_name = models.CharField(max_length=20)
     # last_name = models.CharField(max_length=20)
     description = models.CharField(null=True, max_length=200, validators=[validate_length])
@@ -219,5 +219,8 @@ class Notification(models.Model):
     read = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    # def __str__(self):
+    #     return f"Notification for {self.recipient.username}"
+    
     def __str__(self):
-        return f"Notification for {self.recipient.username}"
+        return self.message
