@@ -188,11 +188,16 @@
               {% endif %}
             </td>
             <td>
+              {% comment %}
               {% if request.get_request_type_display == "Edit Event Post"%}
               {{request.updated_at|date:"Y-m-d H:i"}}
               {% else %}
               {{ request.date|date:"Y-m-d H:i" }}
               {% endif %}
+              {% endcomment %}
+
+              {{ request.updated_at|date:"Y-m-d H:i" }}
+
             </td>
             <td>{{ request.title }}</td>
             <td>{{ request.status }}</td>

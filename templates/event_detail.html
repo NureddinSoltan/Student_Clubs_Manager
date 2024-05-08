@@ -96,12 +96,17 @@
       <p class="firs-text">{{event.faq|safe}}</p>
 
     </div>
-
-
-
-
   </div>
-
+  <div class="d-flex align-items-center justify-content-center gap-2">
+    {% if event.status == "WAITING" %}
+    <a href="{% url 'accept_request' event.id event.get_request_type_display %}">
+      <button class="btn btn-success btn-md mb-1">Accept</button>
+    </a>
+    <a href="{% url 'reject_request' event.id event.get_request_type_display %}">
+      <button class="btn btn-danger btn-md mb-1">Reject</button>
+    </a>
+    {% endif %}
+  </div>
   <hr>
 
   <!-- Cards club -->
@@ -150,6 +155,7 @@
         </div>
       </div>
       {% endfor %}
+
       <!-- Repeat the cards -->
       <!-- Repeat the cards -->
       <div class="col">

@@ -73,25 +73,26 @@ class EventListView(ListView):
         # TODO: sorting by date
         # queryset = queryset.order_by('-date')
 
-        return queryset
+        return queryset.order_by('-date') 
+
 
     # def get_weekly_events(self):
-    #     today = timezone.now().date()
-    #     end_of_week = today + timedelta(days=6)  # Assuming week starts from today
-    #     weekly_events = Event.objects.filter(date__date__range=[today, end_of_week])
+    #     today = timezone.now().date() # + timedelta(days=1)
+    #     print("hoooob" + str(today))
+    #     # Find the first day of the current week (Monday)
+    #     start_of_week = today - timedelta(days=today.weekday())
+    #     print("start" + str(start_of_week))
+    #     # Find the last day of the current week (Sunday)
+    #     end_of_week = start_of_week + timedelta(days=6)
+    #     print("end" + str(end_of_week))
+    #     weekly_events = Event.objects.filter(date__date__range=[start_of_week, end_of_week])
     #     return weekly_events
-    
     def get_weekly_events(self):
-        today = timezone.now().date() # + timedelta(days=1)
-        print("hoooob" + str(today))
-        # Find the first day of the current week (Monday)
+        today = timezone.now().date()
         start_of_week = today - timedelta(days=today.weekday())
-        print("start" + str(start_of_week))
-        # Find the last day of the current week (Sunday)
         end_of_week = start_of_week + timedelta(days=6)
-        print("end" + str(end_of_week))
-        weekly_events = Event.objects.filter(date__date__range=[start_of_week, end_of_week])
-        return weekly_events
+        return Event.objects.filter(date__date__range=[start_of_week, end_of_week], status=Event.StatusChoices.accepted).order_by('date__date')
+
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -296,7 +297,7 @@ class EventUpdateView(UpdateView):
         # return reverse_lazy('event_detail', kwargs={'pk': self.object.pk})
         # return reverse_lazy('/confmsg/activityform/?type=event')
         url = reverse('confirmation_message')  # Ensure the URL name is correctly defined in your urls.py
-        return f"{url}?type=event"
+        return f"{url}?type=edit_post"
 
 
 class EventDeleteView(DeleteView):
@@ -595,10 +596,10 @@ class AdminRequestTemplateView(TemplateView):
         # Combine and sort the results
         all_requests = list(events) + list(activity_forms) + list(edit_event_posts)
         if sort_order == "oldest":
-            all_requests.sort(key=lambda x: x.date if x.date else timezone.now())
+            all_requests.sort(key=lambda x: x.updated_at if x.updated_at else timezone.now())
         else:
             all_requests.sort(
-                key=lambda x: x.date if x.date else timezone.now(), reverse=True
+                key=lambda x: x.updated_at if x.updated_at else timezone.now(), reverse=True
             )
 
         # Pass the filtered and sorted requests to the template

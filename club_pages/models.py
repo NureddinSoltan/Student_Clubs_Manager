@@ -38,6 +38,7 @@ class Club(models.Model):
     club_cover = models.ImageField(
         upload_to="club_images", default="club_cover_default.png", blank=True
     )
+    updated_at = models.DateTimeField(auto_now=True, null=True)
     vice_first_name = models.CharField(max_length=15, null=True)
     vice_last_name = models.CharField(max_length=15, null=True)
     about = RichTextField(null=True)
@@ -75,6 +76,7 @@ class Event(models.Model):
 
     event_image = models.ImageField(upload_to="event_images", default="club-pic.jpeg", blank=True)
     date = models.DateTimeField(null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
     location = models.CharField(max_length=40)
     # first_name = models.CharField(max_length=20)
     # last_name = models.CharField(max_length=20)
@@ -90,7 +92,7 @@ class Event(models.Model):
         blank=True,
     )
     # add just for updating
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    # updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
     class StatusChoices(models.TextChoices):
         # on the left: db, on the right: server
         waiting = "WAITING", "waiting"
@@ -179,6 +181,7 @@ class ActivityForm(models.Model):
     blank=True,
     )
     date = models.DateTimeField(null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
     location = models.CharField(max_length=30)
     # first_name = models.CharField(max_length=15)
     # last_name = models.CharField(max_length=15)
