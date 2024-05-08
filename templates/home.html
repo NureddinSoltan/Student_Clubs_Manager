@@ -112,7 +112,7 @@ Hi {{ user.username }}! you are an {{ user.role }}
                     {% endfor %}
                 </div>
             </div>
-            <div class="links-view"><a href="" class="view-all">View all</a></div>
+            <div class="links-view"><a href="{%url 'club_list'%}" class="view-all">View all</a></div>
         </div>
         <!-- End club section -->
     </div>
@@ -178,7 +178,7 @@ Hi {{ user.username }}! you are an {{ user.role }}
                 </div>
                 {% endfor %}
             </div>
-            <div class="links-view "><a href="" class="view-all">View all</a></div>
+            <div class="links-view "><a href="{%url 'event_list'%}" class="view-all">View all</a></div>
         </div>
         {% endif %}
     <!-- This for the authenticated section for clubs and events -->
